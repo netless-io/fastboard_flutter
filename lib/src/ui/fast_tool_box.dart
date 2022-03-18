@@ -3,8 +3,6 @@ import 'package:fastboard_flutter/src/ui/fast_base_ui.dart';
 import 'package:fastboard_flutter/src/ui/fast_resource_provider.dart';
 import 'package:flutter/material.dart';
 
-import 'fast_icons.dart';
-
 class FastToolBoxExpand extends StatefulWidget {
   const FastToolBoxExpand({Key? key, bool? expand}) : super(key: key);
 
@@ -45,42 +43,6 @@ class FastToolBoxExpandState extends State<FastToolBoxExpand> {
         children: children,
       ),
     );
-
-    return FastContainer(
-        child: Column(
-      children: [
-        InkWell(
-          child: FastIcons.arrow,
-          onTap: () => {},
-        ),
-        const SizedBox(height: 4),
-        InkWell(
-          child: FastIcons.selector,
-          onTap: () => {},
-        ),
-        const SizedBox(height: 4),
-        FastToolboxButton(
-          selected: false,
-          icons: [FastIcons.pencil, FastIcons.pencilFill],
-          onTap: () => {},
-        ),
-        const SizedBox(height: 4),
-        InkWell(
-          child: FastIcons.text,
-          onTap: () => {},
-        ),
-        const SizedBox(height: 4),
-        InkWell(
-          child: FastIcons.eraser,
-          onTap: () => {},
-        ),
-        const SizedBox(height: 4),
-        InkWell(
-          child: FastIcons.rectangle,
-          onTap: () => {},
-        ),
-      ],
-    ));
   }
 
   handleTabIndex(int index) {
