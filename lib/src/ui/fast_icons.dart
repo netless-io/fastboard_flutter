@@ -5,21 +5,35 @@ class FastIcons {
   FastIcons._();
 
   static Widget pagePrev = SvgPicture.asset(
-    "icons/fast_ic_tool_scene_prev.svg",
+    "assets/icons/pagePrev.svg",
     package: "fastboard_flutter",
     width: 24.0,
     height: 24.0,
   );
 
   static Widget pageNext = SvgPicture.asset(
-    "icons/fast_ic_tool_scene_next.svg",
+    "assets/icons/pageNext.svg",
     package: "fastboard_flutter",
     width: 24.0,
     height: 24.0,
   );
 
   static Widget pageAdd = SvgPicture.asset(
-    "icons/fast_ic_tool_scene_add.svg",
+    "assets/icons/pageAdd.svg",
+    package: "fastboard_flutter",
+    width: 24.0,
+    height: 24.0,
+  );
+
+  static Widget undo = SvgPicture.asset(
+    "assets/icons/undo.svg",
+    package: "fastboard_flutter",
+    width: 24.0,
+    height: 24.0,
+  );
+
+  static Widget redo = SvgPicture.asset(
+    "assets/icons/redo.svg",
     package: "fastboard_flutter",
     width: 24.0,
     height: 24.0,

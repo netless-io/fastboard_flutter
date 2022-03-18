@@ -1,7 +1,10 @@
 import 'package:fastboard_flutter/src/controller.dart';
-import 'package:fastboard_flutter/src/ui/white_page_widget.dart';
+import 'package:fastboard_flutter/src/ui/fast_page_indicator.dart';
+import 'package:fastboard_flutter/src/ui/fast_undo_redo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:whiteboard_sdk_flutter/whiteboard_sdk_flutter.dart';
+
+import 'fastboard_models.dart';
 
 typedef FastboardCreatedCallback = void Function(
     FastboardController controller);
@@ -19,7 +22,7 @@ class FastboardView extends StatefulWidget {
 
   // final FastboardCreatedCallback? onFastboardCreated = null;
   final FastRoomCreatedCallback? onFastRoomCreated;
-  final FastStyle? fastStyle;
+  final FontStyle? fastStyle;
   final FastRoomOptions? fastRoomOptions;
   final FastReplayOptions? fastReplayOptions;
 
@@ -31,6 +34,7 @@ class FastboardView extends StatefulWidget {
 
 class FastboardViewState extends State<FastboardView> {
   late FastboardController fastboardController;
+  FastRoomController? fastRoomController;
 
   @override
   Widget build(BuildContext context) {
@@ -38,15 +42,20 @@ class FastboardViewState extends State<FastboardView> {
       constraints: const BoxConstraints.expand(),
       child: Stack(
         alignment: Alignment.center,
-        children: [
+        children: const [
           // WhiteboardView(
           //   options: widget.fastRoomOptions!.whiteOptions,
           //   onSdkCreated: onSdkCreated,
           // ),
-          const Positioned(
-            child: WhitePageWidget(),
+          Positioned(
+            child: FastPageIndicator(),
             bottom: 12.0,
-          )
+          ),
+          Positioned(
+            child: FastRedoUndoWidget(),
+            bottom: 12.0,
+            left: 12.0,
+          ),
         ],
       ),
     );
@@ -59,63 +68,8 @@ class FastboardViewState extends State<FastboardView> {
 
   Future<void> onSdkCreated(WhiteSdk whiteSdk) async {
     fastboardController = FastboardController(whiteSdk);
-    var controller =
+    fastRoomController =
         await fastboardController.joinRoom(widget.fastRoomOptions!);
-    widget.onFastRoomCreated?.call(controller);
+    widget.onFastRoomCreated?.call(fastRoomController!);
   }
-}
-
-class FastRoomOptions {
-  WhiteOptions? _whiteOptions;
-
-  WhiteOptions get whiteOptions =>
-      _whiteOptions ?? WhiteOptions(appIdentifier: appId);
-
-  set whiteOptions(WhiteOptions? whiteOptions) => _whiteOptions = whiteOptions;
-
-  RoomOptions? _roomOptions;
-
-  RoomOptions get roomOptions =>
-      _roomOptions ??
-      RoomOptions(
-        uuid: uuid,
-        roomToken: token,
-        uid: uid,
-        isWritable: writable,
-        region: region,
-      );
-
-  set roomOptions(RoomOptions? roomOptions) => _roomOptions = roomOptions;
-
-  final String appId;
-  final String uuid;
-  final String token;
-  final String uid;
-  final bool writable;
-  final String region;
-
-  FastRoomOptions({
-    required this.appId,
-    required this.uuid,
-    required this.token,
-    required this.uid,
-    required this.writable,
-    required this.region,
-    WhiteOptions? whiteOptions,
-    RoomOptions? roomOptions,
-  }) {
-    _whiteOptions = whiteOptions;
-  }
-}
-
-class FastReplayOptions {}
-
-class FastStyle {
-  Color? canvasColor;
-  bool darkMode;
-
-  FastStyle({
-    this.canvasColor,
-    this.darkMode = false,
-  });
 }

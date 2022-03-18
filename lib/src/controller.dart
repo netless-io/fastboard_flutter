@@ -1,4 +1,4 @@
-import 'package:fastboard_flutter/src/fastboard.dart';
+import 'package:fastboard_flutter/src/fastboard_models.dart';
 import 'package:whiteboard_sdk_flutter/whiteboard_sdk_flutter.dart';
 
 class FastboardController {
@@ -19,6 +19,12 @@ class FastRoomController {
   WhiteRoom whiteRoom;
 
   FastRoomController(this.whiteRoom);
+
+  void addPage() {}
+
+  void prevPage() {}
+
+  void nextPage() {}
 }
 
 class FastReplayController {}
