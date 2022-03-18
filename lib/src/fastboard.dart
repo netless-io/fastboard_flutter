@@ -1,5 +1,6 @@
 import 'package:fastboard_flutter/src/controller.dart';
 import 'package:fastboard_flutter/src/ui/fast_page_indicator.dart';
+import 'package:fastboard_flutter/src/ui/fast_tool_box.dart';
 import 'package:fastboard_flutter/src/ui/fast_undo_redo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:whiteboard_sdk_flutter/whiteboard_sdk_flutter.dart';
@@ -54,6 +55,10 @@ class FastboardViewState extends State<FastboardView> {
           Positioned(
             child: FastRedoUndoWidget(),
             bottom: 12.0,
+            left: 12.0,
+          ),
+          Positioned(
+            child: FastToolBoxExpand(),
             left: 12.0,
           ),
         ],

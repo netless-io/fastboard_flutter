@@ -131,9 +131,8 @@ class FastAppliance {
       FastAppliance(ApplianceName.shape, shapeType: ShapeType.triangle);
   static const FastAppliance speechBalloon =
       FastAppliance(ApplianceName.shape, shapeType: ShapeType.speechBalloon);
+
+  static const FastAppliance clear = FastAppliance("");
 }
 
-
-class ToolboxData {
-
-}
+class ToolboxData {}
