@@ -34,6 +34,7 @@ class FastToolBoxExpandState extends State<FastToolBoxExpand> {
       }
       children.add(FastToolboxButton(
         selected: selectedIndex == i,
+        expandable: items[i].expandable,
         icons: FastResourceProvider.iconOf(items[i].appliance),
         onTap: () => {handleTabIndex(i)},
       ));
@@ -59,9 +60,8 @@ class FastToolBoxExpandState extends State<FastToolBoxExpand> {
 class ToolboxItem {
   FastAppliance appliance;
   List<FastAppliance> subAppliances;
-  bool selected = false;
 
-  bool get expandable => subAppliances.isEmpty;
+  bool get expandable => subAppliances.isNotEmpty;
 
   ToolboxItem({
     required this.appliance,

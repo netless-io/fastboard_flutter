@@ -1,5 +1,13 @@
-import 'package:flutter/cupertino.dart';
+import 'package:fastboard_flutter/fastboard_flutter.dart';
+import 'package:fastboard_flutter/src/ui/fast_icons.dart';
 import 'package:flutter/material.dart';
+
+abstract class FastRoomControllerWidget extends StatefulWidget {
+  final FastRoomController controller;
+
+  const FastRoomControllerWidget(this.controller, {Key? key})
+      : super(key: key);
+}
 
 class FastContainer extends StatelessWidget {
   final Widget? child;
@@ -15,6 +23,7 @@ class FastContainer extends StatelessWidget {
       padding: const EdgeInsets.all(4.0),
       child: child,
       decoration: const BoxDecoration(
+          // color: Colors.white,
           border: Border.fromBorderSide(
             BorderSide(width: 1.0, color: Color(0xFFE5E8F0)),
           ),
@@ -26,6 +35,7 @@ class FastContainer extends StatelessWidget {
 @immutable
 class FastToolboxButton extends StatelessWidget {
   final bool selected;
+  final bool expandable;
 
   final List<Widget> icons;
 
@@ -34,6 +44,7 @@ class FastToolboxButton extends StatelessWidget {
   const FastToolboxButton({
     Key? key,
     this.selected = false,
+    this.expandable = false,
     this.icons = const [],
     this.onTap,
   }) : super(key: key);
@@ -48,7 +59,12 @@ class FastToolboxButton extends StatelessWidget {
           color: color,
           borderRadius: const BorderRadius.all(Radius.circular(4.0))),
       child: InkWell(
-        child: svgIcon,
+        child: Stack(
+          children: [
+            if (expandable) FastIcons.expandable,
+            svgIcon,
+          ],
+        ),
         onTap: onTap,
       ),
     );

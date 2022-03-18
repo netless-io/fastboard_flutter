@@ -1,11 +1,14 @@
+import 'dart:convert';
+import 'dart:math';
+
 import 'package:fastboard_flutter/src/ui/fast_base_ui.dart';
 import 'package:flutter/material.dart';
 
 import 'fast_icons.dart';
 
 /// display page indicate
-class FastPageIndicator extends StatefulWidget {
-  const FastPageIndicator({Key? key}) : super(key: key);
+class FastPageIndicator extends FastRoomControllerWidget {
+  FastPageIndicator(controller, {Key? key}) : super(controller, key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -15,6 +18,33 @@ class FastPageIndicator extends StatefulWidget {
 
 class FastPageIndicatorState extends State<FastPageIndicator> {
   String indicate = "1/23";
+
+  FastPageIndicatorState() {
+    _listener = () {
+      print(jsonEncode(widget.controller.value));
+    };
+  }
+
+  late VoidCallback _listener;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.controller.addListener(_listener);
+  }
+
+  @override
+  void didUpdateWidget(FastPageIndicator oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    oldWidget.controller.removeListener(_listener);
+    widget.controller.addListener(_listener);
+  }
+
+  @override
+  void deactivate() {
+    super.deactivate();
+    widget.controller.removeListener(_listener);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,20 +65,12 @@ class FastPageIndicatorState extends State<FastPageIndicator> {
           const SizedBox(width: 4),
           InkWell(
             child: FastIcons.pageAdd,
-            onTap: () => {},
+            onTap: () => {
+              widget.controller.cleanScene()
+            },
           ),
         ],
       ),
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 }

@@ -45,13 +45,15 @@ class QuickStartBodyState extends State<QuickStartBody> {
           uid: UNIQUE_CLIENT_ID,
           writable: true,
           region: Region.cn_hz,
+          onFastRoomCreated: onFastRoomCreated,
         ),
-        onFastRoomCreated: onFastRoomCreated,
       ),
     ]);
   }
 
-  Future<void> onFastRoomCreated(FastRoomController controller) async {}
+  Future<void> onFastRoomCreated(FastRoomController controller) async {
+
+  }
 
   @override
   void initState() {

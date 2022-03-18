@@ -3,8 +3,12 @@ import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:whiteboard_sdk_flutter/whiteboard_sdk_flutter.dart';
 
+import '../fastboard_flutter.dart';
+
 class FastRoomOptions {
   WhiteOptions? _whiteOptions;
+
+  FastRoomCreatedCallback? onFastRoomCreated;
 
   WhiteOptions get whiteOptions =>
       _whiteOptions ?? WhiteOptions(appIdentifier: appId);
@@ -15,13 +19,13 @@ class FastRoomOptions {
 
   RoomOptions get roomOptions =>
       _roomOptions ??
-      RoomOptions(
-        uuid: uuid,
-        roomToken: token,
-        uid: uid,
-        isWritable: writable,
-        region: region,
-      );
+          RoomOptions(
+            uuid: uuid,
+            roomToken: token,
+            uid: uid,
+            isWritable: writable,
+            region: region,
+          );
 
   set roomOptions(RoomOptions? roomOptions) => _roomOptions = roomOptions;
 
@@ -41,6 +45,7 @@ class FastRoomOptions {
     this.writable = true,
     WhiteOptions? whiteOptions,
     RoomOptions? roomOptions,
+    this.onFastRoomCreated,
   }) {
     _whiteOptions = whiteOptions;
     _roomOptions = roomOptions;
@@ -124,13 +129,13 @@ class FastAppliance {
   static const FastAppliance straight = FastAppliance(ApplianceName.straight);
 
   static const FastAppliance pentagram =
-      FastAppliance(ApplianceName.shape, shapeType: ShapeType.pentagram);
+  FastAppliance(ApplianceName.shape, shapeType: ShapeType.pentagram);
   static const FastAppliance rhombus =
-      FastAppliance(ApplianceName.shape, shapeType: ShapeType.rhombus);
+  FastAppliance(ApplianceName.shape, shapeType: ShapeType.rhombus);
   static const FastAppliance triangle =
-      FastAppliance(ApplianceName.shape, shapeType: ShapeType.triangle);
+  FastAppliance(ApplianceName.shape, shapeType: ShapeType.triangle);
   static const FastAppliance speechBalloon =
-      FastAppliance(ApplianceName.shape, shapeType: ShapeType.speechBalloon);
+  FastAppliance(ApplianceName.shape, shapeType: ShapeType.speechBalloon);
 
   static const FastAppliance clear = FastAppliance("");
 }

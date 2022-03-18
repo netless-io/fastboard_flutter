@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'fast_icons.dart';
 
 class FastRedoUndoWidget extends StatefulWidget {
-  const FastRedoUndoWidget({Key? key, bool}) : super(key: key);
+  const FastRedoUndoWidget({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {

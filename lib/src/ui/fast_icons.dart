@@ -129,4 +129,11 @@ class FastIcons {
     width: 24.0,
     height: 24.0,
   );
+
+  static Widget expandable = SvgPicture.asset(
+    "assets/icons/expandable.svg",
+    package: "fastboard_flutter",
+    width: 24.0,
+    height: 24.0,
+  );
 }
