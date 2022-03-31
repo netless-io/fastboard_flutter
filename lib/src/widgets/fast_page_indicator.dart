@@ -15,42 +15,19 @@ class FastPageIndicator extends FastRoomControllerWidget {
   }
 }
 
-class FastPageIndicatorState extends State<FastPageIndicator> {
-  FastPageIndicatorState() {
-    _listener = () {
-      var fastRoomValue = widget.controller.value;
-      var pageState = fastRoomValue.roomState.pageState;
+class FastPageIndicatorState
+    extends FastRoomControllerState<FastPageIndicator> {
+  FastPageIndicatorState() : super();
 
-      if (pageState != null) {
-        setState(() {
-          indicate = "${pageState.index + 1}/${pageState.length}";
-        });
-      }
-    };
-  }
-
-  late VoidCallback _listener;
   String indicate = " / ";
 
   @override
-  void initState() {
-    super.initState();
-    widget.controller.addListener(_listener);
-  }
-
-  @override
-  void didUpdateWidget(FastPageIndicator oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.controller != widget.controller) {
-      oldWidget.controller.removeListener(_listener);
-      widget.controller.addListener(_listener);
+  void calculateState() {
+    var fastRoomValue = widget.controller.value;
+    var pageState = fastRoomValue.roomState.pageState;
+    if (pageState != null) {
+      indicate = "${pageState.index + 1}/${pageState.length}";
     }
-  }
-
-  @override
-  void deactivate() {
-    super.deactivate();
-    widget.controller.removeListener(_listener);
   }
 
   @override

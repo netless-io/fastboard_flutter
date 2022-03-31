@@ -15,7 +15,8 @@ class FastToolBoxExpand extends FastRoomControllerWidget {
   }
 }
 
-class FastToolBoxExpandState extends State<FastToolBoxExpand> {
+class FastToolBoxExpandState
+    extends FastRoomControllerState<FastToolBoxExpand> {
   int selectedIndex = -1;
 
   List<ToolboxItem> items = [
@@ -49,7 +50,7 @@ class FastToolBoxExpandState extends State<FastToolBoxExpand> {
     );
   }
 
-  handleTabIndex(int index) {
+  void handleTabIndex(int index) {
     if (index == selectedIndex) {
       // show subAppliances
     } else {
@@ -62,6 +63,20 @@ class FastToolBoxExpandState extends State<FastToolBoxExpand> {
         selectedIndex = index;
         widget.controller.setAppliance(items[index].appliance);
       });
+    }
+  }
+
+  @override
+  void calculateState() {
+    var value = widget.controller.value;
+    var memberState = value.roomState.memberState;
+
+    for (var i = 0; i < items.length; ++i) {
+      var fastAppliance = items[i].appliance;
+      if (memberState?.currentApplianceName == fastAppliance.appliance &&
+          memberState?.shapeType == fastAppliance.shapeType) {
+        selectedIndex = i;
+      }
     }
   }
 }

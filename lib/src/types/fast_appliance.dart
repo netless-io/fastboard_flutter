@@ -26,4 +26,9 @@ class FastAppliance {
       FastAppliance(ApplianceName.shape, shapeType: ShapeType.speechBalloon);
 
   static const FastAppliance clear = FastAppliance("");
+
+  static FastAppliance of(String appliance, String shapeType) {
+
+    return clicker;
+  }
 }

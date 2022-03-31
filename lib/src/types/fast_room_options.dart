@@ -4,7 +4,11 @@ class FastRoomOptions {
   WhiteOptions? _whiteOptions;
 
   WhiteOptions get whiteOptions =>
-      _whiteOptions ?? WhiteOptions(appIdentifier: appId);
+      _whiteOptions ??
+      WhiteOptions(
+        appIdentifier: appId,
+        useMultiViews: true,
+      );
 
   set whiteOptions(WhiteOptions? whiteOptions) => _whiteOptions = whiteOptions;
 
@@ -19,6 +23,10 @@ class FastRoomOptions {
         isWritable: writable,
         region: fastRegion.toRegion(),
         disableNewPencil: false,
+        windowParams: WindowParams(
+          containerSizeRatio: 9 / 16,
+          chessboard: false,
+        ),
       );
 
   set roomOptions(RoomOptions? roomOptions) => _roomOptions = roomOptions;

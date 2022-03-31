@@ -8,6 +8,42 @@ abstract class FastRoomControllerWidget extends StatefulWidget {
   const FastRoomControllerWidget(this.controller, {Key? key}) : super(key: key);
 }
 
+abstract class FastRoomControllerState<T extends FastRoomControllerWidget>
+    extends State<T> {
+  FastRoomControllerState() {
+    listener = () {
+      calculateState();
+      setState(() {});
+    };
+  }
+
+  late VoidCallback listener;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.controller.addListener(listener);
+  }
+
+  @override
+  void didUpdateWidget(T oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.controller != widget.controller) {
+      oldWidget.controller.removeListener(listener);
+      widget.controller.addListener(listener);
+    }
+  }
+
+  @override
+  void deactivate() {
+    super.deactivate();
+    widget.controller.removeListener(listener);
+  }
+
+  @protected
+  void calculateState();
+}
+
 class FastContainer extends StatelessWidget {
   final Widget? child;
 

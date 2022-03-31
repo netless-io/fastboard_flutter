@@ -13,13 +13,10 @@ dartfmt:
 dependencies:
     flutter:
         sdk: flutter
-    # whiteboard_sdk_flutter: ^0.3.0
-    whiteboard_sdk_flutter:
-        path: ../whiteboard_flutter
+    whiteboard_sdk_flutter: ^0.4.0
+#    whiteboard_sdk_flutter:
+#        path: ../whiteboard_flutter
     flutter_svg: ^1.0.3
-#  whiteboard_sdk_flutter:
-#    path: ../whiteboard-flutter
-
 
 dev_dependencies:
     flutter_test:

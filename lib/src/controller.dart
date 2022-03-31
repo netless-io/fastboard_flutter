@@ -76,6 +76,9 @@ class FastRoomController extends ValueNotifier<FastRoomValue> {
       onRoomDisconnected: _onRoomDisconnected,
       onRoomError: _onRoomError,
     );
+    if (fastRoomOptions.roomOptions.isWritable) {
+      whiteRoom?.disableSerialization(false);
+    }
   }
 
   void _onRoomStateChanged(RoomState newState) {
