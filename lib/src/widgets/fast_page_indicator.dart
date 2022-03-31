@@ -1,14 +1,13 @@
-import 'dart:convert';
-import 'dart:math';
-
-import 'package:fastboard_flutter/src/ui/fast_base_ui.dart';
 import 'package:flutter/material.dart';
 
+import '../controller.dart' show FastRoomController;
+import 'fast_base_ui.dart';
 import 'fast_icons.dart';
 
 /// display page indicate
 class FastPageIndicator extends FastRoomControllerWidget {
-  FastPageIndicator(controller, {Key? key}) : super(controller, key: key);
+  const FastPageIndicator(FastRoomController controller, {Key? key})
+      : super(controller, key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -17,15 +16,21 @@ class FastPageIndicator extends FastRoomControllerWidget {
 }
 
 class FastPageIndicatorState extends State<FastPageIndicator> {
-  String indicate = "1/23";
-
   FastPageIndicatorState() {
     _listener = () {
-      print(jsonEncode(widget.controller.value));
+      var fastRoomValue = widget.controller.value;
+      var pageState = fastRoomValue.roomState.pageState;
+
+      if (pageState != null) {
+        setState(() {
+          indicate = "${pageState.index + 1}/${pageState.length}";
+        });
+      }
     };
   }
 
   late VoidCallback _listener;
+  String indicate = " / ";
 
   @override
   void initState() {
@@ -36,8 +41,10 @@ class FastPageIndicatorState extends State<FastPageIndicator> {
   @override
   void didUpdateWidget(FastPageIndicator oldWidget) {
     super.didUpdateWidget(oldWidget);
-    oldWidget.controller.removeListener(_listener);
-    widget.controller.addListener(_listener);
+    if (oldWidget.controller != widget.controller) {
+      oldWidget.controller.removeListener(_listener);
+      widget.controller.addListener(_listener);
+    }
   }
 
   @override
@@ -53,21 +60,19 @@ class FastPageIndicatorState extends State<FastPageIndicator> {
         children: [
           InkWell(
             child: FastIcons.pagePrev,
-            onTap: () => {},
+            onTap: () => {widget.controller.prevPage()},
           ),
           const SizedBox(width: 4),
           Text(indicate),
           const SizedBox(width: 4),
           InkWell(
             child: FastIcons.pageNext,
-            onTap: () => {},
+            onTap: () => {widget.controller.nextPage()},
           ),
           const SizedBox(width: 4),
           InkWell(
             child: FastIcons.pageAdd,
-            onTap: () => {
-              widget.controller.cleanScene()
-            },
+            onTap: () => {widget.controller.addPage()},
           ),
         ],
       ),

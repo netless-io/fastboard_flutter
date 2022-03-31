@@ -1,68 +1,64 @@
-import 'package:fastboard_flutter/src/fastboard_models.dart';
-import 'package:fastboard_flutter/src/ui/fast_page_indicator.dart';
-import 'package:fastboard_flutter/src/ui/fast_tool_box.dart';
-import 'package:fastboard_flutter/src/ui/fast_undo_redo.dart';
+import 'dart:async';
+
+import 'package:fastboard_flutter/src/types/fast_redo_undo_count.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:whiteboard_sdk_flutter/whiteboard_sdk_flutter.dart';
 
-abstract class FastboardController {
-  const FastboardController();
+import 'types/types.dart';
 
-  List<Widget> buildView(BuildContext context);
-}
+class FastRoomController extends ValueNotifier<FastRoomValue> {
+  FastRoomController(this.fastRoomOptions)
+      : super(FastRoomValue.uninitialized(fastRoomOptions.writable));
 
-class FastRoomController extends ValueNotifier<RoomState>
-    implements FastboardController {
   WhiteSdk? whiteSdk;
   WhiteRoom? whiteRoom;
-
   FastRoomOptions fastRoomOptions;
-
-  FastRoomController(this.fastRoomOptions) : super(RoomState());
-
-  joinRoom() async {
-    whiteRoom = await whiteSdk?.joinRoom(
-      options: fastRoomOptions.roomOptions,
-      onRoomPhaseChanged: _onRoomPhaseChanged,
-      onRoomStateChanged: _onRoomStateChanged,
-    );
-  }
-
-  void _onRoomStateChanged(RoomState newState) {
-    value = newState;
-  }
 
   void cleanScene() {
     whiteRoom?.cleanScene(false);
   }
 
-  void addPage() {}
+  void addPage() {
+    whiteRoom?.addPage();
+  }
 
-  void prevPage() {}
+  void prevPage() {
+    whiteRoom?.prevPage();
+  }
 
-  void nextPage() {}
+  void nextPage() {
+    whiteRoom?.nextPage();
+  }
 
-  @override
-  List<Widget> buildView(BuildContext context) {
-    return [
-      WhiteboardView(
-        options: fastRoomOptions.whiteOptions,
-        onSdkCreated: onSdkCreated,
-      ),
-      Positioned(
-        child: FastPageIndicator(this),
-        bottom: 12.0,
-      ),
-      const Positioned(
-        child: FastRedoUndoWidget(),
-        bottom: 12.0,
-        left: 12.0,
-      ),
-      const Positioned(
-        child: FastToolBoxExpand(),
-        left: 12.0,
-      ),
-    ];
+  void setAppliance(FastAppliance fastAppliance) {
+    if (fastAppliance == FastAppliance.clear) {
+      cleanScene();
+      return;
+    }
+    var state = MemberState()
+      ..currentApplianceName = fastAppliance.appliance
+      ..shapeType = fastAppliance.shapeType;
+    whiteRoom?.setMemberState(state);
+  }
+
+  // TODO 同时开启序列化
+  Future<bool?> setWritable(bool writable) async {
+    var result = await whiteRoom?.setWritable(writable);
+    if (result ?? false) {
+      whiteRoom?.disableSerialization(false);
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  void undo() {
+    whiteRoom?.undo();
+  }
+
+  void redo() {
+    whiteRoom?.redo();
   }
 
   Future<void> onSdkCreated(WhiteSdk whiteSdk) async {
@@ -70,8 +66,42 @@ class FastRoomController extends ValueNotifier<RoomState>
     await joinRoom();
   }
 
-  void _onRoomPhaseChanged(String phase) {
+  Future<void> joinRoom() async {
+    whiteRoom = await whiteSdk?.joinRoom(
+      options: fastRoomOptions.roomOptions,
+      onRoomPhaseChanged: _onRoomPhaseChanged,
+      onRoomStateChanged: _onRoomStateChanged,
+      onCanRedoStepsUpdate: _onCanRedoUpdated,
+      onCanUndoStepsUpdate: _onCanUndoUpdated,
+      onRoomDisconnected: _onRoomDisconnected,
+      onRoomError: _onRoomError,
+    );
+  }
 
+  void _onRoomStateChanged(RoomState newState) {
+    value = value.copyWith(roomState: newState);
+  }
+
+  /// when reconnected, clear all redoUndoCount
+  void _onRoomPhaseChanged(String phase) {
+    var redoUndoCount = phase == RoomPhase.connected
+        ? const FastRedoUndoCount.initialized()
+        : value.redoUndoCount;
+    value = value.copyWith(roomPhase: phase, redoUndoCount: redoUndoCount);
+  }
+
+  void _onRoomError(String error) {}
+
+  void _onRoomDisconnected(String error) {}
+
+  void _onCanRedoUpdated(int redoCount) {
+    var redoUndoCount = value.redoUndoCount.copyWith(redoCount: redoCount);
+    value = value.copyWith(redoUndoCount: redoUndoCount);
+  }
+
+  void _onCanUndoUpdated(int undoCount) {
+    var redoUndoCount = value.redoUndoCount.copyWith(undoCount: undoCount);
+    value = value.copyWith(redoUndoCount: redoUndoCount);
   }
 }
 

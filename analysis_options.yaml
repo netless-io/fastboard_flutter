@@ -1,4 +1,21 @@
-include: package:flutter_lints/flutter.yaml
+include: package:lints/recommended.yaml
+
+analyzer:
+    exclude: [ build/**, example/**, test/** ]
+    language:
+        strict-raw-types: true
+        strict-inference: true
+
+linter:
+    rules:
+        - always_declare_return_types
+        - cancel_subscriptions
+        - close_sinks
+        - comment_references
+        - depend_on_referenced_packages
+        - library_private_types_in_public_api
+        - one_member_abstracts
+        - only_throw_errors
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options

@@ -1,10 +1,12 @@
-import 'package:fastboard_flutter/src/ui/fast_base_ui.dart';
 import 'package:flutter/material.dart';
 
+import '../controller.dart';
+import 'fast_base_ui.dart';
 import 'fast_icons.dart';
 
-class FastRedoUndoWidget extends StatefulWidget {
-  const FastRedoUndoWidget({Key? key}) : super(key: key);
+class FastRedoUndoWidget extends FastRoomControllerWidget {
+  const FastRedoUndoWidget(FastRoomController controller, {Key? key})
+      : super(controller, key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -20,14 +22,22 @@ class FastRedoUndoState extends State<FastRedoUndoWidget> {
       children: [
         InkWell(
           child: FastIcons.undo,
-          onTap: () => {},
+          onTap: () => {_onUndoTap()},
         ),
         const SizedBox(width: 4),
         InkWell(
           child: FastIcons.redo,
-          onTap: () => {},
+          onTap: () => {_onRedoTap()},
         ),
       ],
     ));
+  }
+
+  void _onUndoTap() {
+    widget.controller.undo();
+  }
+
+  void _onRedoTap() {
+    widget.controller.redo();
   }
 }

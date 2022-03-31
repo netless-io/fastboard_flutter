@@ -1,12 +1,11 @@
 import 'package:fastboard_flutter/fastboard_flutter.dart';
-import 'package:fastboard_flutter/src/ui/fast_icons.dart';
+import 'package:fastboard_flutter/src/widgets/fast_icons.dart';
 import 'package:flutter/material.dart';
 
 abstract class FastRoomControllerWidget extends StatefulWidget {
   final FastRoomController controller;
 
-  const FastRoomControllerWidget(this.controller, {Key? key})
-      : super(key: key);
+  const FastRoomControllerWidget(this.controller, {Key? key}) : super(key: key);
 }
 
 class FastContainer extends StatelessWidget {
@@ -21,9 +20,10 @@ class FastContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(4.0),
-      child: child,
+      // TODO InkWell 点击效果的水波纹处理
+      child: Material(color: Colors.transparent, child: child),
       decoration: const BoxDecoration(
-          // color: Colors.white,
+          color: Colors.white,
           border: Border.fromBorderSide(
             BorderSide(width: 1.0, color: Color(0xFFE5E8F0)),
           ),

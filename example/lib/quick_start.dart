@@ -22,10 +22,7 @@ class QuickStartBody extends StatefulWidget {
 }
 
 class QuickStartBodyState extends State<QuickStartBody> {
-  QuickStartBodyState();
-
-  FastboardController? controller;
-  FastRoomController? fastRoomController;
+  FastRoomController? controller;
 
   static const String APP_ID = '283/VGiScM9Wiw2HJg';
   static const String ROOM_UUID = "d4184790ffd511ebb9ebbf7a8f1d77bd";
@@ -37,22 +34,22 @@ class QuickStartBodyState extends State<QuickStartBody> {
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
-      FastboardView(
+      FastRoomWidget(
         fastRoomOptions: FastRoomOptions(
           appId: APP_ID,
           uuid: ROOM_UUID,
           token: ROOM_TOKEN,
           uid: UNIQUE_CLIENT_ID,
           writable: true,
-          region: Region.cn_hz,
-          onFastRoomCreated: onFastRoomCreated,
+          fastRegion: FastRegion.cn_hz,
         ),
+        onFastRoomCreated: onFastRoomCreated,
       ),
     ]);
   }
 
   Future<void> onFastRoomCreated(FastRoomController controller) async {
-
+    this.controller = controller;
   }
 
   @override

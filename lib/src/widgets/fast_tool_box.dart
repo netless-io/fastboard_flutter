@@ -1,10 +1,13 @@
 import 'package:fastboard_flutter/fastboard_flutter.dart';
-import 'package:fastboard_flutter/src/ui/fast_base_ui.dart';
-import 'package:fastboard_flutter/src/ui/fast_resource_provider.dart';
+import 'package:fastboard_flutter/src/widgets/fast_base_ui.dart';
+import 'package:fastboard_flutter/src/widgets/fast_resource_provider.dart';
 import 'package:flutter/material.dart';
 
-class FastToolBoxExpand extends StatefulWidget {
-  const FastToolBoxExpand({Key? key, bool? expand}) : super(key: key);
+class ToolboxData {}
+
+class FastToolBoxExpand extends FastRoomControllerWidget {
+  const FastToolBoxExpand(controller, {Key? key, bool? expand})
+      : super(controller, key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -51,7 +54,13 @@ class FastToolBoxExpandState extends State<FastToolBoxExpand> {
       // show subAppliances
     } else {
       setState(() {
+        if (items[index].appliance == FastAppliance.clear) {
+          widget.controller.cleanScene();
+          return;
+        }
+
         selectedIndex = index;
+        widget.controller.setAppliance(items[index].appliance);
       });
     }
   }

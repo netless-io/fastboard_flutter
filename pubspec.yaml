@@ -15,7 +15,7 @@ dependencies:
         sdk: flutter
     # whiteboard_sdk_flutter: ^0.3.0
     whiteboard_sdk_flutter:
-        path: ../whiteboard-flutter
+        path: ../whiteboard_flutter
     flutter_svg: ^1.0.3
 #  whiteboard_sdk_flutter:
 #    path: ../whiteboard-flutter
