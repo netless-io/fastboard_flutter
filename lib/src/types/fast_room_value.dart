@@ -25,7 +25,7 @@ class FastRoomValue {
   final FastRedoUndoCount redoUndoCount;
 
   /// Returns a new instance that has the same values as this current instance,
-  /// except for any overrides passed in as arguments to [copyWidth].
+  /// except for any overrides passed in as arguments to [copyWith].
   FastRoomValue copyWith({
     bool? writable,
     RoomState? roomState,

@@ -61,6 +61,10 @@ class FastRoomController extends ValueNotifier<FastRoomValue> {
     whiteRoom?.redo();
   }
 
+  void removePages() {
+    whiteRoom?.removeScenes('/');
+  }
+
   Future<void> onSdkCreated(WhiteSdk whiteSdk) async {
     this.whiteSdk = whiteSdk;
     await joinRoom();

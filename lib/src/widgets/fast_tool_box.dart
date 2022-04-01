@@ -1,12 +1,14 @@
-import 'package:fastboard_flutter/fastboard_flutter.dart';
-import 'package:fastboard_flutter/src/widgets/fast_base_ui.dart';
-import 'package:fastboard_flutter/src/widgets/fast_resource_provider.dart';
 import 'package:flutter/material.dart';
+
+import '../../fastboard_flutter.dart';
+import 'fast_base_ui.dart';
+import 'fast_resource_provider.dart';
 
 class ToolboxData {}
 
 class FastToolBoxExpand extends FastRoomControllerWidget {
-  const FastToolBoxExpand(controller, {Key? key, bool? expand})
+  const FastToolBoxExpand(FastRoomController controller,
+      {Key? key, bool? expand})
       : super(controller, key: key);
 
   @override
