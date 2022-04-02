@@ -5,6 +5,7 @@ import 'package:fastboard_flutter/src/types/types.dart';
 class FastResourceProvider {
   static Map<FastAppliance, List<Widget>> applianceIcons = {
     FastAppliance.arrow: [FastIcons.arrow, FastIcons.arrowBold],
+    FastAppliance.straight: [FastIcons.straight, FastIcons.straightBold],
     FastAppliance.selector: [FastIcons.selector, FastIcons.selectorFill],
     FastAppliance.text: [FastIcons.text, FastIcons.textFill],
     FastAppliance.rectangle: [FastIcons.rectangle, FastIcons.rectangleBold],

@@ -1,19 +1,31 @@
 import 'dart:async';
 
-import 'package:fastboard_flutter/src/types/fast_redo_undo_count.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:stream_transform/stream_transform.dart';
 import 'package:whiteboard_sdk_flutter/whiteboard_sdk_flutter.dart';
 
+import 'types/fast_redo_undo_count.dart';
 import 'types/types.dart';
 
 class FastRoomController extends ValueNotifier<FastRoomValue> {
   FastRoomController(this.fastRoomOptions)
-      : super(FastRoomValue.uninitialized(fastRoomOptions.writable));
+      : super(FastRoomValue.uninitialized(fastRoomOptions.writable)) {}
 
   WhiteSdk? whiteSdk;
   WhiteRoom? whiteRoom;
   FastRoomOptions fastRoomOptions;
+
+  final StreamController<FastRoomEvent> _fastEventStreamController =
+      StreamController<FastRoomEvent>.broadcast();
+
+  Stream<OverlayChangedEvent> onOverlayChanged() {
+    return _fastEventStreamController.stream.whereType<OverlayChangedEvent>();
+  }
+
+  void changeOverlay(int key) {
+    _fastEventStreamController.add(OverlayChangedEvent(key));
+  }
 
   void cleanScene() {
     whiteRoom?.cleanScene(false);
@@ -39,6 +51,21 @@ class FastRoomController extends ValueNotifier<FastRoomValue> {
     var state = MemberState()
       ..currentApplianceName = fastAppliance.appliance
       ..shapeType = fastAppliance.shapeType;
+    whiteRoom?.setMemberState(state);
+  }
+
+  void setStrokeWidth(num strokeWidth) {
+    var state = MemberState()..strokeWidth = strokeWidth;
+    whiteRoom?.setMemberState(state);
+  }
+
+  void setStrokeColor(Color strokeColor) {
+    var state = MemberState()
+      ..strokeColor = [
+        strokeColor.red,
+        strokeColor.green,
+        strokeColor.blue,
+      ];
     whiteRoom?.setMemberState(state);
   }
 
@@ -80,9 +107,23 @@ class FastRoomController extends ValueNotifier<FastRoomValue> {
       onRoomDisconnected: _onRoomDisconnected,
       onRoomError: _onRoomError,
     );
+    value = value.copyWith(isReady: true, roomState: whiteRoom?.state);
     if (fastRoomOptions.roomOptions.isWritable) {
       whiteRoom?.disableSerialization(false);
     }
+  }
+
+  Future<void> reconnect() async {
+    // TODO update room value
+    value = FastRoomValue.uninitialized(fastRoomOptions.roomOptions.isWritable);
+    if (whiteRoom != null) {
+      return joinRoom();
+    }
+    whiteRoom?.disconnect().then((value) {
+      return joinRoom();
+    }).catchError((e) {
+      // ignore
+    });
   }
 
   void _onRoomStateChanged(RoomState newState) {
@@ -110,6 +151,13 @@ class FastRoomController extends ValueNotifier<FastRoomValue> {
     var redoUndoCount = value.redoUndoCount.copyWith(undoCount: undoCount);
     value = value.copyWith(redoUndoCount: redoUndoCount);
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _fastEventStreamController.close();
+  }
 }
 
+/// reserved for replay
 class FastReplayController {}

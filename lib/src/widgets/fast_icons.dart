@@ -53,6 +53,20 @@ class FastIcons {
     height: 24.0,
   );
 
+  static Widget straight = SvgPicture.asset(
+    "assets/icons/line.svg",
+    package: "fastboard_flutter",
+    width: 24.0,
+    height: 24.0,
+  );
+
+  static Widget straightBold = SvgPicture.asset(
+    "assets/icons/lineBold.svg",
+    package: "fastboard_flutter",
+    width: 24.0,
+    height: 24.0,
+  );
+
   static Widget selector = SvgPicture.asset(
     "assets/icons/selector.svg",
     package: "fastboard_flutter",

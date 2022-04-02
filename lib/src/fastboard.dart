@@ -1,12 +1,15 @@
 import 'package:fastboard_flutter/fastboard_flutter.dart';
+import 'package:fastboard_flutter/src/widgets/fast_overlay_handler.dart';
 import 'package:flutter/widgets.dart';
 
 import 'widgets/fast_page_indicator.dart';
+import 'widgets/fast_state_handler.dart';
 import 'widgets/fast_tool_box.dart';
-import 'widgets/fast_undo_redo.dart';
 
+/// 回调房间控制
 typedef FastRoomCreatedCallback = void Function(FastRoomController controller);
 
+/// 用于用户自定义控制组件
 typedef ControllerWidgetBuilder = Widget Function(
   BuildContext context,
   FastRoomController controller,
@@ -23,8 +26,13 @@ class FastRoomWidget extends StatefulWidget {
     this.controllerWidgetBuilder,
   }) : super(key: key);
 
+  /// 房间配置信息
   final FastRoomOptions fastRoomOptions;
+
+  /// 主题模式配置
   final FastStyle? fastStyle;
+
+  /// 加入成功回调
   final FastRoomCreatedCallback? onFastRoomCreated;
 
   @override
@@ -45,30 +53,7 @@ class FastRoomWidgetState extends State<FastRoomWidget> {
 
   @override
   Widget build(BuildContext context) {
-    Widget controllerWidget;
-    if (widget.controllerWidgetBuilder != null) {
-      controllerWidget = widget.controllerWidgetBuilder!(context, controller);
-    } else {
-      controllerWidget = Stack(
-        alignment: Alignment.center,
-        children: [
-          Positioned(
-            child: FastPageIndicator(controller),
-            bottom: 12.0,
-          ),
-          Positioned(
-            child: FastRedoUndoWidget(controller),
-            bottom: 12.0,
-            left: 12.0,
-          ),
-          Positioned(
-            child: FastToolBoxExpand(controller),
-            left: 12.0,
-          ),
-        ],
-      );
-    }
-
+    var builder = widget.controllerWidgetBuilder ?? defaultControllerBuilder;
     return ConstrainedBox(
         constraints: const BoxConstraints.expand(),
         child: Stack(
@@ -77,9 +62,32 @@ class FastRoomWidgetState extends State<FastRoomWidget> {
               options: widget.fastRoomOptions.whiteOptions,
               onSdkCreated: controller.onSdkCreated,
             ),
-            controllerWidget,
+            builder(context, controller),
           ],
         ));
+  }
+
+  Widget defaultControllerBuilder(
+    BuildContext context,
+    FastRoomController controller,
+  ) {
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        FastOverlayHandler(controller),
+        Positioned(
+          child: FastPageIndicator(controller),
+          bottom: 12.0,
+        ),
+        Positioned(
+          child: FastRedoUndoWidget(controller),
+          bottom: 12.0,
+          left: 12.0,
+        ),
+        FastToolBoxExpand(controller),
+        FastStateHandlerWidget(controller),
+      ],
+    );
   }
 
   @override

@@ -27,12 +27,14 @@ class FastRoomValue {
   /// Returns a new instance that has the same values as this current instance,
   /// except for any overrides passed in as arguments to [copyWith].
   FastRoomValue copyWith({
+    bool? isReady,
     bool? writable,
     RoomState? roomState,
     String? roomPhase,
     FastRedoUndoCount? redoUndoCount,
   }) {
     return FastRoomValue(
+      isReady: isReady ?? this.isReady,
       writable: writable ?? this.writable,
       roomPhase: roomPhase ?? this.roomPhase,
       roomState: roomState ?? this.roomState,

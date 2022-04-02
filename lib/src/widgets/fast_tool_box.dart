@@ -20,16 +20,68 @@ class FastToolBoxExpand extends FastRoomControllerWidget {
 class FastToolBoxExpandState
     extends FastRoomControllerState<FastToolBoxExpand> {
   int selectedIndex = -1;
+  int overlayKey = 0;
+
+  bool showSubTools = false;
 
   List<ToolboxItem> items = [
-    ToolboxItem(appliance: FastAppliance.arrow),
+    ToolboxItem(
+      appliance: FastAppliance.arrow,
+      subAppliances: [
+        SubToolboxItem(
+          SubToolboxKey.appliance,
+          [FastAppliance.arrow, FastAppliance.straight],
+        ),
+        SubToolboxItem.noValue(
+          SubToolboxKey.strokeColor,
+        ),
+        SubToolboxItem.noValue(
+          SubToolboxKey.strokeWidth,
+        )
+      ],
+    ),
     ToolboxItem(appliance: FastAppliance.selector),
-    ToolboxItem(appliance: FastAppliance.pencil),
+    ToolboxItem(
+      appliance: FastAppliance.pencil,
+      subAppliances: [
+        SubToolboxItem.noValue(
+          SubToolboxKey.strokeWidth,
+        ),
+        SubToolboxItem.noValue(
+          SubToolboxKey.strokeColor,
+        ),
+      ],
+    ),
     ToolboxItem(appliance: FastAppliance.text),
     ToolboxItem(appliance: FastAppliance.eraser),
     ToolboxItem(appliance: FastAppliance.rectangle),
     ToolboxItem(appliance: FastAppliance.clear),
   ];
+
+  Rect? _rect;
+  num? _strokeWidth;
+  Color? _strokeColor;
+
+  List<Color> colors = [
+    Color(0xFFEC3455),
+    Color(0xFFF5AD46),
+    Color(0xFF68AB5D),
+    Color(0xFF32C5FF),
+    Color(0xFF005BF6),
+    Color(0xFF6236FF),
+    Color(0xFF9E51B6),
+    Color(0xFF6D7278),
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    widget.controller.onOverlayChanged().listen((event) {
+      setState(() {
+        overlayKey = event.value;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,17 +97,172 @@ class FastToolBoxExpandState
         onTap: () => {handleTabIndex(i)},
       ));
     }
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Positioned(
+          child: AfterLayout(
+            callback: (renderAfterLayout) {
+              _rect = renderAfterLayout.localToGlobal(
+                    Offset.zero,
+                    ancestor: context.findRenderObject(),
+                  ) &
+                  renderAfterLayout.size;
+              setState(() {});
+            },
+            child: FastContainer(
+              child: Column(
+                children: children,
+              ),
+            ),
+          ),
+          left: 12,
+        ),
+        if (overlayKey == OverlayChangedEvent.subAppliances)
+          Positioned(
+            child: buildSubToolbox(),
+            top: _rect!.top,
+            left: _rect!.right + 12,
+          ),
+      ],
+    );
+  }
+
+  Widget buildSubToolbox() {
+    List<Widget> children = [];
+    for (var element in items[selectedIndex].subAppliances) {
+      if (children.isNotEmpty) {
+        children.add(Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+          child: Container(
+            height: 0.5,
+            color: Colors.grey,
+          ),
+        ));
+      }
+      switch (element.key) {
+        case SubToolboxKey.strokeWidth:
+          children.add(buildSubToolStroke());
+          break;
+        case SubToolboxKey.strokeColor:
+          children.add(buildSubToolColor());
+          break;
+        case SubToolboxKey.appliance:
+          children.add(buildSubToolAppliance(element.value));
+          break;
+      }
+    }
     return FastContainer(
-      child: Column(
-        children: children,
+      child: SizedBox(
+        width: 128,
+        child: Column(
+          children: children,
+        ),
       ),
     );
   }
 
+  Container buildSubToolColor() {
+    return Container(
+      width: 120,
+      child: GridView.builder(
+        shrinkWrap: true,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 4,
+          childAspectRatio: 1,
+          crossAxisSpacing: 8,
+          mainAxisSpacing: 8,
+        ),
+        itemCount: colors.length,
+        itemBuilder: (context, index) {
+          return InkWell(
+            onTap: () => updateStrokeColor(colors[index]),
+            child: Container(
+              width: 24,
+              height: 24,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                border: _strokeColor == colors[index]
+                    ? Border.all(
+                        color: Colors.blue,
+                        width: 2,
+                      )
+                    : null,
+                color: colors[index],
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  SliderTheme buildSubToolStroke() {
+    return SliderTheme(
+      data: SliderThemeData(
+        trackHeight: 4,
+        thumbShape: RoundSliderThumbShape(
+          enabledThumbRadius: 6,
+          elevation: 2,
+        ),
+        overlayShape: RoundSliderOverlayShape(overlayRadius: 10.0),
+      ),
+      child: Slider(
+        value: _strokeWidth?.toDouble() ?? 4.0,
+        onChanged: (value) {
+          _strokeWidth = value;
+          setState(() {});
+        },
+        onChangeEnd: (value) => widget.controller.setStrokeWidth(value),
+        min: 4,
+        max: 12,
+      ),
+    );
+  }
+
+  Container buildSubToolAppliance(dynamic appliances) {
+    appliances = appliances as List<FastAppliance>;
+    return Container(
+      width: 120,
+      child: GridView.builder(
+        shrinkWrap: true,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 4,
+          crossAxisSpacing: 8,
+          mainAxisSpacing: 8,
+        ),
+        itemCount: appliances.length,
+        itemBuilder: (context, index) {
+          return FastToolboxButton(
+            icons: FastResourceProvider.iconOf(appliances[index]),
+            onTap: () => {selectAppliance(appliances[index])},
+          );
+        },
+      ),
+    );
+  }
+
+  void updateStrokeColor(Color color) {
+    widget.controller.setStrokeColor(color);
+  }
+
+  void selectAppliance(FastAppliance appliance) {
+    if (selectedIndex != -1) {
+      items[selectedIndex].appliance = appliance;
+    }
+    widget.controller.setAppliance(appliance);
+  }
+
   void handleTabIndex(int index) {
     if (index == selectedIndex) {
-      // show subAppliances
+      if (!items[index].expandable) return;
+      if (isSubAppliancesShown()) {
+        hideSubAppliances();
+      } else {
+        showSubAppliances();
+      }
     } else {
+      hideSubAppliances();
       setState(() {
         if (items[index].appliance == FastAppliance.clear) {
           widget.controller.cleanScene();
@@ -73,6 +280,7 @@ class FastToolBoxExpandState
     var value = widget.controller.value;
     var memberState = value.roomState.memberState;
 
+    selectedIndex = -1;
     for (var i = 0; i < items.length; ++i) {
       var fastAppliance = items[i].appliance;
       if (memberState?.currentApplianceName == fastAppliance.appliance &&
@@ -80,17 +288,50 @@ class FastToolBoxExpandState
         selectedIndex = i;
       }
     }
+
+    _strokeWidth = memberState?.strokeWidth;
+    if (memberState?.strokeColor != null) {
+      var cl = memberState!.strokeColor!;
+      _strokeColor = Color.fromRGBO(cl[0], cl[1], cl[2], 1);
+    }
+  }
+
+  bool isSubAppliancesShown() {
+    return overlayKey == OverlayChangedEvent.subAppliances;
+  }
+
+  void showSubAppliances() {
+    widget.controller.changeOverlay(OverlayChangedEvent.subAppliances);
+  }
+
+  void hideSubAppliances() {
+    widget.controller.changeOverlay(OverlayChangedEvent.noOverlay);
   }
 }
 
 class ToolboxItem {
   FastAppliance appliance;
-  List<FastAppliance> subAppliances;
+  List<SubToolboxItem> subAppliances;
 
   bool get expandable => subAppliances.isNotEmpty;
 
   ToolboxItem({
     required this.appliance,
-    this.subAppliances = const [],
+    this.subAppliances = const <SubToolboxItem>[],
   });
+}
+
+enum SubToolboxKey {
+  strokeWidth,
+  strokeColor,
+  appliance,
+}
+
+class SubToolboxItem {
+  SubToolboxItem(this.key, this.value);
+
+  SubToolboxItem.noValue(SubToolboxKey key) : this(key, null);
+
+  final SubToolboxKey key;
+  final Object? value;
 }
