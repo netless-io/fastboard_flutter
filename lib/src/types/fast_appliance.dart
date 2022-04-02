@@ -28,7 +28,6 @@ class FastAppliance {
   static const FastAppliance clear = FastAppliance("");
 
   static FastAppliance of(String appliance, String shapeType) {
-
     return clicker;
   }
 }
