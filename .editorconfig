@@ -17,4 +17,4 @@ ij_visual_guides = none
 ij_wrap_on_typing = false
 
 [*.dart]
-max_line_length = 120
+max_line_length = 80

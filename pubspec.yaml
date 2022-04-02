@@ -4,8 +4,8 @@ version: 0.0.1
 homepage:
 
 environment:
-    sdk: ">=2.15.1 <3.0.0"
-    flutter: ">=1.17.0"
+    sdk: ">=2.12.0 <3.0.0"
+    flutter: ">=1.22.2"
 
 dartfmt:
     line_length: 120
@@ -17,6 +17,7 @@ dependencies:
     whiteboard_sdk_flutter:
         path: ../whiteboard_flutter
     flutter_svg: ^1.0.3
+    stream_transform: ^2.0.0
 
 dev_dependencies:
     flutter_test:
