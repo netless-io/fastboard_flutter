@@ -1,5 +1,6 @@
 import 'package:fastboard_flutter/fastboard_flutter.dart';
 import 'package:fastboard_flutter/src/widgets/fast_overlay_handler.dart';
+import 'package:fastboard_flutter/src/widgets/fast_zoom.dart';
 import 'package:flutter/widgets.dart';
 
 import 'widgets/fast_page_indicator.dart';
@@ -80,7 +81,13 @@ class FastRoomWidgetState extends State<FastRoomWidget> {
           bottom: 12.0,
         ),
         Positioned(
-          child: FastRedoUndoWidget(controller),
+          child: Row(
+            children: [
+              FastRedoUndoWidget(controller),
+              SizedBox(width: 8),
+              FastZoomWidget(controller),
+            ],
+          ),
           bottom: 12.0,
           left: 12.0,
         ),

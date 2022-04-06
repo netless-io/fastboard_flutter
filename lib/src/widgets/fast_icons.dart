@@ -39,6 +39,27 @@ class FastIcons {
     height: 24.0,
   );
 
+  static Widget zoomIn = SvgPicture.asset(
+    "assets/icons/zoomIn.svg",
+    package: "fastboard_flutter",
+    width: 24.0,
+    height: 24.0,
+  );
+
+  static Widget zoomOut = SvgPicture.asset(
+    "assets/icons/zoomOut.svg",
+    package: "fastboard_flutter",
+    width: 24.0,
+    height: 24.0,
+  );
+
+  static Widget zoomReset = SvgPicture.asset(
+    "assets/icons/zoomReset.svg",
+    package: "fastboard_flutter",
+    width: 24.0,
+    height: 24.0,
+  );
+
   static Widget arrow = SvgPicture.asset(
     "assets/icons/arrow.svg",
     package: "fastboard_flutter",

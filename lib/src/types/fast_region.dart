@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:fastboard_flutter/fastboard_flutter.dart';
 
 enum FastRegion {

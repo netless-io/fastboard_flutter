@@ -10,11 +10,13 @@ import 'types/types.dart';
 
 class FastRoomController extends ValueNotifier<FastRoomValue> {
   FastRoomController(this.fastRoomOptions)
-      : super(FastRoomValue.uninitialized(fastRoomOptions.writable)) {}
+      : super(FastRoomValue.uninitialized(fastRoomOptions.writable));
 
   WhiteSdk? whiteSdk;
   WhiteRoom? whiteRoom;
   FastRoomOptions fastRoomOptions;
+
+  num zoomScaleDefault = 1;
 
   final StreamController<FastRoomEvent> _fastEventStreamController =
       StreamController<FastRoomEvent>.broadcast();
@@ -92,6 +94,18 @@ class FastRoomController extends ValueNotifier<FastRoomValue> {
     whiteRoom?.removeScenes('/');
   }
 
+  void zoomTo(num zoomScale) {
+    whiteRoom?.moveCamera(CameraConfig(scale: zoomScale));
+  }
+
+  void zoomReset() {
+    whiteRoom?.moveCamera(CameraConfig(
+      scale: zoomScaleDefault,
+      centerX: 0,
+      centerY: 0,
+    ));
+  }
+
   Future<void> onSdkCreated(WhiteSdk whiteSdk) async {
     this.whiteSdk = whiteSdk;
     await joinRoom();
@@ -108,6 +122,7 @@ class FastRoomController extends ValueNotifier<FastRoomValue> {
       onRoomError: _onRoomError,
     );
     value = value.copyWith(isReady: true, roomState: whiteRoom?.state);
+    zoomScaleDefault = value.roomState.cameraState?.scale ?? 1;
     if (fastRoomOptions.roomOptions.isWritable) {
       whiteRoom?.disableSerialization(false);
     }
