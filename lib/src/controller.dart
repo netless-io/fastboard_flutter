@@ -122,7 +122,6 @@ class FastRoomController extends ValueNotifier<FastRoomValue> {
       onRoomError: _onRoomError,
     );
     value = value.copyWith(isReady: true, roomState: whiteRoom?.state);
-    zoomScaleDefault = value.roomState.cameraState?.scale ?? 1;
     if (fastRoomOptions.roomOptions.isWritable) {
       whiteRoom?.disableSerialization(false);
     }

@@ -27,6 +27,7 @@ class FastRoomOptions {
           containerSizeRatio: 9 / 16,
           chessboard: false,
         ),
+        cameraBound: CameraBound(centerX: 0, centerY: 0),
       );
 
   set roomOptions(RoomOptions? roomOptions) => _roomOptions = roomOptions;

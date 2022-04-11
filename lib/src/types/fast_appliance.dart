@@ -27,7 +27,36 @@ class FastAppliance {
 
   static const FastAppliance clear = FastAppliance("");
 
-  static FastAppliance of(String appliance, String shapeType) {
+  static FastAppliance of(String? appliance, String? shapeType) {
+    switch (appliance) {
+      case ApplianceName.clicker:
+        return clicker;
+      case ApplianceName.selector:
+        return selector;
+      case ApplianceName.pencil:
+        return pencil;
+      case ApplianceName.rectangle:
+        return rectangle;
+      case ApplianceName.ellipse:
+        return ellipse;
+      case ApplianceName.eraser:
+        return eraser;
+      case ApplianceName.arrow:
+        return arrow;
+      case ApplianceName.straight:
+        return straight;
+      case ApplianceName.shape:
+        switch (shapeType) {
+          case ShapeType.pentagram:
+            return pentagram;
+          case ShapeType.rhombus:
+            return rhombus;
+          case ShapeType.triangle:
+            return triangle;
+          case ShapeType.speechBalloon:
+            return speechBalloon;
+        }
+    }
     return clicker;
   }
 }

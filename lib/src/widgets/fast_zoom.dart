@@ -14,7 +14,7 @@ class FastZoomWidget extends FastRoomControllerWidget {
     FastRoomController controller, {
     Key? key,
     this.minScale = 0.25,
-    this.maxScale = 2,
+    this.maxScale = 10,
   }) : super(controller, key: key);
 
   @override
@@ -57,11 +57,11 @@ class FastZoomState extends FastRoomControllerState<FastZoomWidget> {
   }
 
   void _onZoomIn() {
-    widget.controller.zoomTo(max(zoomScale - 0.25, widget.minScale));
+    widget.controller.zoomTo(max(zoomScale * 0.8, widget.minScale));
   }
 
   void _onZoomOut() {
-    widget.controller.zoomTo(min(zoomScale + 0.25, widget.maxScale));
+    widget.controller.zoomTo(min(zoomScale / 0.8, widget.maxScale));
   }
 
   void _onZoomReset() {

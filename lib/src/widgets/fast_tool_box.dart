@@ -1,3 +1,4 @@
+import 'package:fastboard_flutter/src/widgets/fast_icons.dart';
 import 'package:flutter/material.dart';
 
 import '../../fastboard_flutter.dart';
@@ -61,6 +62,7 @@ class FastToolBoxExpandState
   Rect? _rect;
   num? _strokeWidth;
   Color? _strokeColor;
+  bool showDelete = false;
 
   List<Color> colors = [
     Color(0xFFEC3455),
@@ -123,6 +125,12 @@ class FastToolBoxExpandState
             child: buildSubToolbox(),
             top: _rect!.top,
             left: _rect!.right + 12,
+          ),
+        if (showDelete)
+          Positioned(
+            child: buildDeleteButton(),
+            top: _rect!.top - 12 - 32,
+            left: _rect!.left,
           ),
       ],
     );
@@ -294,6 +302,12 @@ class FastToolBoxExpandState
       var cl = memberState!.strokeColor!;
       _strokeColor = Color.fromRGBO(cl[0], cl[1], cl[2], 1);
     }
+
+    var fastAppliance = FastAppliance.of(
+      memberState?.currentApplianceName,
+      memberState?.shapeType,
+    );
+    showDelete = fastAppliance == FastAppliance.selector;
   }
 
   bool isSubAppliancesShown() {
@@ -306,6 +320,19 @@ class FastToolBoxExpandState
 
   void hideSubAppliances() {
     widget.controller.changeOverlay(OverlayChangedEvent.noOverlay);
+  }
+
+  Widget buildDeleteButton() {
+    return FastContainer(
+      child: InkWell(
+        child: FastIcons.delete,
+        onTap: _onDeleteSelected,
+      ),
+    );
+  }
+
+  void _onDeleteSelected() {
+    widget.controller.whiteRoom?.delete();
   }
 }
 

@@ -171,4 +171,11 @@ class FastIcons {
     width: 24.0,
     height: 24.0,
   );
+
+  static Widget delete = SvgPicture.asset(
+    "assets/icons/delete.svg",
+    package: "fastboard_flutter",
+    width: 24.0,
+    height: 24.0,
+  );
 }
