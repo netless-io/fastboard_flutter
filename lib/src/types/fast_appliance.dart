@@ -16,16 +16,26 @@ class FastAppliance {
   static const FastAppliance arrow = FastAppliance(ApplianceName.arrow);
   static const FastAppliance straight = FastAppliance(ApplianceName.straight);
 
-  static const FastAppliance pentagram =
-      FastAppliance(ApplianceName.shape, shapeType: ShapeType.pentagram);
-  static const FastAppliance rhombus =
-      FastAppliance(ApplianceName.shape, shapeType: ShapeType.rhombus);
-  static const FastAppliance triangle =
-      FastAppliance(ApplianceName.shape, shapeType: ShapeType.triangle);
-  static const FastAppliance speechBalloon =
-      FastAppliance(ApplianceName.shape, shapeType: ShapeType.speechBalloon);
+  static const FastAppliance pentagram = FastAppliance(
+    ApplianceName.shape,
+    shapeType: ShapeType.pentagram,
+  );
+  static const FastAppliance rhombus = FastAppliance(
+    ApplianceName.shape,
+    shapeType: ShapeType.rhombus,
+  );
+  static const FastAppliance triangle = FastAppliance(
+    ApplianceName.shape,
+    shapeType: ShapeType.triangle,
+  );
+  static const FastAppliance balloon = FastAppliance(
+    ApplianceName.shape,
+    shapeType: ShapeType.speechBalloon,
+  );
 
   static const FastAppliance clear = FastAppliance("");
+
+  static const FastAppliance unknown = FastAppliance("unknown");
 
   static FastAppliance of(String? appliance, String? shapeType) {
     switch (appliance) {
@@ -35,6 +45,8 @@ class FastAppliance {
         return selector;
       case ApplianceName.pencil:
         return pencil;
+      case ApplianceName.text:
+        return text;
       case ApplianceName.rectangle:
         return rectangle;
       case ApplianceName.ellipse:
@@ -54,9 +66,9 @@ class FastAppliance {
           case ShapeType.triangle:
             return triangle;
           case ShapeType.speechBalloon:
-            return speechBalloon;
+            return balloon;
         }
     }
-    return clicker;
+    return unknown;
   }
 }

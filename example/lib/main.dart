@@ -45,8 +45,9 @@ class _MyAppState extends State<MyApp> {
   void _pushPage(BuildContext context, FastExamplePage page) {
     Navigator.of(context).push(MaterialPageRoute<void>(
         builder: (_) => Scaffold(
-              // appBar: AppBar(title: Text(page.title)),
               body: page,
+              // prevent resize, when the keyboard appears
+              resizeToAvoidBottomInset: false,
             )));
   }
 }

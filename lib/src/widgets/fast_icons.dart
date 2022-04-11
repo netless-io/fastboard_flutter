@@ -60,6 +60,20 @@ class FastIcons {
     height: 24.0,
   );
 
+  static Widget click = SvgPicture.asset(
+    "assets/icons/click.svg",
+    package: "fastboard_flutter",
+    width: 24.0,
+    height: 24.0,
+  );
+
+  static Widget clickFill = SvgPicture.asset(
+    "assets/icons/clickFill.svg",
+    package: "fastboard_flutter",
+    width: 24.0,
+    height: 24.0,
+  );
+
   static Widget arrow = SvgPicture.asset(
     "assets/icons/arrow.svg",
     package: "fastboard_flutter",
@@ -139,6 +153,76 @@ class FastIcons {
 
   static Widget rectangleBold = SvgPicture.asset(
     "assets/icons/rectangleBold.svg",
+    package: "fastboard_flutter",
+    width: 24.0,
+    height: 24.0,
+  );
+
+  static Widget circle = SvgPicture.asset(
+    "assets/icons/circle.svg",
+    package: "fastboard_flutter",
+    width: 24.0,
+    height: 24.0,
+  );
+
+  static Widget circleBold = SvgPicture.asset(
+    "assets/icons/circleBold.svg",
+    package: "fastboard_flutter",
+    width: 24.0,
+    height: 24.0,
+  );
+
+  static Widget star = SvgPicture.asset(
+    "assets/icons/star.svg",
+    package: "fastboard_flutter",
+    width: 24.0,
+    height: 24.0,
+  );
+
+  static Widget starBold = SvgPicture.asset(
+    "assets/icons/starBold.svg",
+    package: "fastboard_flutter",
+    width: 24.0,
+    height: 24.0,
+  );
+
+  static Widget balloon = SvgPicture.asset(
+    "assets/icons/balloon.svg",
+    package: "fastboard_flutter",
+    width: 24.0,
+    height: 24.0,
+  );
+
+  static Widget balloonBold = SvgPicture.asset(
+    "assets/icons/balloonBold.svg",
+    package: "fastboard_flutter",
+    width: 24.0,
+    height: 24.0,
+  );
+
+  static Widget rhombus = SvgPicture.asset(
+    "assets/icons/rhombus.svg",
+    package: "fastboard_flutter",
+    width: 24.0,
+    height: 24.0,
+  );
+
+  static Widget rhombusBold = SvgPicture.asset(
+    "assets/icons/rhombusBold.svg",
+    package: "fastboard_flutter",
+    width: 24.0,
+    height: 24.0,
+  );
+
+  static Widget triangle = SvgPicture.asset(
+    "assets/icons/triangle.svg",
+    package: "fastboard_flutter",
+    width: 24.0,
+    height: 24.0,
+  );
+
+  static Widget triangleBold = SvgPicture.asset(
+    "assets/icons/triangleBold.svg",
     package: "fastboard_flutter",
     width: 24.0,
     height: 24.0,

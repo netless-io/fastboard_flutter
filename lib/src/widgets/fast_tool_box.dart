@@ -1,7 +1,8 @@
 import 'package:fastboard_flutter/src/widgets/fast_icons.dart';
 import 'package:flutter/material.dart';
 
-import '../../fastboard_flutter.dart';
+import '../controller.dart';
+import '../types/types.dart';
 import 'fast_base_ui.dart';
 import 'fast_resource_provider.dart';
 
@@ -20,31 +21,12 @@ class FastToolBoxExpand extends FastRoomControllerWidget {
 
 class FastToolBoxExpandState
     extends FastRoomControllerState<FastToolBoxExpand> {
-  int selectedIndex = -1;
-  int overlayKey = 0;
-
-  bool showSubTools = false;
-
   List<ToolboxItem> items = [
+    ToolboxItem(appliances: [FastAppliance.clicker]),
+    ToolboxItem(appliances: [FastAppliance.selector]),
     ToolboxItem(
-      appliance: FastAppliance.arrow,
-      subAppliances: [
-        SubToolboxItem(
-          SubToolboxKey.appliance,
-          [FastAppliance.arrow, FastAppliance.straight],
-        ),
-        SubToolboxItem.noValue(
-          SubToolboxKey.strokeColor,
-        ),
-        SubToolboxItem.noValue(
-          SubToolboxKey.strokeWidth,
-        )
-      ],
-    ),
-    ToolboxItem(appliance: FastAppliance.selector),
-    ToolboxItem(
-      appliance: FastAppliance.pencil,
-      subAppliances: [
+      appliances: [FastAppliance.pencil],
+      subItems: [
         SubToolboxItem.noValue(
           SubToolboxKey.strokeWidth,
         ),
@@ -53,27 +35,39 @@ class FastToolBoxExpandState
         ),
       ],
     ),
-    ToolboxItem(appliance: FastAppliance.text),
-    ToolboxItem(appliance: FastAppliance.eraser),
-    ToolboxItem(appliance: FastAppliance.rectangle),
-    ToolboxItem(appliance: FastAppliance.clear),
+    ToolboxItem(appliances: [FastAppliance.text]),
+    ToolboxItem(appliances: [FastAppliance.eraser]),
+    ToolboxItem(
+      appliances: [
+        FastAppliance.rectangle,
+        FastAppliance.ellipse,
+        FastAppliance.straight,
+        FastAppliance.arrow,
+        FastAppliance.pentagram,
+        FastAppliance.rhombus,
+        FastAppliance.triangle,
+        FastAppliance.balloon,
+      ],
+      subItems: [
+        SubToolboxItem.noValue(
+          SubToolboxKey.strokeWidth,
+        ),
+        SubToolboxItem.noValue(
+          SubToolboxKey.strokeColor,
+        ),
+      ],
+    ),
+    ToolboxItem(appliances: [FastAppliance.clear]),
   ];
 
   Rect? _rect;
   num? _strokeWidth;
   Color? _strokeColor;
-  bool showDelete = false;
 
-  List<Color> colors = [
-    Color(0xFFEC3455),
-    Color(0xFFF5AD46),
-    Color(0xFF68AB5D),
-    Color(0xFF32C5FF),
-    Color(0xFF005BF6),
-    Color(0xFF6236FF),
-    Color(0xFF9E51B6),
-    Color(0xFF6D7278),
-  ];
+  int selectedIndex = -1;
+  int overlayKey = 0;
+  bool showSubTools = false;
+  bool showDelete = false;
 
   @override
   void initState() {
@@ -95,7 +89,7 @@ class FastToolBoxExpandState
       children.add(FastToolboxButton(
         selected: selectedIndex == i,
         expandable: items[i].expandable,
-        icons: FastResourceProvider.iconOf(items[i].appliance),
+        icons: FastResourceProvider.iconOf(items[i].displayAppliance),
         onTap: () => {handleTabIndex(i)},
       ));
     }
@@ -138,7 +132,11 @@ class FastToolBoxExpandState
 
   Widget buildSubToolbox() {
     List<Widget> children = [];
-    for (var element in items[selectedIndex].subAppliances) {
+    var appliances = items[selectedIndex].appliances;
+    if (appliances.length > 1) {
+      children.add(buildSubToolAppliance(appliances));
+    }
+    for (var element in items[selectedIndex].subItems) {
       if (children.isNotEmpty) {
         children.add(Padding(
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
@@ -155,8 +153,8 @@ class FastToolBoxExpandState
         case SubToolboxKey.strokeColor:
           children.add(buildSubToolColor());
           break;
-        case SubToolboxKey.appliance:
-          children.add(buildSubToolAppliance(element.value));
+        case SubToolboxKey.strokeTextColor:
+          // TODO: Handle this case.
           break;
       }
     }
@@ -171,6 +169,7 @@ class FastToolBoxExpandState
   }
 
   Container buildSubToolColor() {
+    var colors = FastResourceProvider.colors;
     return Container(
       width: 120,
       child: GridView.builder(
@@ -186,6 +185,7 @@ class FastToolBoxExpandState
           return InkWell(
             onTap: () => updateStrokeColor(colors[index]),
             child: Container(
+              padding: EdgeInsets.all(2),
               width: 24,
               height: 24,
               decoration: BoxDecoration(
@@ -196,6 +196,8 @@ class FastToolBoxExpandState
                         width: 2,
                       )
                     : null,
+              ),
+              child: Container(
                 color: colors[index],
               ),
             ),
@@ -222,8 +224,8 @@ class FastToolBoxExpandState
           setState(() {});
         },
         onChangeEnd: (value) => widget.controller.setStrokeWidth(value),
-        min: 4,
-        max: 12,
+        min: 1,
+        max: 24,
       ),
     );
   }
@@ -256,7 +258,7 @@ class FastToolBoxExpandState
 
   void selectAppliance(FastAppliance appliance) {
     if (selectedIndex != -1) {
-      items[selectedIndex].appliance = appliance;
+      items[selectedIndex].updateAppliance(appliance);
     }
     widget.controller.setAppliance(appliance);
   }
@@ -272,13 +274,13 @@ class FastToolBoxExpandState
     } else {
       hideSubAppliances();
       setState(() {
-        if (items[index].appliance == FastAppliance.clear) {
+        if (items[index].displayAppliance == FastAppliance.clear) {
           widget.controller.cleanScene();
           return;
         }
 
         selectedIndex = index;
-        widget.controller.setAppliance(items[index].appliance);
+        widget.controller.setAppliance(items[index].displayAppliance);
       });
     }
   }
@@ -287,27 +289,25 @@ class FastToolBoxExpandState
   void calculateState() {
     var value = widget.controller.value;
     var memberState = value.roomState.memberState;
+    var fastAppliance = FastAppliance.of(
+      memberState?.currentApplianceName,
+      memberState?.shapeType,
+    );
 
     selectedIndex = -1;
     for (var i = 0; i < items.length; ++i) {
-      var fastAppliance = items[i].appliance;
-      if (memberState?.currentApplianceName == fastAppliance.appliance &&
-          memberState?.shapeType == fastAppliance.shapeType) {
+      if (items[i].appliances.contains(fastAppliance)) {
+        items[i].updateAppliance(fastAppliance);
         selectedIndex = i;
       }
     }
+    showDelete = fastAppliance == FastAppliance.selector;
 
     _strokeWidth = memberState?.strokeWidth;
     if (memberState?.strokeColor != null) {
       var cl = memberState!.strokeColor!;
       _strokeColor = Color.fromRGBO(cl[0], cl[1], cl[2], 1);
     }
-
-    var fastAppliance = FastAppliance.of(
-      memberState?.currentApplianceName,
-      memberState?.shapeType,
-    );
-    showDelete = fastAppliance == FastAppliance.selector;
   }
 
   bool isSubAppliancesShown() {
@@ -337,21 +337,34 @@ class FastToolBoxExpandState
 }
 
 class ToolboxItem {
-  FastAppliance appliance;
-  List<SubToolboxItem> subAppliances;
+  List<FastAppliance> appliances;
+  int displayIndex;
+  List<SubToolboxItem> subItems;
 
-  bool get expandable => subAppliances.isNotEmpty;
+  bool get expandable => subItems.isNotEmpty;
+
+  FastAppliance get displayAppliance => appliances[displayIndex];
+
+  void updateAppliance(FastAppliance fastAppliance) {
+    for (int i = 0; i < appliances.length; i++) {
+      if (appliances[i] == fastAppliance) {
+        displayIndex = i;
+        break;
+      }
+    }
+  }
 
   ToolboxItem({
-    required this.appliance,
-    this.subAppliances = const <SubToolboxItem>[],
+    required this.appliances,
+    this.displayIndex = 0,
+    this.subItems = const <SubToolboxItem>[],
   });
 }
 
 enum SubToolboxKey {
   strokeWidth,
   strokeColor,
-  appliance,
+  strokeTextColor,
 }
 
 class SubToolboxItem {
