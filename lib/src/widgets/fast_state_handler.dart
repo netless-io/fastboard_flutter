@@ -3,6 +3,7 @@ import 'package:whiteboard_sdk_flutter/whiteboard_sdk_flutter.dart';
 
 import '../controller.dart';
 import 'fast_base_ui.dart';
+import 'fast_gap.dart';
 
 class FastStateHandlerWidget extends FastRoomControllerWidget {
   const FastStateHandlerWidget(FastRoomController controller, {Key? key})
@@ -62,7 +63,8 @@ class FastStateHandlerState
               child: FastContainer(
                 child: InkWell(
                   child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 6),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: FastGap.gap_1_5),
                       child: Text("retry")),
                   onTap: _onReconnect,
                 ),

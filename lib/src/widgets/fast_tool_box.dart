@@ -1,3 +1,4 @@
+import 'package:fastboard_flutter/src/widgets/fast_gap.dart';
 import 'package:fastboard_flutter/src/widgets/fast_icons.dart';
 import 'package:flutter/material.dart';
 
@@ -64,10 +65,10 @@ class FastToolBoxExpandState
   num? _strokeWidth;
   Color? _strokeColor;
 
+  FastAppliance selectedAppliance = FastAppliance.unknown;
   int selectedIndex = -1;
   int overlayKey = 0;
   bool showSubTools = false;
-  bool showDelete = false;
 
   @override
   void initState() {
@@ -112,18 +113,18 @@ class FastToolBoxExpandState
               ),
             ),
           ),
-          left: 12,
+          left: FastGap.gap_3,
         ),
         if (overlayKey == OverlayChangedEvent.subAppliances)
           Positioned(
             child: buildSubToolbox(),
             top: _rect!.top,
-            left: _rect!.right + 12,
+            left: _rect!.right + FastGap.gap_3,
           ),
-        if (showDelete)
+        if (selectedAppliance == FastAppliance.selector)
           Positioned(
             child: buildDeleteButton(),
-            top: _rect!.top - 12 - 32,
+            top: _rect!.top - FastGap.gap_3 - FastGap.gap_8,
             left: _rect!.left,
           ),
       ],
@@ -139,10 +140,10 @@ class FastToolBoxExpandState
     for (var element in items[selectedIndex].subItems) {
       if (children.isNotEmpty) {
         children.add(Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+          padding: EdgeInsets.all(FastGap.gap_1),
           child: Container(
-            height: 0.5,
-            color: Colors.grey,
+            height: FastGap.gapMin,
+            color: FastResourceProvider.themeData.dividerColor,
           ),
         ));
       }
@@ -154,13 +155,12 @@ class FastToolBoxExpandState
           children.add(buildSubToolColor());
           break;
         case SubToolboxKey.strokeTextColor:
-          // TODO: Handle this case.
           break;
       }
     }
     return FastContainer(
       child: SizedBox(
-        width: 128,
+        width: FastGap.subToolboxWidth,
         child: Column(
           children: children,
         ),
@@ -168,37 +168,42 @@ class FastToolBoxExpandState
     );
   }
 
-  Container buildSubToolColor() {
-    var colors = FastResourceProvider.colors;
+  Widget buildSubToolColor() {
+    var colors = FastResourceProvider.strokeColors;
     return Container(
-      width: 120,
       child: GridView.builder(
         shrinkWrap: true,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 4,
-          childAspectRatio: 1,
-          crossAxisSpacing: 8,
-          mainAxisSpacing: 8,
+          crossAxisSpacing: FastGap.gap_1,
+          mainAxisSpacing: FastGap.gap_1,
         ),
         itemCount: colors.length,
         itemBuilder: (context, index) {
-          return InkWell(
-            onTap: () => updateStrokeColor(colors[index]),
-            child: Container(
-              padding: EdgeInsets.all(2),
-              width: 24,
-              height: 24,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(4.0)),
-                border: _strokeColor == colors[index]
-                    ? Border.all(
-                        color: Colors.blue,
-                        width: 2,
-                      )
-                    : null,
-              ),
+          return Center(
+            child: InkWell(
+              onTap: () => updateStrokeColor(colors[index]),
               child: Container(
-                color: colors[index],
+                width: FastGap.gap_6,
+                height: FastGap.gap_6,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                  border: Border.all(
+                    color: _strokeColor == colors[index]
+                        ? FastResourceProvider.themeData.mainColor
+                        : Colors.transparent,
+                    width: FastGap.gap_0_5,
+                  ),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.all(FastGap.gap_0_5),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                      color: colors[index],
+                    ),
+                  ),
+                ),
               ),
             ),
           );
@@ -207,15 +212,18 @@ class FastToolBoxExpandState
     );
   }
 
-  SliderTheme buildSubToolStroke() {
+  Widget buildSubToolStroke() {
     return SliderTheme(
       data: SliderThemeData(
-        trackHeight: 4,
+        activeTrackColor: FastResourceProvider.themeData.mainColor,
+        inactiveTrackColor: FastResourceProvider.themeData.dividerColor,
+        thumbColor: FastResourceProvider.themeData.mainColor,
+        trackHeight: FastGap.gap_1,
         thumbShape: RoundSliderThumbShape(
-          enabledThumbRadius: 6,
+          enabledThumbRadius: FastGap.gap_1_5,
           elevation: 2,
         ),
-        overlayShape: RoundSliderOverlayShape(overlayRadius: 10.0),
+        overlayShape: RoundSliderOverlayShape(overlayRadius: FastGap.gap_3),
       ),
       child: Slider(
         value: _strokeWidth?.toDouble() ?? 4.0,
@@ -230,20 +238,20 @@ class FastToolBoxExpandState
     );
   }
 
-  Container buildSubToolAppliance(dynamic appliances) {
+  Widget buildSubToolAppliance(dynamic appliances) {
     appliances = appliances as List<FastAppliance>;
     return Container(
-      width: 120,
       child: GridView.builder(
         shrinkWrap: true,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 4,
-          crossAxisSpacing: 8,
-          mainAxisSpacing: 8,
+          crossAxisSpacing: FastGap.gap_1,
+          mainAxisSpacing: FastGap.gap_1,
         ),
         itemCount: appliances.length,
         itemBuilder: (context, index) {
           return FastToolboxButton(
+            selected: appliances[index] == selectedAppliance,
             icons: FastResourceProvider.iconOf(appliances[index]),
             onTap: () => {selectAppliance(appliances[index])},
           );
@@ -289,19 +297,18 @@ class FastToolBoxExpandState
   void calculateState() {
     var value = widget.controller.value;
     var memberState = value.roomState.memberState;
-    var fastAppliance = FastAppliance.of(
+    selectedAppliance = FastAppliance.of(
       memberState?.currentApplianceName,
       memberState?.shapeType,
     );
 
     selectedIndex = -1;
     for (var i = 0; i < items.length; ++i) {
-      if (items[i].appliances.contains(fastAppliance)) {
-        items[i].updateAppliance(fastAppliance);
+      if (items[i].appliances.contains(selectedAppliance)) {
+        items[i].updateAppliance(selectedAppliance);
         selectedIndex = i;
       }
     }
-    showDelete = fastAppliance == FastAppliance.selector;
 
     _strokeWidth = memberState?.strokeWidth;
     if (memberState?.strokeColor != null) {

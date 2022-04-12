@@ -1,3 +1,4 @@
+import 'package:fastboard_flutter/src/widgets/fast_gap.dart';
 import 'package:flutter/material.dart';
 
 import '../controller.dart';
@@ -39,14 +40,14 @@ class FastPageIndicatorState
             child: FastIcons.pagePrev,
             onTap: () => {widget.controller.prevPage()},
           ),
-          const SizedBox(width: 4),
+          SizedBox(width: FastGap.gap_1),
           Text(indicate),
-          const SizedBox(width: 4),
+          SizedBox(width: FastGap.gap_1),
           InkWell(
             child: FastIcons.pageNext,
             onTap: () => {widget.controller.nextPage()},
           ),
-          const SizedBox(width: 4),
+          SizedBox(width: FastGap.gap_1),
           InkWell(
             child: FastIcons.pageAdd,
             onTap: () => {widget.controller.addPage()},

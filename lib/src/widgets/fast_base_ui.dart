@@ -1,3 +1,5 @@
+import 'package:fastboard_flutter/src/widgets/fast_gap.dart';
+import 'package:fastboard_flutter/src/widgets/fast_resource_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
@@ -47,6 +49,7 @@ abstract class FastRoomControllerState<T extends FastRoomControllerWidget>
   void calculateState();
 }
 
+/// 组件容器，用于设置 Toolbox，RedoUndo 等的背景控制
 class FastContainer extends StatelessWidget {
   final Widget? child;
 
@@ -58,15 +61,16 @@ class FastContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(4.0),
+      padding: EdgeInsets.all(FastGap.gap_1),
       // TODO InkWell 点击效果的水波纹处理
       child: Material(color: Colors.transparent, child: child),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
           color: Colors.white,
-          border: Border.fromBorderSide(
-            BorderSide(width: 1.0, color: Color(0xFFE5E8F0)),
-          ),
-          borderRadius: BorderRadius.all(Radius.circular(4.0))),
+          border: Border.fromBorderSide(BorderSide(
+            width: FastGap.gapMin,
+            color: FastResourceProvider.themeData.borderColor,
+          )),
+          borderRadius: BorderRadius.circular(FastGap.gap_1)),
     );
   }
 }
@@ -90,21 +94,25 @@ class FastToolboxButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var color = selected ? const Color(0xFFE8F2FF) : null;
+    var color = selected ? FastResourceProvider.themeData.borderColor : null;
     var svgIcon = selected ? icons[1] : icons[0];
 
-    return Container(
-      decoration: BoxDecoration(
-          color: color,
-          borderRadius: const BorderRadius.all(Radius.circular(4.0))),
-      child: InkWell(
-        child: Stack(
-          children: [
-            if (expandable) FastIcons.expandable,
-            svgIcon,
-          ],
+    return Center(
+      child: Container(
+        decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.circular(
+              FastGap.gap_1,
+            )),
+        child: InkWell(
+          child: Stack(
+            children: [
+              if (expandable) FastIcons.expandable,
+              svgIcon,
+            ],
+          ),
+          onTap: onTap,
         ),
-        onTap: onTap,
       ),
     );
   }

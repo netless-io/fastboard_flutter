@@ -1,3 +1,4 @@
+import 'package:fastboard_flutter/src/types/fast_ui_style.dart';
 import 'package:flutter/widgets.dart';
 
 import '../types/types.dart';
@@ -25,7 +26,7 @@ class FastResourceProvider {
     return applianceIcons[appliance]!;
   }
 
-  static List<Color> colors = [
+  static List<Color> strokeColors = [
     Color(0xFFEC3455),
     Color(0xFFF5AD46),
     Color(0xFF68AB5D),
@@ -35,4 +36,6 @@ class FastResourceProvider {
     Color(0xFF9E51B6),
     Color(0xFF6D7278),
   ];
+
+  static FastThemeData themeData = FastThemeData.light();
 }

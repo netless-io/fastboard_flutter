@@ -1,3 +1,6 @@
+import 'package:fastboard_flutter/src/types/fast_ui_style.dart';
+import 'package:fastboard_flutter/src/widgets/fast_gap.dart';
+import 'package:fastboard_flutter/src/widgets/fast_resource_provider.dart';
 import 'package:flutter/widgets.dart';
 import 'package:whiteboard_sdk_flutter/whiteboard_sdk_flutter.dart';
 
@@ -20,16 +23,15 @@ class FastRoomWidget extends StatefulWidget {
   const FastRoomWidget({
     Key? key,
     required this.fastRoomOptions,
-    this.fastStyle,
+    this.themeData,
     this.onFastRoomCreated,
     this.controllerWidgetBuilder,
   }) : super(key: key);
 
+  final FastThemeData? themeData;
+
   /// 房间配置信息
   final FastRoomOptions fastRoomOptions;
-
-  /// 主题模式配置
-  final FastStyle? fastStyle;
 
   /// 加入成功回调
   final FastRoomCreatedCallback? onFastRoomCreated;
@@ -47,11 +49,13 @@ class FastRoomWidgetState extends State<FastRoomWidget> {
   @override
   void initState() {
     super.initState();
+    FastResourceProvider.themeData = widget.themeData ?? FastThemeData.light();
     controller = FastRoomController(widget.fastRoomOptions);
   }
 
   @override
   Widget build(BuildContext context) {
+    FastGap.initContext(context);
     var builder = widget.controllerWidgetBuilder ?? defaultControllerBuilder;
     return ConstrainedBox(
         constraints: const BoxConstraints.expand(),
@@ -76,18 +80,18 @@ class FastRoomWidgetState extends State<FastRoomWidget> {
         FastOverlayHandler(controller),
         Positioned(
           child: FastPageIndicator(controller),
-          bottom: 12.0,
+          bottom: FastGap.gap_3,
         ),
         Positioned(
           child: Row(
             children: [
               FastRedoUndoWidget(controller),
-              SizedBox(width: 8),
+              SizedBox(width: FastGap.gap_2),
               FastZoomWidget(controller),
             ],
           ),
-          bottom: 12.0,
-          left: 12.0,
+          bottom: FastGap.gap_3,
+          left: FastGap.gap_3,
         ),
         FastToolBoxExpand(controller),
         FastStateHandlerWidget(controller),

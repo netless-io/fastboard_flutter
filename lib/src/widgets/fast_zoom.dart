@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../controller.dart';
 import 'fast_base_ui.dart';
+import 'fast_gap.dart';
 import 'fast_icons.dart';
 
 class FastZoomWidget extends FastRoomControllerWidget {
@@ -41,9 +42,9 @@ class FastZoomState extends FastRoomControllerState<FastZoomWidget> {
           child: FastIcons.zoomIn,
           onTap: _onZoomIn,
         ),
-        const SizedBox(width: 4),
+        SizedBox(width: FastGap.gap_1),
         Text("${(zoomScale * 100).ceil()}%"),
-        const SizedBox(width: 4),
+        SizedBox(width: FastGap.gap_1),
         InkWell(
           child: FastIcons.zoomOut,
           onTap: _onZoomOut,

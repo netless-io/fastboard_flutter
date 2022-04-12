@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../controller.dart';
 import '../types/fast_redo_undo_count.dart';
 import 'fast_base_ui.dart';
+import 'fast_gap.dart';
 import 'fast_icons.dart';
 
 class FastRedoUndoWidget extends FastRoomControllerWidget {
@@ -33,7 +34,7 @@ class FastRedoUndoState extends FastRoomControllerState<FastRedoUndoWidget> {
           child: FastIcons.undo,
           onTap: redoUndoCount.undo != 0 ? _onUndoTap : null,
         ),
-        const SizedBox(width: 4),
+        SizedBox(width: FastGap.gap_1),
         InkWell(
           child: FastIcons.redo,
           onTap: redoUndoCount.redo != 0 ? _onRedoTap : null,
