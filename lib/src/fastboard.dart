@@ -1,11 +1,9 @@
-import 'package:fastboard_flutter/fastboard_flutter.dart';
-import 'package:fastboard_flutter/src/widgets/fast_overlay_handler.dart';
-import 'package:fastboard_flutter/src/widgets/fast_zoom.dart';
 import 'package:flutter/widgets.dart';
+import 'package:whiteboard_sdk_flutter/whiteboard_sdk_flutter.dart';
 
-import 'widgets/fast_page_indicator.dart';
-import 'widgets/fast_state_handler.dart';
-import 'widgets/fast_tool_box.dart';
+import 'controller.dart';
+import 'types/types.dart';
+import 'widgets/widgets.dart';
 
 /// 回调房间控制
 typedef FastRoomCreatedCallback = void Function(FastRoomController controller);

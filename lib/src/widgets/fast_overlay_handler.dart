@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import '../../fastboard_flutter.dart';
 import 'fast_base_ui.dart';
 
-class ToolboxData {}
-
 class FastOverlayHandler extends FastRoomControllerWidget {
   const FastOverlayHandler(FastRoomController controller,
       {Key? key, bool? expand})
@@ -49,29 +47,4 @@ class FastOverlayHandlerState
   void hideOverlay() {
     widget.controller.changeOverlay(OverlayChangedEvent.noOverlay);
   }
-}
-
-class ToolboxItem {
-  FastAppliance appliance;
-  List<SubToolboxItem> subAppliances;
-
-  bool get expandable => subAppliances.isNotEmpty;
-
-  ToolboxItem({
-    required this.appliance,
-    this.subAppliances = const <SubToolboxItem>[],
-  });
-}
-
-enum SubToolboxKey {
-  strokeWidth,
-  strokeColor,
-  appliance,
-}
-
-class SubToolboxItem {
-  SubToolboxItem(this.key, this.value);
-
-  final SubToolboxKey key;
-  final dynamic value;
 }

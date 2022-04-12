@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../controller.dart' show FastRoomController;
+import '../controller.dart';
 import 'fast_base_ui.dart';
 import 'fast_icons.dart';
 

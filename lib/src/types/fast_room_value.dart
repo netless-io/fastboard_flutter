@@ -1,6 +1,7 @@
-import 'package:fastboard_flutter/src/types/fast_redo_undo_count.dart';
 import 'package:flutter/foundation.dart';
 import 'package:whiteboard_sdk_flutter/whiteboard_sdk_flutter.dart';
+
+import 'fast_redo_undo_count.dart';
 
 // all fast room state, include isReady, writable, roomPhase and roomState.
 class FastRoomValue {

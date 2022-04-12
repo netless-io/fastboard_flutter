@@ -1,7 +1,7 @@
-import 'package:fastboard_flutter/src/types/fast_redo_undo_count.dart';
 import 'package:flutter/material.dart';
 
 import '../controller.dart';
+import '../types/fast_redo_undo_count.dart';
 import 'fast_base_ui.dart';
 import 'fast_icons.dart';
 

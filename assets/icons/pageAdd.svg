@@ -2,8 +2,8 @@
     <rect fill="white" height="24" opacity="0.01" width="24" />
     <path d="M4 20H20" stroke="#5D6066" stroke-linejoin="round" stroke-width="1.25" />
     <path d="M4 6H20" stroke="#5D6066" stroke-linejoin="round" stroke-width="1.25" />
-    <rect height="10" rx="1" stroke="#5D6066" stroke-linejoin="round" stroke-width="1.25" width="14" x="5"
-            y="8" />
+    <rect height="10" rx="1" stroke="#5D6066" stroke-linejoin="round" stroke-width="1.25" width="14"
+            x="5" y="8" />
     <path d="M12 4V6" stroke="#5D6066" stroke-linejoin="round" stroke-width="1.25" />
     <path d="M9 13H15" stroke="#5D6066" stroke-linejoin="round" stroke-width="1.25" />
     <path d="M12 10V16" stroke="#5D6066" stroke-linejoin="round" stroke-width="1.25" />

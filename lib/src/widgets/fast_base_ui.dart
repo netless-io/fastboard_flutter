@@ -1,9 +1,9 @@
-import 'package:fastboard_flutter/src/widgets/fast_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 
 import '../controller.dart';
+import 'fast_icons.dart';
 
 abstract class FastRoomControllerWidget extends StatefulWidget {
   final FastRoomController controller;

@@ -1,6 +1,7 @@
-import 'package:fastboard_flutter/src/types/types.dart';
-import 'package:fastboard_flutter/src/widgets/fast_icons.dart';
 import 'package:flutter/widgets.dart';
+
+import '../types/types.dart';
+import 'fast_icons.dart';
 
 class FastResourceProvider {
   static Map<FastAppliance, List<Widget>> applianceIcons = {

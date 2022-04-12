@@ -5,6 +5,6 @@
             stroke-width="1.25" />
     <path d="M16.2427 7.75736L10.5858 13.4142" stroke="#5D6066" stroke-linejoin="round"
             stroke-width="1.25" />
-    <path d="M7.05029 14.1213V15.5355H8.46451V16.9497H9.87872" stroke="#5D6066" stroke-linejoin="round"
-            stroke-width="1.25" />
+    <path d="M7.05029 14.1213V15.5355H8.46451V16.9497H9.87872" stroke="#5D6066"
+            stroke-linejoin="round" stroke-width="1.25" />
 </svg>
