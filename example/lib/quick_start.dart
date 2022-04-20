@@ -25,9 +25,9 @@ class QuickStartBodyState extends State<QuickStartBody> {
   FastRoomController? controller;
 
   static const String APP_ID = '283/VGiScM9Wiw2HJg';
-  static const String ROOM_UUID = "d4184790ffd511ebb9ebbf7a8f1d77bd";
+  static const String ROOM_UUID = "9e441760c09711ec9b6bd3c11300c55c";
   static const String ROOM_TOKEN =
-      "NETLESSROOM_YWs9eTBJOWsxeC1IVVo4VGh0NyZub25jZT0xNjI5MjU3OTQyNTM2MDAmcm9sZT0wJnNpZz1lZDdjOGJiY2M4YzVjZjQ5NDU5NmIzZGJiYzQzNDczNDJmN2NjYTAxMThlMTMyOWVlZGRmMjljNjE1NzQ5ZWFkJnV1aWQ9ZDQxODQ3OTBmZmQ1MTFlYmI5ZWJiZjdhOGYxZDc3YmQ";
+      "WHITEcGFydG5lcl9pZD15TFExM0tTeUx5VzBTR3NkJnNpZz1jNmU1ZDg0YmExYmU4YTY5MGViMDhkM2YyZGM1MzI2ZWE0M2YxNmYwOmFrPXlMUTEzS1N5THlXMFNHc2QmY3JlYXRlX3RpbWU9MTY1MDQ1MTc5NzIyNSZleHBpcmVfdGltZT0xNjgxOTg3Nzk3MjI1Jm5vbmNlPTE2NTA0NTE3OTcyMjUwMCZyb2xlPXJvb20mcm9vbUlkPTllNDQxNzYwYzA5NzExZWM5YjZiZDNjMTEzMDBjNTVjJnRlYW1JZD05SUQyMFBRaUVldTNPNy1mQmNBek9n";
   static const String UNIQUE_CLIENT_ID = "123456";
 
   // This widgets is the root of your application.

@@ -7,8 +7,6 @@ import '../types/types.dart';
 import 'fast_base_ui.dart';
 import 'fast_resource_provider.dart';
 
-class ToolboxData {}
-
 class FastToolBoxExpand extends FastRoomControllerWidget {
   const FastToolBoxExpand(FastRoomController controller,
       {Key? key, bool? expand})
@@ -22,44 +20,7 @@ class FastToolBoxExpand extends FastRoomControllerWidget {
 
 class FastToolBoxExpandState
     extends FastRoomControllerState<FastToolBoxExpand> {
-  List<ToolboxItem> items = [
-    ToolboxItem(appliances: [FastAppliance.clicker]),
-    ToolboxItem(appliances: [FastAppliance.selector]),
-    ToolboxItem(
-      appliances: [FastAppliance.pencil],
-      subItems: [
-        SubToolboxItem.noValue(
-          SubToolboxKey.strokeWidth,
-        ),
-        SubToolboxItem.noValue(
-          SubToolboxKey.strokeColor,
-        ),
-      ],
-    ),
-    ToolboxItem(appliances: [FastAppliance.text]),
-    ToolboxItem(appliances: [FastAppliance.eraser]),
-    ToolboxItem(
-      appliances: [
-        FastAppliance.rectangle,
-        FastAppliance.ellipse,
-        FastAppliance.straight,
-        FastAppliance.arrow,
-        FastAppliance.pentagram,
-        FastAppliance.rhombus,
-        FastAppliance.triangle,
-        FastAppliance.balloon,
-      ],
-      subItems: [
-        SubToolboxItem.noValue(
-          SubToolboxKey.strokeWidth,
-        ),
-        SubToolboxItem.noValue(
-          SubToolboxKey.strokeColor,
-        ),
-      ],
-    ),
-    ToolboxItem(appliances: [FastAppliance.clear]),
-  ];
+  var items = FastResourceProvider.expandItems;
 
   Rect? _rect;
   num? _strokeWidth;

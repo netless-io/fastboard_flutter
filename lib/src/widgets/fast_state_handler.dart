@@ -1,3 +1,4 @@
+import 'package:fastboard_flutter/src/widgets/fast_resource_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:whiteboard_sdk_flutter/whiteboard_sdk_flutter.dart';
 
@@ -48,7 +49,9 @@ class FastStateHandlerState
           child: Center(
               child: CircularProgressIndicator(
             backgroundColor: Colors.grey[200],
-            valueColor: AlwaysStoppedAnimation(Colors.blue),
+            valueColor: AlwaysStoppedAnimation(
+              FastResourceProvider.themeData.mainColor,
+            ),
           )),
         );
       case RoomHandlerState.connected:
