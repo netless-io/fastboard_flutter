@@ -5,6 +5,7 @@ import 'package:whiteboard_sdk_flutter/whiteboard_sdk_flutter.dart';
 import '../controller.dart';
 import 'fast_base_ui.dart';
 import 'fast_gap.dart';
+import 'fast_theme.dart';
 
 class FastStateHandlerWidget extends FastRoomControllerWidget {
   const FastStateHandlerWidget(FastRoomController controller, {Key? key})
@@ -39,6 +40,8 @@ class FastStateHandlerState
 
   @override
   Widget build(BuildContext context) {
+    var themeData = FastTheme.of(context)!.data;
+
     switch (state) {
       case RoomHandlerState.loading:
         return Container(
@@ -50,7 +53,7 @@ class FastStateHandlerState
               child: CircularProgressIndicator(
             backgroundColor: Colors.grey[200],
             valueColor: AlwaysStoppedAnimation(
-              FastResourceProvider.themeData.mainColor,
+              themeData.mainColor,
             ),
           )),
         );

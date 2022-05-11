@@ -6,6 +6,7 @@ import '../controller.dart';
 import '../types/types.dart';
 import 'fast_base_ui.dart';
 import 'fast_resource_provider.dart';
+import 'fast_theme.dart';
 
 class FastToolBoxExpand extends FastRoomControllerWidget {
   const FastToolBoxExpand(FastRoomController controller,
@@ -20,7 +21,7 @@ class FastToolBoxExpand extends FastRoomControllerWidget {
 
 class FastToolBoxExpandState
     extends FastRoomControllerState<FastToolBoxExpand> {
-  var items = FastResourceProvider.expandItems;
+  var items = FastUiSettings.expandItems;
 
   Rect? _rect;
   num? _strokeWidth;
@@ -51,7 +52,7 @@ class FastToolBoxExpandState
       children.add(FastToolboxButton(
         selected: selectedIndex == i,
         expandable: items[i].expandable,
-        icons: FastResourceProvider.iconOf(items[i].displayAppliance),
+        icons: FastUiSettings.iconOf(items[i].displayAppliance),
         onTap: () => {handleTabIndex(i)},
       ));
     }
@@ -93,6 +94,8 @@ class FastToolBoxExpandState
   }
 
   Widget buildSubToolbox() {
+    var themeData = FastTheme.of(context)!.data;
+
     List<Widget> children = [];
     var appliances = items[selectedIndex].appliances;
     if (appliances.length > 1) {
@@ -104,7 +107,7 @@ class FastToolBoxExpandState
           padding: EdgeInsets.all(FastGap.gap_1),
           child: Container(
             height: FastGap.gapMin,
-            color: FastResourceProvider.themeData.dividerColor,
+            color: themeData.dividerColor,
           ),
         ));
       }
@@ -130,7 +133,9 @@ class FastToolBoxExpandState
   }
 
   Widget buildSubToolColor() {
-    var colors = FastResourceProvider.strokeColors;
+    var colors = FastUiSettings.strokeColors;
+    var themeData = FastTheme.of(context)!.data;
+
     return Container(
       child: GridView.builder(
         shrinkWrap: true,
@@ -151,7 +156,7 @@ class FastToolBoxExpandState
                   borderRadius: BorderRadius.all(Radius.circular(4.0)),
                   border: Border.all(
                     color: _strokeColor == colors[index]
-                        ? FastResourceProvider.themeData.mainColor
+                        ? themeData.mainColor
                         : Colors.transparent,
                     width: FastGap.gap_0_5,
                   ),
@@ -174,11 +179,13 @@ class FastToolBoxExpandState
   }
 
   Widget buildSubToolStroke() {
+    var themeData = FastTheme.of(context)!.data;
+
     return SliderTheme(
       data: SliderThemeData(
-        activeTrackColor: FastResourceProvider.themeData.mainColor,
-        inactiveTrackColor: FastResourceProvider.themeData.dividerColor,
-        thumbColor: FastResourceProvider.themeData.mainColor,
+        activeTrackColor: themeData.mainColor,
+        inactiveTrackColor: themeData.dividerColor,
+        thumbColor: themeData.mainColor,
         trackHeight: FastGap.gap_1,
         thumbShape: RoundSliderThumbShape(
           enabledThumbRadius: FastGap.gap_1_5,
@@ -213,7 +220,7 @@ class FastToolBoxExpandState
         itemBuilder: (context, index) {
           return FastToolboxButton(
             selected: appliances[index] == selectedAppliance,
-            icons: FastResourceProvider.iconOf(appliances[index]),
+            icons: FastUiSettings.iconOf(appliances[index]),
             onTap: () => {selectAppliance(appliances[index])},
           );
         },

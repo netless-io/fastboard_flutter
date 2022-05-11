@@ -61,25 +61,23 @@ class FastRoomController extends ValueNotifier<FastRoomValue> {
     whiteRoom?.setMemberState(state);
   }
 
-  void setStrokeColor(Color strokeColor) {
+  void setStrokeColor(Color color) {
     var state = MemberState()
       ..strokeColor = [
-        strokeColor.red,
-        strokeColor.green,
-        strokeColor.blue,
+        color.red,
+        color.green,
+        color.blue,
       ];
     whiteRoom?.setMemberState(state);
   }
 
   // TODO 同时开启序列化
-  Future<bool?> setWritable(bool writable) async {
+  Future<bool> setWritable(bool writable) async {
     var result = await whiteRoom?.setWritable(writable);
     if (result ?? false) {
       whiteRoom?.disableSerialization(false);
-      return true;
-    } else {
-      return false;
     }
+    return result ?? false;
   }
 
   void undo() {
@@ -130,14 +128,15 @@ class FastRoomController extends ValueNotifier<FastRoomValue> {
   Future<void> reconnect() async {
     // TODO update room value
     value = FastRoomValue.uninitialized(fastRoomOptions.roomOptions.isWritable);
-    if (whiteRoom != null) {
+    if (whiteRoom == null) {
       return joinRoom();
+    } else {
+      whiteRoom?.disconnect().then((value) {
+        return joinRoom();
+      }).catchError((e) {
+        // ignore
+      });
     }
-    whiteRoom?.disconnect().then((value) {
-      return joinRoom();
-    }).catchError((e) {
-      // ignore
-    });
   }
 
   void _onRoomStateChanged(RoomState newState) {

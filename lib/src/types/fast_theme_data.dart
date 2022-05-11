@@ -22,15 +22,18 @@ class FastThemeData {
 
   FastThemeData.dark()
       : this(
-            backgroundColor: const Color(0xFF000000),
-            selectedBackgroundColor: const Color(0xFF4B4D54),
-            borderColor: const Color(0x26CCCCCC),
-            iconColor: const Color(0xFFFFFFFF),
-            textColorOnBackground: const Color(0xFFF9F9F9),
-            dividerColor: const Color(0xFFDBE1EA));
+          mainColor: const Color(0xFF3381FF),
+          backgroundColor: const Color(0xFF14181E),
+          selectedBackgroundColor: const Color(0xFF4B4D54),
+          borderColor: const Color(0x26CCCCCC),
+          iconColor: const Color(0xFFFFFFFF),
+          textColorOnBackground: const Color(0xFFECF0F7),
+          dividerColor: const Color(0xFFDBE1EA),
+        );
 
   FastThemeData.light()
       : this(
+          mainColor: const Color(0xFF3381FF),
           backgroundColor: const Color(0xFFF9F9F9),
           selectedBackgroundColor: const Color(0xFFE5E8F0),
           borderColor: const Color(0x26000000),

@@ -43,6 +43,7 @@ class QuickStartBodyState extends State<QuickStartBody> {
           writable: true,
           fastRegion: FastRegion.cn_hz,
         ),
+        useDarkTheme: true,
         onFastRoomCreated: onFastRoomCreated,
       ),
     ]);
@@ -57,6 +58,7 @@ class QuickStartBodyState extends State<QuickStartBody> {
     super.initState();
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
     ]);
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   }

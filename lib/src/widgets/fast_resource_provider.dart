@@ -1,11 +1,10 @@
-import 'package:fastboard_flutter/src/types/fast_ui_style.dart';
 import 'package:flutter/widgets.dart';
 
 import '../types/types.dart';
 import 'fast_icons.dart';
 import 'fast_tool_box.dart';
 
-class FastResourceProvider {
+class FastUiSettings {
   static Map<FastAppliance, List<Widget>> applianceIcons = {
     FastAppliance.clicker: [FastIcons.click, FastIcons.clickFill],
     FastAppliance.arrow: [FastIcons.arrow, FastIcons.arrowBold],
@@ -74,6 +73,4 @@ class FastResourceProvider {
     ),
     ToolboxItem(appliances: [FastAppliance.clear]),
   ];
-
-  static FastThemeData themeData = FastThemeData.light();
 }

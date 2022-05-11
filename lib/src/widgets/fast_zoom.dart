@@ -6,6 +6,7 @@ import '../controller.dart';
 import 'fast_base_ui.dart';
 import 'fast_gap.dart';
 import 'fast_icons.dart';
+import 'fast_theme.dart';
 
 class FastZoomWidget extends FastRoomControllerWidget {
   final num minScale;
@@ -35,6 +36,9 @@ class FastZoomState extends FastRoomControllerState<FastZoomWidget> {
 
   @override
   Widget build(BuildContext context) {
+    var themeData = FastTheme.of(context)!.data;
+    var defaultTestStyle = DefaultTextStyle.of(context).style;
+
     return FastContainer(
         child: Row(
       children: [
@@ -43,7 +47,12 @@ class FastZoomState extends FastRoomControllerState<FastZoomWidget> {
           onTap: _onZoomIn,
         ),
         SizedBox(width: FastGap.gap_1),
-        Text("${(zoomScale * 100).ceil()}%"),
+        Text(
+          "${(zoomScale * 100).ceil()}%",
+          style: defaultTestStyle.copyWith(
+            color: themeData.textColorOnBackground,
+          ),
+        ),
         SizedBox(width: FastGap.gap_1),
         InkWell(
           child: FastIcons.zoomOut,

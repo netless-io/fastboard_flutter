@@ -32,7 +32,7 @@ class _MyAppState extends State<MyApp> {
         ),
         body: ListView.builder(
           itemCount: _allPages.length,
-          itemBuilder: (appContext, int index) => ListTile(
+          itemBuilder: (appContext, index) => ListTile(
             leading: _allPages[index].leading,
             title: Text(_allPages[index].title),
             onTap: () => _pushPage(appContext, _allPages[index]),

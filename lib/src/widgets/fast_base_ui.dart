@@ -1,8 +1,10 @@
+import 'package:fastboard_flutter/fastboard_flutter.dart';
 import 'package:fastboard_flutter/src/widgets/fast_gap.dart';
-import 'package:fastboard_flutter/src/widgets/fast_resource_provider.dart';
+import 'package:fastboard_flutter/src/widgets/fast_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../controller.dart';
 import 'fast_icons.dart';
@@ -60,15 +62,17 @@ class FastContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var themeData = FastTheme.of(context)!.data;
+
     return Container(
       padding: EdgeInsets.all(FastGap.gap_1),
       // TODO InkWell 点击效果的水波纹处理
       child: Material(color: Colors.transparent, child: child),
       decoration: BoxDecoration(
-          color: Colors.white,
+          color: themeData.backgroundColor,
           border: Border.fromBorderSide(BorderSide(
             width: FastGap.gapMin,
-            color: FastResourceProvider.themeData.borderColor,
+            color: themeData.borderColor,
           )),
           borderRadius: BorderRadius.circular(FastGap.gap_1)),
     );
@@ -95,7 +99,9 @@ class FastToolboxButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var color = selected ? FastResourceProvider.themeData.borderColor : null;
+    var themeData = FastTheme.of(context)!.data;
+
+    var color = selected ? themeData.borderColor : null;
     var svgIcon = selected ? icons[1] : icons[0];
 
     return Center(
@@ -115,6 +121,32 @@ class FastToolboxButton extends StatelessWidget {
           onTap: onTap,
         ),
       ),
+    );
+  }
+}
+
+class FastIcon extends StatelessWidget {
+  final bool selected;
+  final List<String> icons;
+  final Color? color;
+
+  FastIcon({
+    Key? key,
+    required this.icons,
+    this.selected = false,
+    this.color,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    var themeData = FastTheme.of(context)!.data;
+
+    return SvgPicture.asset(
+      selected ? icons[1] : icons[0],
+      package: "fastboard_flutter",
+      width: FastGap.gap_6,
+      height: FastGap.gap_6,
+      color: themeData.iconColor,
     );
   }
 }

@@ -1,6 +1,6 @@
-import 'package:fastboard_flutter/src/types/fast_ui_style.dart';
+import 'package:fastboard_flutter/src/types/fast_theme_data.dart';
 import 'package:fastboard_flutter/src/widgets/fast_gap.dart';
-import 'package:fastboard_flutter/src/widgets/fast_resource_provider.dart';
+import 'package:fastboard_flutter/src/widgets/fast_theme.dart';
 import 'package:flutter/widgets.dart';
 import 'package:whiteboard_sdk_flutter/whiteboard_sdk_flutter.dart';
 
@@ -18,17 +18,21 @@ typedef ControllerWidgetBuilder = Widget Function(
 );
 
 class FastRoomWidget extends StatefulWidget {
-  final ControllerWidgetBuilder? controllerWidgetBuilder;
+  final ControllerWidgetBuilder? builder;
 
   const FastRoomWidget({
     Key? key,
     required this.fastRoomOptions,
-    this.themeData,
+    this.theme,
+    this.darkTheme,
+    this.useDarkTheme = false,
     this.onFastRoomCreated,
-    this.controllerWidgetBuilder,
+    this.builder,
   }) : super(key: key);
 
-  final FastThemeData? themeData;
+  final FastThemeData? theme;
+  final FastThemeData? darkTheme;
+  final bool useDarkTheme;
 
   /// 房间配置信息
   final FastRoomOptions fastRoomOptions;
@@ -44,19 +48,22 @@ class FastRoomWidget extends StatefulWidget {
 
 class FastRoomWidgetState extends State<FastRoomWidget> {
   late FastRoomController controller;
-  late WhiteSdk whiteSdk;
 
   @override
   void initState() {
     super.initState();
-    FastResourceProvider.themeData = widget.themeData ?? FastThemeData.light();
     controller = FastRoomController(widget.fastRoomOptions);
   }
 
   @override
   Widget build(BuildContext context) {
     FastGap.initContext(context);
-    var builder = widget.controllerWidgetBuilder ?? defaultControllerBuilder;
+
+    var builder = widget.builder ?? defaultControllerBuilder;
+    var themeData = widget.useDarkTheme
+        ? widget.darkTheme ?? FastThemeData.dark()
+        : widget.theme ?? FastThemeData.light();
+
     return ConstrainedBox(
         constraints: const BoxConstraints.expand(),
         child: Stack(
@@ -65,7 +72,13 @@ class FastRoomWidgetState extends State<FastRoomWidget> {
               options: widget.fastRoomOptions.whiteOptions,
               onSdkCreated: controller.onSdkCreated,
             ),
-            builder(context, controller),
+            FastTheme(
+                data: themeData,
+                child: Builder(
+                  builder: (context) {
+                    return builder(context, controller);
+                  },
+                ))
           ],
         ));
   }
