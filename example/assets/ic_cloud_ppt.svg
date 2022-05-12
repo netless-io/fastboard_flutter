@@ -1,0 +1,10 @@
+<svg id="vector" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+    <path d="M 11.333 7.333 L 17.467 7.333 L 17.467 7.333 L 23.333 13.111 L 23.333 22 C 23.333 23.473 22.139 24.667 20.667 24.667 L 11.333 24.667 C 9.861 24.667 8.667 23.473 8.667 22 L 8.667 10 C 8.667 8.527 9.861 7.333 11.333 7.333 Z"
+            fill-rule="evenodd"
+            fill="#ffffff"
+            id="path" stroke="#e9875a" stroke-linecap="round" stroke-linejoin="round"
+            stroke-width="1.2" />
+    <path d="M 17.333 7.333 L 22.667 12.667 L 20.242 12.667 C 18.636 12.667 17.333 11.364 17.333 9.758 L 17.333 7.333 L 17.333 7.333 Z"
+            fill="#e9875a"
+            fill-rule="evenodd" id="path_1" stroke-width="1" />
+</svg>

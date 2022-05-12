@@ -3,6 +3,8 @@ import 'package:fastboard_flutter_example/page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'widgets.dart';
+
 class QuickStartPage extends FastExamplePage {
   const QuickStartPage() : super(const Icon(Icons.ac_unit), 'Quick Start');
 
@@ -43,14 +45,18 @@ class QuickStartBodyState extends State<QuickStartBody> {
           writable: true,
           fastRegion: FastRegion.cn_hz,
         ),
-        useDarkTheme: true,
+        useDarkTheme: false,
         onFastRoomCreated: onFastRoomCreated,
       ),
+      if (controller != null)
+        Positioned(child: CloudTestWidget(controller: controller!)),
     ]);
   }
 
   Future<void> onFastRoomCreated(FastRoomController controller) async {
-    this.controller = controller;
+    setState(() {
+      this.controller = controller;
+    });
   }
 
   @override
