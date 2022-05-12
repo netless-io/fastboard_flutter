@@ -37,6 +37,27 @@ class FastAppliance {
 
   static const FastAppliance unknown = FastAppliance("unknown");
 
+  static Map<FastAppliance, bool> kHasProperties = <FastAppliance, bool>{
+    FastAppliance.clicker: false,
+    FastAppliance.selector: false,
+    FastAppliance.pencil: true,
+    FastAppliance.rectangle: true,
+    FastAppliance.ellipse: true,
+    FastAppliance.text: true,
+    FastAppliance.eraser: false,
+    FastAppliance.arrow: true,
+    FastAppliance.straight: true,
+    FastAppliance.pentagram: true,
+    FastAppliance.rhombus: true,
+    FastAppliance.triangle: true,
+    FastAppliance.balloon: true,
+    FastAppliance.clear: false,
+  };
+
+  bool get hasProperties {
+    return kHasProperties[this] ?? false;
+  }
+
   static FastAppliance of(String? appliance, String? shapeType) {
     switch (appliance) {
       case ApplianceName.clicker:

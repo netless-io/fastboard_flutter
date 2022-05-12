@@ -5,8 +5,10 @@ import 'widgets.dart';
 
 /// display page indicate
 class FastPageIndicator extends FastRoomControllerWidget {
-  const FastPageIndicator(FastRoomController controller, {Key? key})
-      : super(controller, key: key);
+  const FastPageIndicator(
+    FastRoomController controller, {
+    Key? key,
+  }) : super(controller, key: key);
 
   @override
   State<StatefulWidget> createState() {

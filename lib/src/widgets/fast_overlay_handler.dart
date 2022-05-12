@@ -5,9 +5,11 @@ import '../types/types.dart';
 import 'widgets.dart';
 
 class FastOverlayHandler extends FastRoomControllerWidget {
-  const FastOverlayHandler(FastRoomController controller,
-      {Key? key, bool? expand})
-      : super(controller, key: key);
+  const FastOverlayHandler(
+    FastRoomController controller, {
+    Key? key,
+    bool? expand,
+  }) : super(controller, key: key);
 
   @override
   State<StatefulWidget> createState() {

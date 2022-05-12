@@ -3,8 +3,6 @@ import 'package:whiteboard_sdk_flutter/whiteboard_sdk_flutter.dart';
 
 import 'controller.dart';
 import 'types/types.dart';
-import 'widgets/fast_gap.dart';
-import 'widgets/fast_theme.dart';
 import 'widgets/widgets.dart';
 
 /// 回调房间控制

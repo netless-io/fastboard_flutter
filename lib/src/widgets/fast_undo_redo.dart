@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 import '../controller.dart';
 import '../types/fast_redo_undo_count.dart';
-import 'fast_base_ui.dart';
-import 'fast_gap.dart';
-import 'fast_icons.dart';
+import 'widgets.dart';
 
 class FastRedoUndoWidget extends FastRoomControllerWidget {
-  const FastRedoUndoWidget(FastRoomController controller, {Key? key})
-      : super(controller, key: key);
+  const FastRedoUndoWidget(
+    FastRoomController controller, {
+    Key? key,
+  }) : super(controller, key: key);
 
   @override
   State<StatefulWidget> createState() {

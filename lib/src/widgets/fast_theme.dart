@@ -16,7 +16,7 @@ class FastTheme extends InheritedWidget {
   }
 
   @override
-  bool updateShouldNotify(FastTheme old) {
-    return old.data != data;
+  bool updateShouldNotify(FastTheme oldWidget) {
+    return oldWidget.data != data;
   }
 }

@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 
 import '../controller.dart';
 import '../types/types.dart';
+import 'flutter_after_layout.dart';
 import 'widgets.dart';
 
 class FastToolBoxExpand extends FastRoomControllerWidget {
-  const FastToolBoxExpand(FastRoomController controller,
-      {Key? key, bool? expand})
-      : super(controller, key: key);
+  const FastToolBoxExpand(
+    FastRoomController controller, {
+    Key? key,
+    bool? expand,
+  }) : super(controller, key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -17,16 +20,15 @@ class FastToolBoxExpand extends FastRoomControllerWidget {
 
 class FastToolBoxExpandState
     extends FastRoomControllerState<FastToolBoxExpand> {
-  var items = FastUiSettings.expandItems;
+  var items = FastUiSettings.toolboxItems;
 
   Rect? _rect;
   num? _strokeWidth;
   Color? _strokeColor;
 
   FastAppliance selectedAppliance = FastAppliance.unknown;
-  int selectedIndex = -1;
+  int lastIndex = -1;
   int overlayKey = 0;
-  bool showSubTools = false;
 
   @override
   void initState() {
@@ -46,11 +48,11 @@ class FastToolBoxExpandState
         children.add(const SizedBox(height: 4));
       }
       children.add(FastToolboxButton(
-        selected: selectedIndex == i,
+        selected: isSelected(items[i]),
         expandable: items[i].expandable,
         icons: FastIcon(
-          FastUiSettings.iconOf(items[i].displayAppliance),
-          selected: selectedIndex == i,
+          FastUiSettings.iconOf(items[i].current),
+          selected: isSelected(items[i]),
         ),
         onTap: () {
           handleTabIndex(i);
@@ -97,31 +99,18 @@ class FastToolBoxExpandState
   Widget buildSubToolbox() {
     var themeData = FastTheme.of(context)!.data;
 
+    var item = items[lastIndex];
     List<Widget> children = [];
-    var appliances = items[selectedIndex].appliances;
-    if (appliances.length > 1) {
-      children.add(buildSubToolAppliance(appliances));
+    if (item.appliances.length > 1) {
+      children.add(buildSubToolAppliance(item.appliances));
     }
-    for (var element in items[selectedIndex].subItems) {
+    if (item.current.hasProperties) {
       if (children.isNotEmpty) {
-        children.add(Padding(
-          padding: EdgeInsets.all(FastGap.gap_1),
-          child: Container(
-            height: FastGap.gapMin,
-            color: themeData.dividerColor,
-          ),
-        ));
+        children.add(ToolExtensionPadding(themeData: themeData));
       }
-      switch (element.key) {
-        case SubToolboxKey.strokeWidth:
-          children.add(buildSubToolStroke());
-          break;
-        case SubToolboxKey.strokeColor:
-          children.add(buildSubToolColor());
-          break;
-        case SubToolboxKey.strokeTextColor:
-          break;
-      }
+      children.add(buildSubToolStroke());
+      children.add(ToolExtensionPadding(themeData: themeData));
+      children.add(buildSubToolColor());
     }
     return FastContainer(
       child: SizedBox(
@@ -221,7 +210,6 @@ class FastToolBoxExpandState
         itemBuilder: (context, index) {
           return FastToolboxButton(
             selected: appliances[index] == selectedAppliance,
-            // icons: FastUiSettings.iconOf(appliances[index]),
             icons: FastIcon(
               FastUiSettings.iconOf(appliances[index]),
               selected: appliances[index] == selectedAppliance,
@@ -238,30 +226,31 @@ class FastToolBoxExpandState
   }
 
   void selectAppliance(FastAppliance appliance) {
-    if (selectedIndex != -1) {
-      items[selectedIndex].updateAppliance(appliance);
+    for (var item in items) {
+      item.update(appliance);
     }
+
     widget.controller.setAppliance(appliance);
   }
 
   void handleTabIndex(int index) {
-    if (index == selectedIndex) {
+    if (isSelected(items[index])) {
       if (!items[index].expandable) return;
       if (isSubAppliancesShown()) {
         hideSubAppliances();
       } else {
+        lastIndex = index;
         showSubAppliances();
       }
     } else {
       hideSubAppliances();
       setState(() {
-        if (items[index].displayAppliance == FastAppliance.clear) {
+        if (items[index].current == FastAppliance.clear) {
           widget.controller.cleanScene();
           return;
         }
 
-        selectedIndex = index;
-        widget.controller.setAppliance(items[index].displayAppliance);
+        widget.controller.setAppliance(items[index].current);
       });
     }
   }
@@ -275,11 +264,9 @@ class FastToolBoxExpandState
       memberState?.shapeType,
     );
 
-    selectedIndex = -1;
     for (var i = 0; i < items.length; ++i) {
       if (items[i].appliances.contains(selectedAppliance)) {
-        items[i].updateAppliance(selectedAppliance);
-        selectedIndex = i;
+        items[i].update(selectedAppliance);
       }
     }
 
@@ -314,44 +301,28 @@ class FastToolBoxExpandState
   void _onDeleteSelected() {
     widget.controller.whiteRoom?.delete();
   }
-}
 
-class ToolboxItem {
-  List<FastAppliance> appliances;
-  int displayIndex;
-  List<SubToolboxItem> subItems;
-
-  bool get expandable => subItems.isNotEmpty;
-
-  FastAppliance get displayAppliance => appliances[displayIndex];
-
-  void updateAppliance(FastAppliance fastAppliance) {
-    for (int i = 0; i < appliances.length; i++) {
-      if (appliances[i] == fastAppliance) {
-        displayIndex = i;
-        break;
-      }
-    }
+  bool isSelected(ToolboxItem item) {
+    return item.current == selectedAppliance;
   }
-
-  ToolboxItem({
-    required this.appliances,
-    this.displayIndex = 0,
-    this.subItems = const <SubToolboxItem>[],
-  });
 }
 
-enum SubToolboxKey {
-  strokeWidth,
-  strokeColor,
-  strokeTextColor,
-}
+class ToolExtensionPadding extends StatelessWidget {
+  const ToolExtensionPadding({
+    Key? key,
+    required this.themeData,
+  }) : super(key: key);
 
-class SubToolboxItem {
-  SubToolboxItem(this.key, this.value);
+  final FastThemeData themeData;
 
-  SubToolboxItem.noValue(SubToolboxKey key) : this(key, null);
-
-  final SubToolboxKey key;
-  final Object? value;
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(FastGap.gap_1),
+      child: Container(
+        height: FastGap.gapMin,
+        color: themeData.dividerColor,
+      ),
+    );
+  }
 }

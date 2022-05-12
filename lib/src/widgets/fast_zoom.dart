@@ -37,25 +37,26 @@ class FastZoomState extends FastRoomControllerState<FastZoomWidget> {
   @override
   Widget build(BuildContext context) {
     return FastContainer(
-        child: Row(
-      children: [
-        InkWell(
-          child: FastIcon(FastIcons.zoomIn),
-          onTap: _onZoomIn,
-        ),
-        SizedBox(width: FastGap.gap_1),
-        FastText("${(zoomScale * 100).ceil()}%"),
-        SizedBox(width: FastGap.gap_1),
-        InkWell(
-          child: FastIcon(FastIcons.zoomOut),
-          onTap: _onZoomOut,
-        ),
-        InkWell(
-          child: FastIcon(FastIcons.zoomReset),
-          onTap: _onZoomReset,
-        ),
-      ],
-    ));
+      child: Row(
+        children: [
+          InkWell(
+            child: FastIcon(FastIcons.zoomIn),
+            onTap: _onZoomIn,
+          ),
+          SizedBox(width: FastGap.gap_1),
+          FastText("${(zoomScale * 100).ceil()}%"),
+          SizedBox(width: FastGap.gap_1),
+          InkWell(
+            child: FastIcon(FastIcons.zoomOut),
+            onTap: _onZoomOut,
+          ),
+          InkWell(
+            child: FastIcon(FastIcons.zoomReset),
+            onTap: _onZoomReset,
+          ),
+        ],
+      ),
+    );
   }
 
   void _onZoomIn() {

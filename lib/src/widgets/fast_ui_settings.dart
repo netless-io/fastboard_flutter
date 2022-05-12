@@ -2,7 +2,6 @@ import 'package:fastboard_flutter/src/widgets/fast_icons.dart';
 import 'package:flutter/widgets.dart';
 
 import '../types/types.dart';
-import 'fast_tool_box.dart';
 
 class FastUiSettings {
   static Map<FastAppliance, FastIconData> applianceIcons = {
@@ -37,40 +36,22 @@ class FastUiSettings {
     Color(0xFF6D7278),
   ];
 
-  static List<ToolboxItem> expandItems = [
+  static List<ToolboxItem> toolboxItems = [
     ToolboxItem(appliances: [FastAppliance.clicker]),
     ToolboxItem(appliances: [FastAppliance.selector]),
-    ToolboxItem(
-      appliances: [FastAppliance.pencil],
-      subItems: [
-        SubToolboxItem.noValue(SubToolboxKey.strokeWidth),
-        SubToolboxItem.noValue(SubToolboxKey.strokeColor),
-      ],
-    ),
-    ToolboxItem(
-      appliances: [FastAppliance.text],
-      subItems: [
-        SubToolboxItem.noValue(SubToolboxKey.strokeWidth),
-        SubToolboxItem.noValue(SubToolboxKey.strokeColor),
-      ],
-    ),
+    ToolboxItem(appliances: [FastAppliance.pencil]),
+    ToolboxItem(appliances: [FastAppliance.text]),
     ToolboxItem(appliances: [FastAppliance.eraser]),
-    ToolboxItem(
-      appliances: [
-        FastAppliance.rectangle,
-        FastAppliance.ellipse,
-        FastAppliance.straight,
-        FastAppliance.arrow,
-        FastAppliance.pentagram,
-        FastAppliance.rhombus,
-        FastAppliance.triangle,
-        FastAppliance.balloon,
-      ],
-      subItems: [
-        SubToolboxItem.noValue(SubToolboxKey.strokeWidth),
-        SubToolboxItem.noValue(SubToolboxKey.strokeColor),
-      ],
-    ),
+    ToolboxItem(appliances: [
+      FastAppliance.rectangle,
+      FastAppliance.ellipse,
+      FastAppliance.straight,
+      FastAppliance.arrow,
+      FastAppliance.pentagram,
+      FastAppliance.rhombus,
+      FastAppliance.triangle,
+      FastAppliance.balloon,
+    ]),
     ToolboxItem(appliances: [FastAppliance.clear]),
   ];
 }

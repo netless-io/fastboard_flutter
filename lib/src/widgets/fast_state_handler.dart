@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:whiteboard_sdk_flutter/whiteboard_sdk_flutter.dart';
 
 import '../controller.dart';
-import 'fast_theme.dart';
 import 'widgets.dart';
 
 class FastStateHandlerWidget extends FastRoomControllerWidget {
-  const FastStateHandlerWidget(FastRoomController controller, {Key? key})
-      : super(controller, key: key);
+  const FastStateHandlerWidget(
+    FastRoomController controller, {
+    Key? key,
+  }) : super(controller, key: key);
 
   @override
   State<StatefulWidget> createState() {
