@@ -1,5 +1,4 @@
 import 'package:fastboard_flutter/fastboard_flutter.dart';
-import 'package:fastboard_flutter/src/widgets/fast_gap.dart';
 import 'package:fastboard_flutter/src/widgets/fast_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -7,7 +6,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../controller.dart';
-import 'fast_icons.dart';
+import 'widgets.dart';
 
 abstract class FastRoomControllerWidget extends StatefulWidget {
   final FastRoomController controller;
@@ -85,7 +84,7 @@ class FastToolboxButton extends StatelessWidget {
   final bool selected;
   final bool expandable;
 
-  final List<Widget> icons;
+  final Widget? icons;
 
   final GestureTapCallback? onTap;
 
@@ -93,7 +92,7 @@ class FastToolboxButton extends StatelessWidget {
     Key? key,
     this.selected = false,
     this.expandable = false,
-    this.icons = const [],
+    this.icons,
     this.onTap,
   }) : super(key: key);
 
@@ -102,7 +101,6 @@ class FastToolboxButton extends StatelessWidget {
     var themeData = FastTheme.of(context)!.data;
 
     var color = selected ? themeData.borderColor : null;
-    var svgIcon = selected ? icons[1] : icons[0];
 
     return Center(
       child: Container(
@@ -114,8 +112,8 @@ class FastToolboxButton extends StatelessWidget {
         child: InkWell(
           child: Stack(
             children: [
-              if (expandable) FastIcons.expandable,
-              svgIcon,
+              if (expandable) FastIcon(FastIcons.expandable),
+              if (icons != null) icons!,
             ],
           ),
           onTap: onTap,
@@ -127,23 +125,21 @@ class FastToolboxButton extends StatelessWidget {
 
 class FastIcon extends StatelessWidget {
   final bool selected;
-  final List<String> icons;
-  final Color? color;
+  final FastIconData icon;
 
-  FastIcon({
+  const FastIcon(
+    this.icon, {
     Key? key,
-    required this.icons,
     this.selected = false,
-    this.color,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var themeData = FastTheme.of(context)!.data;
 
     return SvgPicture.asset(
-      selected ? icons[1] : icons[0],
-      package: "fastboard_flutter",
+      icon.assetBySelected(selected),
+      package: icon.package,
       width: FastGap.gap_6,
       height: FastGap.gap_6,
       color: themeData.iconColor,
@@ -185,7 +181,7 @@ class RenderAfterLayout extends RenderProxyBox {
     // 不能直接回调callback，原因是当前组件布局完成后可能还有其它组件未完成布局
     // 如果callback中又触发了UI更新（比如调用了 setState）则会报错。因此，我们
     // 在 frame 结束的时候再去触发回调。
-    SchedulerBinding.instance!
+    SchedulerBinding.instance
         .addPostFrameCallback((timeStamp) => callback(this));
   }
 

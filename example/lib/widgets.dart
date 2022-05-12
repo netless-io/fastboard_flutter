@@ -17,7 +17,7 @@ class CloudTestWidget extends StatefulWidget {
 }
 
 class CloudTestWidgetState extends State<CloudTestWidget> {
-  var showCloud = true;
+  var showCloud = false;
 
   @override
   Widget build(BuildContext context) {

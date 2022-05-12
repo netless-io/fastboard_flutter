@@ -1,9 +1,7 @@
-import 'package:fastboard_flutter/src/widgets/fast_gap.dart';
 import 'package:flutter/material.dart';
 
 import '../controller.dart';
-import 'fast_base_ui.dart';
-import 'fast_icons.dart';
+import 'widgets.dart';
 
 /// display page indicate
 class FastPageIndicator extends FastRoomControllerWidget {
@@ -37,19 +35,19 @@ class FastPageIndicatorState
       child: Row(
         children: [
           InkWell(
-            child: FastIcons.pagePrev,
+            child: FastIcon(FastIcons.pagePrev),
             onTap: () => {widget.controller.prevPage()},
           ),
           SizedBox(width: FastGap.gap_1),
-          Text(indicate),
+          FastText(indicate),
           SizedBox(width: FastGap.gap_1),
           InkWell(
-            child: FastIcons.pageNext,
+            child: FastIcon(FastIcons.pageNext),
             onTap: () => {widget.controller.nextPage()},
           ),
           SizedBox(width: FastGap.gap_1),
           InkWell(
-            child: FastIcons.pageAdd,
+            child: FastIcon(FastIcons.pageAdd),
             onTap: () => {widget.controller.addPage()},
           ),
         ],

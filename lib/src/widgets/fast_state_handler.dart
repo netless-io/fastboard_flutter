@@ -1,11 +1,9 @@
-import 'package:fastboard_flutter/src/widgets/fast_resource_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:whiteboard_sdk_flutter/whiteboard_sdk_flutter.dart';
 
 import '../controller.dart';
-import 'fast_base_ui.dart';
-import 'fast_gap.dart';
 import 'fast_theme.dart';
+import 'widgets.dart';
 
 class FastStateHandlerWidget extends FastRoomControllerWidget {
   const FastStateHandlerWidget(FastRoomController controller, {Key? key})
@@ -47,7 +45,7 @@ class FastStateHandlerState
         return Container(
           constraints: BoxConstraints.expand(),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: themeData.backgroundColor,
           ),
           child: Center(
               child: CircularProgressIndicator(
@@ -63,7 +61,7 @@ class FastStateHandlerState
         return Container(
             constraints: BoxConstraints.expand(),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: themeData.backgroundColor,
             ),
             child: Center(
               child: FastContainer(
@@ -71,7 +69,7 @@ class FastStateHandlerState
                   child: Padding(
                       padding:
                           EdgeInsets.symmetric(horizontal: FastGap.gap_1_5),
-                      child: Text("retry")),
+                      child: FastText("retry")),
                   onTap: _onReconnect,
                 ),
               ),

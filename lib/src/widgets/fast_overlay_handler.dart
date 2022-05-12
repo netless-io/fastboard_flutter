@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../fastboard_flutter.dart';
-import 'fast_base_ui.dart';
+import '../controller.dart';
+import '../types/types.dart';
+import 'widgets.dart';
 
 class FastOverlayHandler extends FastRoomControllerWidget {
   const FastOverlayHandler(FastRoomController controller,

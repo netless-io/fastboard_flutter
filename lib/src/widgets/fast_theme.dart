@@ -1,5 +1,6 @@
-import 'package:fastboard_flutter/src/types/fast_theme_data.dart';
 import 'package:flutter/widgets.dart';
+
+import '../types/fast_theme_data.dart';
 
 class FastTheme extends InheritedWidget {
   FastTheme({

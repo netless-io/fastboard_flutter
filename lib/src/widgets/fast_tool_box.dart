@@ -1,12 +1,8 @@
-import 'package:fastboard_flutter/src/widgets/fast_gap.dart';
-import 'package:fastboard_flutter/src/widgets/fast_icons.dart';
 import 'package:flutter/material.dart';
 
 import '../controller.dart';
 import '../types/types.dart';
-import 'fast_base_ui.dart';
-import 'fast_resource_provider.dart';
-import 'fast_theme.dart';
+import 'widgets.dart';
 
 class FastToolBoxExpand extends FastRoomControllerWidget {
   const FastToolBoxExpand(FastRoomController controller,
@@ -52,8 +48,13 @@ class FastToolBoxExpandState
       children.add(FastToolboxButton(
         selected: selectedIndex == i,
         expandable: items[i].expandable,
-        icons: FastUiSettings.iconOf(items[i].displayAppliance),
-        onTap: () => {handleTabIndex(i)},
+        icons: FastIcon(
+          FastUiSettings.iconOf(items[i].displayAppliance),
+          selected: selectedIndex == i,
+        ),
+        onTap: () {
+          handleTabIndex(i);
+        },
       ));
     }
     return Stack(
@@ -220,7 +221,11 @@ class FastToolBoxExpandState
         itemBuilder: (context, index) {
           return FastToolboxButton(
             selected: appliances[index] == selectedAppliance,
-            icons: FastUiSettings.iconOf(appliances[index]),
+            // icons: FastUiSettings.iconOf(appliances[index]),
+            icons: FastIcon(
+              FastUiSettings.iconOf(appliances[index]),
+              selected: appliances[index] == selectedAppliance,
+            ),
             onTap: () => {selectAppliance(appliances[index])},
           );
         },
@@ -300,7 +305,7 @@ class FastToolBoxExpandState
   Widget buildDeleteButton() {
     return FastContainer(
       child: InkWell(
-        child: FastIcons.delete,
+        child: FastIcon(FastIcons.delete),
         onTap: _onDeleteSelected,
       ),
     );

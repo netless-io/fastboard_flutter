@@ -1,28 +1,28 @@
+import 'package:fastboard_flutter/src/widgets/fast_icons.dart';
 import 'package:flutter/widgets.dart';
 
 import '../types/types.dart';
-import 'fast_icons.dart';
 import 'fast_tool_box.dart';
 
 class FastUiSettings {
-  static Map<FastAppliance, List<Widget>> applianceIcons = {
-    FastAppliance.clicker: [FastIcons.click, FastIcons.clickFill],
-    FastAppliance.arrow: [FastIcons.arrow, FastIcons.arrowBold],
-    FastAppliance.straight: [FastIcons.straight, FastIcons.straightBold],
-    FastAppliance.selector: [FastIcons.selector, FastIcons.selectorFill],
-    FastAppliance.text: [FastIcons.text, FastIcons.textFill],
-    FastAppliance.rectangle: [FastIcons.rectangle, FastIcons.rectangleBold],
-    FastAppliance.ellipse: [FastIcons.circle, FastIcons.circleBold],
-    FastAppliance.eraser: [FastIcons.eraser, FastIcons.eraserFill],
-    FastAppliance.pencil: [FastIcons.pencil, FastIcons.pencilFill],
-    FastAppliance.pentagram: [FastIcons.star, FastIcons.starBold],
-    FastAppliance.rhombus: [FastIcons.rhombus, FastIcons.rhombusBold],
-    FastAppliance.triangle: [FastIcons.triangle, FastIcons.triangleBold],
-    FastAppliance.balloon: [FastIcons.balloon, FastIcons.balloonBold],
-    FastAppliance.clear: [FastIcons.clear, FastIcons.clear],
+  static Map<FastAppliance, FastIconData> applianceIcons = {
+    FastAppliance.clicker: FastIcons.click,
+    FastAppliance.arrow: FastIcons.arrow,
+    FastAppliance.straight: FastIcons.straight,
+    FastAppliance.selector: FastIcons.selector,
+    FastAppliance.text: FastIcons.text,
+    FastAppliance.rectangle: FastIcons.rectangle,
+    FastAppliance.ellipse: FastIcons.circle,
+    FastAppliance.eraser: FastIcons.eraser,
+    FastAppliance.pencil: FastIcons.pencil,
+    FastAppliance.pentagram: FastIcons.star,
+    FastAppliance.rhombus: FastIcons.rhombus,
+    FastAppliance.triangle: FastIcons.triangle,
+    FastAppliance.balloon: FastIcons.balloon,
+    FastAppliance.clear: FastIcons.clear,
   };
 
-  static List<Widget> iconOf(FastAppliance appliance) {
+  static FastIconData iconOf(FastAppliance appliance) {
     return applianceIcons[appliance]!;
   }
 

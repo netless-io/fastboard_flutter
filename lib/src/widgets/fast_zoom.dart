@@ -36,30 +36,22 @@ class FastZoomState extends FastRoomControllerState<FastZoomWidget> {
 
   @override
   Widget build(BuildContext context) {
-    var themeData = FastTheme.of(context)!.data;
-    var defaultTestStyle = DefaultTextStyle.of(context).style;
-
     return FastContainer(
         child: Row(
       children: [
         InkWell(
-          child: FastIcons.zoomIn,
+          child: FastIcon(FastIcons.zoomIn),
           onTap: _onZoomIn,
         ),
         SizedBox(width: FastGap.gap_1),
-        Text(
-          "${(zoomScale * 100).ceil()}%",
-          style: defaultTestStyle.copyWith(
-            color: themeData.textColorOnBackground,
-          ),
-        ),
+        FastText("${(zoomScale * 100).ceil()}%"),
         SizedBox(width: FastGap.gap_1),
         InkWell(
-          child: FastIcons.zoomOut,
+          child: FastIcon(FastIcons.zoomOut),
           onTap: _onZoomOut,
         ),
         InkWell(
-          child: FastIcons.zoomReset,
+          child: FastIcon(FastIcons.zoomReset),
           onTap: _onZoomReset,
         ),
       ],
@@ -86,5 +78,24 @@ class FastZoomState extends FastRoomControllerState<FastZoomWidget> {
   void _updateZoomScale() {
     var cameraState = widget.controller.value.roomState.cameraState;
     zoomScale = cameraState?.scale ?? 1;
+  }
+}
+
+class FastText extends StatelessWidget {
+  const FastText(this.text, {Key? key}) : super(key: key);
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    var themeData = FastTheme.of(context)!.data;
+    var defaultTestStyle = DefaultTextStyle.of(context).style;
+
+    return Text(
+      text,
+      style: defaultTestStyle.copyWith(
+        color: themeData.textColorOnBackground,
+      ),
+    );
   }
 }

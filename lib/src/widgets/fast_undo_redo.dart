@@ -31,12 +31,12 @@ class FastRedoUndoState extends FastRoomControllerState<FastRedoUndoWidget> {
         child: Row(
       children: [
         InkWell(
-          child: FastIcons.undo,
+          child: FastIcon(FastIcons.undo),
           onTap: redoUndoCount.undo != 0 ? _onUndoTap : null,
         ),
         SizedBox(width: FastGap.gap_1),
         InkWell(
-          child: FastIcons.redo,
+          child: FastIcon(FastIcons.redo),
           onTap: redoUndoCount.redo != 0 ? _onRedoTap : null,
         ),
       ],

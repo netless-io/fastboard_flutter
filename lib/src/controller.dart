@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:stream_transform/stream_transform.dart';
 import 'package:whiteboard_sdk_flutter/whiteboard_sdk_flutter.dart';
 
-import 'types/fast_redo_undo_count.dart';
 import 'types/types.dart';
 
 class FastRoomController extends ValueNotifier<FastRoomValue> {

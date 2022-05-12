@@ -1,11 +1,10 @@
-import 'package:fastboard_flutter/src/types/fast_theme_data.dart';
-import 'package:fastboard_flutter/src/widgets/fast_gap.dart';
-import 'package:fastboard_flutter/src/widgets/fast_theme.dart';
 import 'package:flutter/widgets.dart';
 import 'package:whiteboard_sdk_flutter/whiteboard_sdk_flutter.dart';
 
 import 'controller.dart';
 import 'types/types.dart';
+import 'widgets/fast_gap.dart';
+import 'widgets/fast_theme.dart';
 import 'widgets/widgets.dart';
 
 /// 回调房间控制
@@ -64,13 +63,20 @@ class FastRoomWidgetState extends State<FastRoomWidget> {
         ? widget.darkTheme ?? FastThemeData.dark()
         : widget.theme ?? FastThemeData.light();
 
+    var whiteOptions = widget.fastRoomOptions.whiteOptions.copyWith(
+      backgroundColor: themeData.backgroundColor,
+    );
+
     return ConstrainedBox(
         constraints: const BoxConstraints.expand(),
         child: Stack(
           children: [
             WhiteboardView(
-              options: widget.fastRoomOptions.whiteOptions,
-              onSdkCreated: controller.onSdkCreated,
+              options: whiteOptions,
+              onSdkCreated: (sdk) async {
+                await controller.onSdkCreated(sdk);
+                widget.onFastRoomCreated?.call(controller);
+              },
             ),
             FastTheme(
                 data: themeData,
@@ -110,6 +116,21 @@ class FastRoomWidgetState extends State<FastRoomWidget> {
         FastStateHandlerWidget(controller),
       ],
     );
+  }
+
+  @override
+  void didUpdateWidget(FastRoomWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _updateWhiteIfNeed(oldWidget);
+  }
+
+  void _updateWhiteIfNeed(FastRoomWidget oldWidget) {
+    if (oldWidget.useDarkTheme != widget.useDarkTheme) {
+      var themeData = widget.useDarkTheme
+          ? widget.darkTheme ?? FastThemeData.dark()
+          : widget.theme ?? FastThemeData.light();
+      controller.whiteSdk?.setBackgroundColor(themeData.backgroundColor);
+    }
   }
 
   @override

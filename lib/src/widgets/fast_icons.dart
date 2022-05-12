@@ -1,266 +1,179 @@
-import 'package:fastboard_flutter/src/widgets/fast_gap.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+class FastIconData {
+  const FastIconData({
+    required this.assets,
+    this.package = "fastboard_flutter",
+  });
+
+  final List<String> assets;
+
+  final String? package;
+
+  String get assetNormal => assets[0];
+
+  String assetBySelected(bool selected) {
+    return selected
+        ? assets.length > 1
+            ? assets[1]
+            : assets[0]
+        : assets[0];
+  }
+}
 
 class FastIcons {
   FastIcons._();
 
-  static Widget pagePrev = SvgPicture.asset(
-    "assets/icons/pagePrev.svg",
-    package: "fastboard_flutter",
-    width: FastGap.gap_6,
-    height: FastGap.gap_6,
+  static const FastIconData pagePrev = FastIconData(
+    assets: [
+      "assets/icons/pagePrev.svg",
+    ],
   );
 
-  static Widget pageNext = SvgPicture.asset(
-    "assets/icons/pageNext.svg",
-    package: "fastboard_flutter",
-    width: FastGap.gap_6,
-    height: FastGap.gap_6,
+  static const FastIconData pageNext = FastIconData(
+    assets: [
+      "assets/icons/pageNext.svg",
+    ],
   );
 
-  static Widget pageAdd = SvgPicture.asset(
-    "assets/icons/pageAdd.svg",
-    package: "fastboard_flutter",
-    width: FastGap.gap_6,
-    height: FastGap.gap_6,
+  static const FastIconData pageAdd = FastIconData(
+    assets: [
+      "assets/icons/pageAdd.svg",
+    ],
   );
 
-  static Widget undo = SvgPicture.asset(
-    "assets/icons/undo.svg",
-    package: "fastboard_flutter",
-    width: FastGap.gap_6,
-    height: FastGap.gap_6,
+  static const FastIconData undo = FastIconData(
+    assets: [
+      "assets/icons/undo.svg",
+    ],
   );
 
-  static Widget redo = SvgPicture.asset(
-    "assets/icons/redo.svg",
-    package: "fastboard_flutter",
-    width: FastGap.gap_6,
-    height: FastGap.gap_6,
+  static const FastIconData redo = FastIconData(
+    assets: [
+      "assets/icons/redo.svg",
+    ],
   );
 
-  static Widget zoomIn = SvgPicture.asset(
-    "assets/icons/zoomIn.svg",
-    package: "fastboard_flutter",
-    width: FastGap.gap_6,
-    height: FastGap.gap_6,
+  static const FastIconData zoomIn = FastIconData(
+    assets: [
+      "assets/icons/zoomIn.svg",
+    ],
   );
 
-  static Widget zoomOut = SvgPicture.asset(
-    "assets/icons/zoomOut.svg",
-    package: "fastboard_flutter",
-    width: FastGap.gap_6,
-    height: FastGap.gap_6,
+  static const FastIconData zoomOut = FastIconData(
+    assets: [
+      "assets/icons/zoomOut.svg",
+    ],
   );
 
-  static Widget zoomReset = SvgPicture.asset(
-    "assets/icons/zoomReset.svg",
-    package: "fastboard_flutter",
-    width: FastGap.gap_6,
-    height: FastGap.gap_6,
+  static const FastIconData zoomReset = FastIconData(
+    assets: [
+      "assets/icons/zoomReset.svg",
+    ],
   );
 
-  static Widget click = SvgPicture.asset(
-    "assets/icons/click.svg",
-    package: "fastboard_flutter",
-    width: FastGap.gap_6,
-    height: FastGap.gap_6,
+  static const FastIconData click = FastIconData(
+    assets: [
+      "assets/icons/click.svg",
+      "assets/icons/clickFill.svg",
+    ],
   );
 
-  static Widget clickFill = SvgPicture.asset(
-    "assets/icons/clickFill.svg",
-    package: "fastboard_flutter",
-    width: FastGap.gap_6,
-    height: FastGap.gap_6,
+  static const FastIconData arrow = FastIconData(
+    assets: [
+      "assets/icons/arrow.svg",
+      "assets/icons/arrowBold.svg",
+    ],
   );
 
-  static Widget arrow = SvgPicture.asset(
-    "assets/icons/arrow.svg",
-    package: "fastboard_flutter",
-    width: FastGap.gap_6,
-    height: FastGap.gap_6,
+  static const FastIconData straight = FastIconData(
+    assets: [
+      "assets/icons/line.svg",
+      "assets/icons/lineBold.svg",
+    ],
   );
 
-  static Widget arrowBold = SvgPicture.asset(
-    "assets/icons/arrowBold.svg",
-    package: "fastboard_flutter",
-    width: FastGap.gap_6,
-    height: FastGap.gap_6,
+  static const FastIconData selector = FastIconData(
+    assets: [
+      "assets/icons/selector.svg",
+      "assets/icons/selectorFill.svg",
+    ],
   );
 
-  static Widget straight = SvgPicture.asset(
-    "assets/icons/line.svg",
-    package: "fastboard_flutter",
-    width: FastGap.gap_6,
-    height: FastGap.gap_6,
+  static const FastIconData pencil = FastIconData(
+    assets: [
+      "assets/icons/pencil.svg",
+      "assets/icons/pencilFill.svg",
+    ],
   );
 
-  static Widget straightBold = SvgPicture.asset(
-    "assets/icons/lineBold.svg",
-    package: "fastboard_flutter",
-    width: FastGap.gap_6,
-    height: FastGap.gap_6,
+  static const FastIconData eraser = FastIconData(
+    assets: [
+      "assets/icons/eraser.svg",
+      "assets/icons/eraserFill.svg",
+    ],
   );
 
-  static Widget selector = SvgPicture.asset(
-    "assets/icons/selector.svg",
-    package: "fastboard_flutter",
-    width: FastGap.gap_6,
-    height: FastGap.gap_6,
+  static const FastIconData rectangle = FastIconData(
+    assets: [
+      "assets/icons/rectangle.svg",
+      "assets/icons/rectangleBold.svg",
+    ],
   );
 
-  static Widget selectorFill = SvgPicture.asset(
-    "assets/icons/selectorFill.svg",
-    package: "fastboard_flutter",
-    width: FastGap.gap_6,
-    height: FastGap.gap_6,
+  static const FastIconData circle = FastIconData(
+    assets: [
+      "assets/icons/circle.svg",
+      "assets/icons/circleBold.svg",
+    ],
   );
 
-  static Widget pencil = SvgPicture.asset(
-    "assets/icons/pencil.svg",
-    package: "fastboard_flutter",
-    width: FastGap.gap_6,
-    height: FastGap.gap_6,
+  static const FastIconData star = FastIconData(
+    assets: [
+      "assets/icons/star.svg",
+      "assets/icons/starBold.svg",
+    ],
   );
 
-  static Widget pencilFill = SvgPicture.asset(
-    "assets/icons/pencilFill.svg",
-    package: "fastboard_flutter",
-    width: FastGap.gap_6,
-    height: FastGap.gap_6,
+  static const FastIconData balloon = FastIconData(
+    assets: [
+      "assets/icons/balloon.svg",
+      "assets/icons/balloonBold.svg",
+    ],
   );
 
-  static Widget eraser = SvgPicture.asset(
-    "assets/icons/eraser.svg",
-    package: "fastboard_flutter",
-    width: FastGap.gap_6,
-    height: FastGap.gap_6,
+  static const FastIconData rhombus = FastIconData(
+    assets: [
+      "assets/icons/rhombus.svg",
+      "assets/icons/rhombusBold.svg",
+    ],
   );
 
-  static Widget eraserFill = SvgPicture.asset(
-    "assets/icons/eraserFill.svg",
-    package: "fastboard_flutter",
-    width: FastGap.gap_6,
-    height: FastGap.gap_6,
+  static const FastIconData triangle = FastIconData(
+    assets: [
+      "assets/icons/triangle.svg",
+      "assets/icons/triangleBold.svg",
+    ],
   );
 
-  static Widget rectangle = SvgPicture.asset(
-    "assets/icons/rectangle.svg",
-    package: "fastboard_flutter",
-    width: FastGap.gap_6,
-    height: FastGap.gap_6,
+  static const FastIconData text = FastIconData(
+    assets: [
+      "assets/icons/text.svg",
+      "assets/icons/textFill.svg",
+    ],
   );
 
-  static Widget rectangleBold = SvgPicture.asset(
-    "assets/icons/rectangleBold.svg",
-    package: "fastboard_flutter",
-    width: FastGap.gap_6,
-    height: FastGap.gap_6,
+  static const FastIconData clear = FastIconData(
+    assets: [
+      "assets/icons/clear.svg",
+    ],
   );
 
-  static Widget circle = SvgPicture.asset(
-    "assets/icons/circle.svg",
-    package: "fastboard_flutter",
-    width: FastGap.gap_6,
-    height: FastGap.gap_6,
+  static const FastIconData expandable = FastIconData(
+    assets: ["assets/icons/expandable.svg"],
   );
 
-  static Widget circleBold = SvgPicture.asset(
-    "assets/icons/circleBold.svg",
-    package: "fastboard_flutter",
-    width: FastGap.gap_6,
-    height: FastGap.gap_6,
-  );
-
-  static Widget star = SvgPicture.asset(
-    "assets/icons/star.svg",
-    package: "fastboard_flutter",
-    width: FastGap.gap_6,
-    height: FastGap.gap_6,
-  );
-
-  static Widget starBold = SvgPicture.asset(
-    "assets/icons/starBold.svg",
-    package: "fastboard_flutter",
-    width: FastGap.gap_6,
-    height: FastGap.gap_6,
-  );
-
-  static Widget balloon = SvgPicture.asset(
-    "assets/icons/balloon.svg",
-    package: "fastboard_flutter",
-    width: FastGap.gap_6,
-    height: FastGap.gap_6,
-  );
-
-  static Widget balloonBold = SvgPicture.asset(
-    "assets/icons/balloonBold.svg",
-    package: "fastboard_flutter",
-    width: FastGap.gap_6,
-    height: FastGap.gap_6,
-  );
-
-  static Widget rhombus = SvgPicture.asset(
-    "assets/icons/rhombus.svg",
-    package: "fastboard_flutter",
-    width: FastGap.gap_6,
-    height: FastGap.gap_6,
-  );
-
-  static Widget rhombusBold = SvgPicture.asset(
-    "assets/icons/rhombusBold.svg",
-    package: "fastboard_flutter",
-    width: FastGap.gap_6,
-    height: FastGap.gap_6,
-  );
-
-  static Widget triangle = SvgPicture.asset(
-    "assets/icons/triangle.svg",
-    package: "fastboard_flutter",
-    width: FastGap.gap_6,
-    height: FastGap.gap_6,
-  );
-
-  static Widget triangleBold = SvgPicture.asset(
-    "assets/icons/triangleBold.svg",
-    package: "fastboard_flutter",
-    width: FastGap.gap_6,
-    height: FastGap.gap_6,
-  );
-
-  static Widget text = SvgPicture.asset(
-    "assets/icons/text.svg",
-    package: "fastboard_flutter",
-    width: FastGap.gap_6,
-    height: FastGap.gap_6,
-  );
-
-  static Widget textFill = SvgPicture.asset(
-    "assets/icons/textFill.svg",
-    package: "fastboard_flutter",
-    width: FastGap.gap_6,
-    height: FastGap.gap_6,
-  );
-
-  static Widget clear = SvgPicture.asset(
-    "assets/icons/clear.svg",
-    package: "fastboard_flutter",
-    width: FastGap.gap_6,
-    height: FastGap.gap_6,
-  );
-
-  static Widget expandable = SvgPicture.asset(
-    "assets/icons/expandable.svg",
-    package: "fastboard_flutter",
-    width: FastGap.gap_6,
-    height: FastGap.gap_6,
-  );
-
-  static Widget delete = SvgPicture.asset(
-    "assets/icons/delete.svg",
-    package: "fastboard_flutter",
-    width: FastGap.gap_6,
-    height: FastGap.gap_6,
+  static const FastIconData delete = FastIconData(
+    assets: [
+      "assets/icons/delete.svg",
+    ],
   );
 }
