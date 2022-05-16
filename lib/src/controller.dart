@@ -125,12 +125,11 @@ class FastRoomController extends ValueNotifier<FastRoomValue> {
   }
 
   Future<void> reconnect() async {
-    // TODO update room value
     value = FastRoomValue.uninitialized(fastRoomOptions.roomOptions.isWritable);
     if (whiteRoom == null) {
       return joinRoom();
     } else {
-      whiteRoom?.disconnect().then((value) {
+      await whiteRoom?.disconnect().then((value) {
         return joinRoom();
       }).catchError((e) {
         // ignore
@@ -147,7 +146,10 @@ class FastRoomController extends ValueNotifier<FastRoomValue> {
     var redoUndoCount = phase == RoomPhase.connected
         ? const FastRedoUndoCount.initialized()
         : value.redoUndoCount;
-    value = value.copyWith(roomPhase: phase, redoUndoCount: redoUndoCount);
+    value = value.copyWith(
+      roomPhase: phase,
+      redoUndoCount: redoUndoCount,
+    );
   }
 
   void _onRoomError(String error) {}

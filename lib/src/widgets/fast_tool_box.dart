@@ -9,7 +9,6 @@ class FastToolBoxExpand extends FastRoomControllerWidget {
   const FastToolBoxExpand(
     FastRoomController controller, {
     Key? key,
-    bool? expand,
   }) : super(controller, key: key);
 
   @override
@@ -22,13 +21,14 @@ class FastToolBoxExpandState
     extends FastRoomControllerState<FastToolBoxExpand> {
   var items = FastUiSettings.toolboxItems;
 
-  Rect? _rect;
   num? _strokeWidth;
   Color? _strokeColor;
 
   FastAppliance selectedAppliance = FastAppliance.unknown;
   int lastIndex = -1;
   int overlayKey = 0;
+
+  RenderAfterLayout? _renderAfterLayout;
 
   @override
   void initState() {
@@ -59,18 +59,18 @@ class FastToolBoxExpandState
         },
       ));
     }
+
+    var rect = _anchorRect;
+    debugPrint("anchorRect is $rect");
+
     return Stack(
       alignment: Alignment.center,
       children: [
         Positioned(
           child: AfterLayout(
             callback: (renderAfterLayout) {
-              _rect = renderAfterLayout.localToGlobal(
-                    Offset.zero,
-                    ancestor: context.findRenderObject(),
-                  ) &
-                  renderAfterLayout.size;
-              setState(() {});
+              debugPrint("AfterLayout rect ${renderAfterLayout.size}");
+              _renderAfterLayout = renderAfterLayout;
             },
             child: FastContainer(
               child: Column(
@@ -82,24 +82,35 @@ class FastToolBoxExpandState
         ),
         if (overlayKey == OverlayChangedEvent.subAppliances)
           Positioned(
-            child: buildSubToolbox(),
-            top: _rect!.top,
-            left: _rect!.right + FastGap.gap_3,
+            child: buildSubToolbox(items[lastIndex]),
+            top: rect.top,
+            left: rect.right + FastGap.gap_3,
           ),
         if (selectedAppliance == FastAppliance.selector)
           Positioned(
             child: buildDeleteButton(),
-            top: _rect!.top - FastGap.gap_3 - FastGap.gap_8,
-            left: _rect!.left,
+            top: rect.top - FastGap.gap_3 - FastGap.gap_8,
+            left: rect.left,
           ),
       ],
     );
   }
 
-  Widget buildSubToolbox() {
+  Rect get _anchorRect {
+    if (_renderAfterLayout != null) {
+      return _renderAfterLayout!.localToGlobal(
+            Offset.zero,
+            ancestor: context.findRenderObject(),
+          ) &
+          _renderAfterLayout!.size;
+    } else {
+      return Rect.zero;
+    }
+  }
+
+  Widget buildSubToolbox(ToolboxItem item) {
     var themeData = FastTheme.of(context)!.data;
 
-    var item = items[lastIndex];
     List<Widget> children = [];
     if (item.appliances.length > 1) {
       children.add(buildSubToolAppliance(item.appliances));

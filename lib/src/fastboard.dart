@@ -78,11 +78,9 @@ class FastRoomViewState extends State<FastRoomView> {
             ),
             FastTheme(
                 data: themeData,
-                child: Builder(
-                  builder: (context) {
-                    return builder(context, controller);
-                  },
-                ))
+                child: Builder(builder: (context) {
+                  return builder(context, controller);
+                }))
           ],
         ));
   }
