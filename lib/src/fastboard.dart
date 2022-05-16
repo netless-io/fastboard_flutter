@@ -14,10 +14,10 @@ typedef ControllerWidgetBuilder = Widget Function(
   FastRoomController controller,
 );
 
-class FastRoomWidget extends StatefulWidget {
+class FastRoomView extends StatefulWidget {
   final ControllerWidgetBuilder? builder;
 
-  const FastRoomWidget({
+  const FastRoomView({
     Key? key,
     required this.fastRoomOptions,
     this.theme,
@@ -39,11 +39,11 @@ class FastRoomWidget extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return FastRoomWidgetState();
+    return FastRoomViewState();
   }
 }
 
-class FastRoomWidgetState extends State<FastRoomWidget> {
+class FastRoomViewState extends State<FastRoomView> {
   late FastRoomController controller;
 
   @override
@@ -102,27 +102,27 @@ class FastRoomWidgetState extends State<FastRoomWidget> {
         Positioned(
           child: Row(
             children: [
-              FastRedoUndoWidget(controller),
+              FastRedoUndoView(controller),
               SizedBox(width: FastGap.gap_2),
-              FastZoomWidget(controller),
+              FastZoomView(controller),
             ],
           ),
           bottom: FastGap.gap_3,
           left: FastGap.gap_3,
         ),
         FastToolBoxExpand(controller),
-        FastStateHandlerWidget(controller),
+        FastStateHandlerView(controller),
       ],
     );
   }
 
   @override
-  void didUpdateWidget(FastRoomWidget oldWidget) {
+  void didUpdateWidget(FastRoomView oldWidget) {
     super.didUpdateWidget(oldWidget);
     _updateWhiteIfNeed(oldWidget);
   }
 
-  void _updateWhiteIfNeed(FastRoomWidget oldWidget) {
+  void _updateWhiteIfNeed(FastRoomView oldWidget) {
     if (oldWidget.useDarkTheme != widget.useDarkTheme) {
       var themeData = widget.useDarkTheme
           ? widget.darkTheme ?? FastThemeData.dark()

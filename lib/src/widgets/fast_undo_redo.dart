@@ -4,8 +4,8 @@ import '../controller.dart';
 import '../types/fast_redo_undo_count.dart';
 import 'widgets.dart';
 
-class FastRedoUndoWidget extends FastRoomControllerWidget {
-  const FastRedoUndoWidget(
+class FastRedoUndoView extends FastRoomControllerWidget {
+  const FastRedoUndoView(
     FastRoomController controller, {
     Key? key,
   }) : super(controller, key: key);
@@ -16,7 +16,7 @@ class FastRedoUndoWidget extends FastRoomControllerWidget {
   }
 }
 
-class FastRedoUndoState extends FastRoomControllerState<FastRedoUndoWidget> {
+class FastRedoUndoState extends FastRoomControllerState<FastRedoUndoView> {
   late FastRedoUndoCount redoUndoCount;
 
   @override

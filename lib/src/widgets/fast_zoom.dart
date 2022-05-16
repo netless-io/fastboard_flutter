@@ -8,11 +8,11 @@ import 'fast_gap.dart';
 import 'fast_icons.dart';
 import 'fast_theme.dart';
 
-class FastZoomWidget extends FastRoomControllerWidget {
+class FastZoomView extends FastRoomControllerWidget {
   final num minScale;
   final num maxScale;
 
-  const FastZoomWidget(
+  const FastZoomView(
     FastRoomController controller, {
     Key? key,
     this.minScale = 0.25,
@@ -25,7 +25,7 @@ class FastZoomWidget extends FastRoomControllerWidget {
   }
 }
 
-class FastZoomState extends FastRoomControllerState<FastZoomWidget> {
+class FastZoomState extends FastRoomControllerState<FastZoomView> {
   late num zoomScale;
 
   @override

@@ -36,7 +36,7 @@ class QuickStartBodyState extends State<QuickStartBody> {
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
-      FastRoomWidget(
+      FastRoomView(
         fastRoomOptions: FastRoomOptions(
           appId: APP_ID,
           uuid: ROOM_UUID,

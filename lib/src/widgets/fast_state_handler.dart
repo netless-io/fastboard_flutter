@@ -4,8 +4,8 @@ import 'package:whiteboard_sdk_flutter/whiteboard_sdk_flutter.dart';
 import '../controller.dart';
 import 'widgets.dart';
 
-class FastStateHandlerWidget extends FastRoomControllerWidget {
-  const FastStateHandlerWidget(
+class FastStateHandlerView extends FastRoomControllerWidget {
+  const FastStateHandlerView(
     FastRoomController controller, {
     Key? key,
   }) : super(controller, key: key);
@@ -17,7 +17,7 @@ class FastStateHandlerWidget extends FastRoomControllerWidget {
 }
 
 class FastStateHandlerState
-    extends FastRoomControllerState<FastStateHandlerWidget> {
+    extends FastRoomControllerState<FastStateHandlerView> {
   RoomHandlerState state = RoomHandlerState.loading;
 
   @override
