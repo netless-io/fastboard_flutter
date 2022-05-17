@@ -109,7 +109,7 @@ class FastToolBoxExpandState
   }
 
   Widget buildSubToolbox(ToolboxItem item) {
-    var themeData = FastTheme.of(context)!.data;
+    var themeData = FastTheme.of(context);
 
     List<Widget> children = [];
     if (item.appliances.length > 1) {
@@ -135,7 +135,7 @@ class FastToolBoxExpandState
 
   Widget buildSubToolColor() {
     var colors = FastUiSettings.strokeColors;
-    var themeData = FastTheme.of(context)!.data;
+    var themeData = FastTheme.of(context);
 
     return Container(
       child: GridView.builder(
@@ -180,7 +180,7 @@ class FastToolBoxExpandState
   }
 
   Widget buildSubToolStroke() {
-    var themeData = FastTheme.of(context)!.data;
+    var themeData = FastTheme.of(context);
 
     return SliderTheme(
       data: SliderThemeData(

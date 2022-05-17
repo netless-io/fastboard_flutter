@@ -60,7 +60,7 @@ class FastContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var themeData = FastTheme.of(context)!.data;
+    var themeData = FastTheme.of(context);
 
     return Container(
       padding: EdgeInsets.all(FastGap.gap_1),
@@ -97,7 +97,7 @@ class FastToolboxButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var themeData = FastTheme.of(context)!.data;
+    var themeData = FastTheme.of(context);
 
     var color = selected ? themeData.borderColor : null;
 
@@ -134,7 +134,7 @@ class FastIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var themeData = FastTheme.of(context)!.data;
+    var themeData = FastTheme.of(context);
 
     return SvgPicture.asset(
       icon.assetBySelected(selected),

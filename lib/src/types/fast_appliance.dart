@@ -1,5 +1,6 @@
 import 'package:whiteboard_sdk_flutter/whiteboard_sdk_flutter.dart';
 
+// TODO enum with params
 class FastAppliance {
   final String appliance;
   final String? shapeType;

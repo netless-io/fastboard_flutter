@@ -45,7 +45,7 @@ class QuickStartBodyState extends State<QuickStartBody> {
           writable: true,
           fastRegion: FastRegion.cn_hz,
         ),
-        useDarkTheme: false,
+        useDarkTheme: true,
         onFastRoomCreated: onFastRoomCreated,
       ),
       if (controller != null)
@@ -65,6 +65,8 @@ class QuickStartBodyState extends State<QuickStartBody> {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.portraitUp,
     ]);
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   }
@@ -72,8 +74,8 @@ class QuickStartBodyState extends State<QuickStartBody> {
   @override
   void dispose() {
     super.dispose();
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-    ]);
+    // SystemChrome.setPreferredOrientations([
+    //   DeviceOrientation.portraitUp,
+    // ]);
   }
 }

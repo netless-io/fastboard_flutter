@@ -27,8 +27,12 @@ class FastRoomView extends StatefulWidget {
     this.builder,
   }) : super(key: key);
 
+  /// light theme data
   final FastThemeData? theme;
+
+  /// dark theme data
   final FastThemeData? darkTheme;
+
   final bool useDarkTheme;
 
   /// 房间配置信息
@@ -55,8 +59,8 @@ class FastRoomViewState extends State<FastRoomView> {
   @override
   Widget build(BuildContext context) {
     FastGap.initContext(context);
-
     var builder = widget.builder ?? defaultControllerBuilder;
+
     var themeData = widget.useDarkTheme
         ? widget.darkTheme ?? FastThemeData.dark()
         : widget.theme ?? FastThemeData.light();
@@ -92,7 +96,7 @@ class FastRoomViewState extends State<FastRoomView> {
     return Stack(
       alignment: Alignment.center,
       children: [
-        FastOverlayHandler(controller),
+        FastOverlayHandlerView(controller),
         Positioned(
           child: FastPageIndicator(controller),
           bottom: FastGap.gap_3,

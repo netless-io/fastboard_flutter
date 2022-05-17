@@ -4,6 +4,7 @@ import 'package:whiteboard_sdk_flutter/whiteboard_sdk_flutter.dart';
 import '../controller.dart';
 import 'widgets.dart';
 
+/// display the room loading, error and support a ui to reconnect
 class FastStateHandlerView extends FastRoomControllerWidget {
   const FastStateHandlerView(
     FastRoomController controller, {
@@ -39,7 +40,7 @@ class FastStateHandlerState
 
   @override
   Widget build(BuildContext context) {
-    var themeData = FastTheme.of(context)!.data;
+    var themeData = FastTheme.of(context);
 
     switch (state) {
       case RoomHandlerState.loading:

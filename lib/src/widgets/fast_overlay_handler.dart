@@ -4,8 +4,9 @@ import '../controller.dart';
 import '../types/types.dart';
 import 'widgets.dart';
 
-class FastOverlayHandler extends FastRoomControllerWidget {
-  const FastOverlayHandler(
+/// handle overlay when toolbox extension displayed
+class FastOverlayHandlerView extends FastRoomControllerWidget {
+  const FastOverlayHandlerView(
     FastRoomController controller, {
     Key? key,
     bool? expand,
@@ -18,7 +19,7 @@ class FastOverlayHandler extends FastRoomControllerWidget {
 }
 
 class FastOverlayHandlerState
-    extends FastRoomControllerState<FastOverlayHandler> {
+    extends FastRoomControllerState<FastOverlayHandlerView> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<OverlayChangedEvent>(

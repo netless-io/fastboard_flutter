@@ -1,3 +1,4 @@
+/// icons data, [0] for normal state, [1] for selected state.
 class FastIconData {
   const FastIconData(
     this.assets, {
@@ -19,6 +20,7 @@ class FastIconData {
   }
 }
 
+/// [FastIconData] constants which using by fastboard
 class FastIcons {
   FastIcons._();
 

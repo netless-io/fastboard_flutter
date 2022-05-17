@@ -11,8 +11,9 @@ class FastTheme extends InheritedWidget {
 
   final FastThemeData data;
 
-  static FastTheme? of(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<FastTheme>();
+  static FastThemeData of(BuildContext context) {
+    final FastTheme? fastTheme = context.dependOnInheritedWidgetOfExactType<FastTheme>();
+    return fastTheme?.data ?? FastThemeData.light();
   }
 
   @override

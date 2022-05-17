@@ -89,7 +89,7 @@ class FastText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var themeData = FastTheme.of(context)!.data;
+    var themeData = FastTheme.of(context);
     var defaultTestStyle = DefaultTextStyle.of(context).style;
 
     return Text(
