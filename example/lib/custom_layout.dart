@@ -7,29 +7,29 @@ import 'package:flutter/services.dart';
 import 'page.dart';
 import 'widgets.dart';
 
-class QuickStartPage extends FastExamplePage {
-  const QuickStartPage()
+class CustomLayoutPage extends FastExamplePage {
+  const CustomLayoutPage()
       : super(
-          const Icon(Icons.rocket_launch_rounded),
-          'Quick Start',
+          const Icon(Icons.space_dashboard_rounded),
+          'Custom Layout',
         );
 
   @override
   Widget build(BuildContext context) {
-    return const QuickStartBody();
+    return const CustomLayoutBody();
   }
 }
 
-class QuickStartBody extends StatefulWidget {
-  const QuickStartBody();
+class CustomLayoutBody extends StatefulWidget {
+  const CustomLayoutBody();
 
   @override
   State<StatefulWidget> createState() {
-    return QuickStartBodyState();
+    return CustomLayoutBodyState();
   }
 }
 
-class QuickStartBodyState extends State<QuickStartBody> {
+class CustomLayoutBodyState extends State<CustomLayoutBody> {
   Completer<FastRoomController> completerController = Completer();
 
   static const String APP_ID = '283/VGiScM9Wiw2HJg';
@@ -53,17 +53,16 @@ class QuickStartBodyState extends State<QuickStartBody> {
         ),
         useDarkTheme: false,
         onFastRoomCreated: onFastRoomCreated,
+        builder: customControllerBuilder,
       ),
       FutureBuilder<FastRoomController>(
           future: completerController.future,
           builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return Positioned(
-                child: CloudTestWidget(controller: snapshot.data!),
-              );
-            } else {
-              return Container();
-            }
+            return snapshot.hasData
+                ? Positioned(
+                    child: CloudTestWidget(controller: snapshot.data!),
+                  )
+                : Container();
           }),
       Positioned(
         child: InkWell(

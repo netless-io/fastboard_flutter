@@ -15,8 +15,6 @@ typedef ControllerWidgetBuilder = Widget Function(
 );
 
 class FastRoomView extends StatefulWidget {
-  final ControllerWidgetBuilder? builder;
-
   const FastRoomView({
     Key? key,
     required this.fastRoomOptions,
@@ -40,6 +38,8 @@ class FastRoomView extends StatefulWidget {
 
   /// 加入成功回调
   final FastRoomCreatedCallback? onFastRoomCreated;
+
+  final ControllerWidgetBuilder? builder;
 
   @override
   State<StatefulWidget> createState() {

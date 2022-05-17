@@ -1,6 +1,7 @@
 import 'package:fastboard_flutter/fastboard_flutter.dart';
-import 'package:fastboard_flutter_example/test_data.dart';
 import 'package:flutter/material.dart';
+
+import 'test_data.dart';
 
 class CloudTestWidget extends StatefulWidget {
   final FastRoomController controller;
@@ -8,7 +9,7 @@ class CloudTestWidget extends StatefulWidget {
   CloudTestWidget({
     required this.controller,
     Key? key,
-  }) : super();
+  }) : super(key: key);
 
   @override
   State<CloudTestWidget> createState() {

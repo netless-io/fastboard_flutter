@@ -1,9 +1,12 @@
-import 'package:fastboard_flutter_example/page.dart';
-import 'package:fastboard_flutter_example/quick_start.dart';
 import 'package:flutter/material.dart';
+
+import 'custom_layout.dart';
+import 'page.dart';
+import 'quick_start.dart';
 
 final List<FastExamplePage> _allPages = <FastExamplePage>[
   const QuickStartPage(),
+  const CustomLayoutPage(),
 ];
 
 void main() {
@@ -27,18 +30,19 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Fastboard'),
-        ),
-        body: ListView.builder(
-          itemCount: _allPages.length,
-          itemBuilder: (appContext, index) => ListTile(
-            leading: _allPages[index].leading,
-            title: Text(_allPages[index].title),
-            onTap: () => _pushPage(appContext, _allPages[index]),
+          appBar: AppBar(
+            title: const Text('Fastboard'),
           ),
-        ),
-      ),
+          body: ListView.builder(
+            itemCount: _allPages.length,
+            itemBuilder: (appContext, index) => ListTile(
+              leading: _allPages[index].leading,
+              title: Text(_allPages[index].title),
+              onTap: () => _pushPage(appContext, _allPages[index]),
+            ),
+          )
+          // body: _allPages[0],
+          ),
     );
   }
 
