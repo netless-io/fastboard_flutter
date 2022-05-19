@@ -14,9 +14,9 @@ class CloudFile {
 
   String? taskToken;
 
-  num? width;
+  int? width;
 
-  num? height;
+  int? height;
 
   CloudFile({
     required this.type,

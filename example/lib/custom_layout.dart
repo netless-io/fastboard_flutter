@@ -30,7 +30,7 @@ class CustomLayoutBody extends StatefulWidget {
 }
 
 class CustomLayoutBodyState extends State<CustomLayoutBody> {
-  Completer<FastRoomController> completerController = Completer();
+  Completer<FastRoomController> controllerCompleter = Completer();
 
   static const String APP_ID = '283/VGiScM9Wiw2HJg';
   static const String ROOM_UUID = "9e441760c09711ec9b6bd3c11300c55c";
@@ -53,10 +53,10 @@ class CustomLayoutBodyState extends State<CustomLayoutBody> {
         ),
         useDarkTheme: false,
         onFastRoomCreated: onFastRoomCreated,
-        builder: customControllerBuilder,
+        builder: customBuilder,
       ),
       FutureBuilder<FastRoomController>(
-          future: completerController.future,
+          future: controllerCompleter.future,
           builder: (context, snapshot) {
             return snapshot.hasData
                 ? Positioned(
@@ -77,7 +77,7 @@ class CustomLayoutBodyState extends State<CustomLayoutBody> {
     ]);
   }
 
-  Widget customControllerBuilder(
+  Widget customBuilder(
     BuildContext context,
     FastRoomController controller,
   ) {
@@ -97,7 +97,7 @@ class CustomLayoutBodyState extends State<CustomLayoutBody> {
   }
 
   Future<void> onFastRoomCreated(FastRoomController controller) async {
-    completerController.complete(controller);
+    controllerCompleter.complete(controller);
   }
 
   @override

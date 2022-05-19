@@ -83,7 +83,7 @@ class CloudTestWidgetState extends State<CloudTestWidget> {
                 return SizedBox(
                   height: 50,
                   child: InkWell(
-                    onTap: onItemClick(item),
+                    onTap: () => onItemClick(item),
                     child: Row(
                       children: [
                         Padding(
@@ -126,12 +126,31 @@ class CloudTestWidgetState extends State<CloudTestWidget> {
     switch (item.type) {
       case "png":
       case "jpg":
+        widget.controller.insertImage(item.url, item.width!, item.height!);
         break;
       case "mp4":
+        widget.controller.insertVideo(item.url, item.name);
         break;
       case "ppt":
       case "pptx":
+        widget.controller.insertDoc(InsertDocParams(
+          taskUUID: item.taskUUID!,
+          taskToken: item.taskToken!,
+          region: FastRegion.cn_hz,
+          dynamic: true,
+          title: item.name,
+        ));
+        break;
+      case "pdf":
+        widget.controller.insertDoc(InsertDocParams(
+          taskUUID: item.taskUUID!,
+          taskToken: item.taskToken!,
+          region: FastRegion.cn_hz,
+          dynamic: false,
+          title: item.name,
+        ));
         break;
     }
+    switchShowCloud();
   }
 }

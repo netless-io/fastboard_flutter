@@ -3,6 +3,7 @@ import 'package:whiteboard_sdk_flutter/whiteboard_sdk_flutter.dart';
 
 import 'controller.dart';
 import 'types/types.dart';
+import 'widgets/default_builder.dart';
 import 'widgets/widgets.dart';
 
 /// 回调房间控制
@@ -22,7 +23,7 @@ class FastRoomView extends StatefulWidget {
     this.darkTheme,
     this.useDarkTheme = false,
     this.onFastRoomCreated,
-    this.builder,
+    this.builder = defaultControllerBuilder,
   }) : super(key: key);
 
   /// light theme data
@@ -39,7 +40,7 @@ class FastRoomView extends StatefulWidget {
   /// 加入成功回调
   final FastRoomCreatedCallback? onFastRoomCreated;
 
-  final ControllerWidgetBuilder? builder;
+  final ControllerWidgetBuilder builder;
 
   @override
   State<StatefulWidget> createState() {
@@ -59,8 +60,6 @@ class FastRoomViewState extends State<FastRoomView> {
   @override
   Widget build(BuildContext context) {
     FastGap.initContext(context);
-    var builder = widget.builder ?? defaultControllerBuilder;
-
     var themeData = widget.useDarkTheme
         ? widget.darkTheme ?? FastThemeData.dark()
         : widget.theme ?? FastThemeData.light();
@@ -83,39 +82,10 @@ class FastRoomViewState extends State<FastRoomView> {
             FastTheme(
                 data: themeData,
                 child: Builder(builder: (context) {
-                  return builder(context, controller);
+                  return widget.builder(context, controller);
                 }))
           ],
         ));
-  }
-
-  Widget defaultControllerBuilder(
-    BuildContext context,
-    FastRoomController controller,
-  ) {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        FastOverlayHandlerView(controller),
-        Positioned(
-          child: FastPageIndicator(controller),
-          bottom: FastGap.gap_3,
-        ),
-        Positioned(
-          child: Row(
-            children: [
-              FastRedoUndoView(controller),
-              SizedBox(width: FastGap.gap_2),
-              FastZoomView(controller),
-            ],
-          ),
-          bottom: FastGap.gap_3,
-          left: FastGap.gap_3,
-        ),
-        FastToolBoxExpand(controller),
-        FastStateHandlerView(controller),
-      ],
-    );
   }
 
   @override

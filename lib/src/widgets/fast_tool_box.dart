@@ -61,7 +61,6 @@ class FastToolBoxExpandState
     }
 
     var rect = _anchorRect;
-    debugPrint("anchorRect is $rect");
 
     return Stack(
       alignment: Alignment.center,

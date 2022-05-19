@@ -6,6 +6,7 @@ import 'package:stream_transform/stream_transform.dart';
 import 'package:whiteboard_sdk_flutter/whiteboard_sdk_flutter.dart';
 
 import 'types/types.dart';
+import 'utils/converter.dart';
 
 class FastRoomController extends ValueNotifier<FastRoomValue> {
   FastRoomController(this.fastRoomOptions)
@@ -76,6 +77,7 @@ class FastRoomController extends ValueNotifier<FastRoomValue> {
     if (result ?? false) {
       whiteRoom?.disableSerialization(false);
     }
+    value = value.copyWith(writable: result);
     return result ?? false;
   }
 
@@ -134,6 +136,42 @@ class FastRoomController extends ValueNotifier<FastRoomValue> {
       }).catchError((e) {
         // ignore
       });
+    }
+  }
+
+  void insertImage(String url, num width, num height) {
+    var info = ImageInformation(width: width, height: height);
+    whiteRoom?.insertImageByUrl(info, url);
+  }
+
+  Future<String?> insertVideo(String url, String title) async {
+    var windowAppParams = WindowAppParams.mediaPlayerApp(url, title);
+    return await whiteRoom?.addApp(windowAppParams);
+  }
+
+  Future<String?> insertDoc(InsertDocParams params) async {
+    if (whiteRoom == null) {
+      return null;
+    }
+    try {
+      ConversionQuery query = ConversionQuery(
+        taskUUID: params.taskUUID,
+        takeToken: params.taskToken,
+        convertType:
+            params.dynamic ? ConversionType.dynamic : ConversionType.static,
+        region: params.region.toRegion(),
+      );
+
+      var info = await Converter.instance.startQuery(query);
+      var windowAppParams = WindowAppParams.slideApp(
+        "/${params.taskUUID}/${whiteRoom?.genUuidV4()}",
+        info.toScenes(),
+        params.title,
+      );
+      return await whiteRoom?.addApp(windowAppParams);
+    } catch (e) {
+      print("insertDoc error $e");
+      return null;
     }
   }
 

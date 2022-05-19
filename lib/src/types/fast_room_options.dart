@@ -26,6 +26,11 @@ class FastRoomOptions {
         windowParams: WindowParams(
           containerSizeRatio: 9 / 16,
           chessboard: false,
+          collectorStyles: {
+            "right": "40",
+            "bottom": "40",
+            "position": "fixed",
+          },
         ),
         cameraBound: CameraBound(centerX: 0, centerY: 0),
       );
