@@ -136,18 +136,18 @@ class CloudTestWidgetState extends State<CloudTestWidget> {
         widget.controller.insertDoc(InsertDocParams(
           taskUUID: item.taskUUID!,
           taskToken: item.taskToken!,
-          region: FastRegion.cn_hz,
           dynamic: true,
           title: item.name,
+          region: FastRegion.cn_hz,
         ));
         break;
       case "pdf":
         widget.controller.insertDoc(InsertDocParams(
           taskUUID: item.taskUUID!,
           taskToken: item.taskToken!,
-          region: FastRegion.cn_hz,
           dynamic: false,
           title: item.name,
+          region: FastRegion.cn_hz,
         ));
         break;
     }

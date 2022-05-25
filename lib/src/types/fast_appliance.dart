@@ -1,6 +1,6 @@
 import 'package:whiteboard_sdk_flutter/whiteboard_sdk_flutter.dart';
 
-// TODO enum with params
+/// TODO when update dart to 2.17, use Enum Members replace.
 class FastAppliance {
   final String appliance;
   final String? shapeType;
@@ -54,7 +54,7 @@ class FastAppliance {
     FastAppliance.balloon: true,
     FastAppliance.clear: false,
   };
-
+  
   bool get hasProperties {
     return kHasProperties[this] ?? false;
   }

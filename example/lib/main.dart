@@ -10,6 +10,10 @@ final List<FastExamplePage> _allPages = <FastExamplePage>[
 ];
 
 void main() {
+  const bool isProduction = bool.fromEnvironment('dart.vm.product');
+  if (isProduction) {
+    debugPrint = (String? message, {int? wrapWidth}) => null;
+  }
   runApp(const MyApp());
 }
 
@@ -31,7 +35,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
           appBar: AppBar(
-            title: const Text('Fastboard'),
+            title: const Text('FFastboard'),
           ),
           body: ListView.builder(
             itemCount: _allPages.length,

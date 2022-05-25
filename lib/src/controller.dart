@@ -71,7 +71,6 @@ class FastRoomController extends ValueNotifier<FastRoomValue> {
     whiteRoom?.setMemberState(state);
   }
 
-  // TODO 同时开启序列化
   Future<bool> setWritable(bool writable) async {
     var result = await whiteRoom?.setWritable(writable);
     if (result ?? false) {
@@ -128,15 +127,10 @@ class FastRoomController extends ValueNotifier<FastRoomValue> {
 
   Future<void> reconnect() async {
     value = FastRoomValue.uninitialized(fastRoomOptions.roomOptions.isWritable);
-    if (whiteRoom == null) {
-      return joinRoom();
-    } else {
-      await whiteRoom?.disconnect().then((value) {
-        return joinRoom();
-      }).catchError((e) {
-        // ignore
-      });
+    if (whiteRoom != null) {
+      await whiteRoom?.disconnect();
     }
+    return joinRoom();
   }
 
   void insertImage(String url, num width, num height) {
@@ -150,16 +144,14 @@ class FastRoomController extends ValueNotifier<FastRoomValue> {
   }
 
   Future<String?> insertDoc(InsertDocParams params) async {
-    if (whiteRoom == null) {
-      return null;
-    }
+    if (whiteRoom == null) return null;
     try {
       ConversionQuery query = ConversionQuery(
         taskUUID: params.taskUUID,
         takeToken: params.taskToken,
         convertType:
             params.dynamic ? ConversionType.dynamic : ConversionType.static,
-        region: params.region.toRegion(),
+        region: (params.region ?? fastRoomOptions.fastRegion).toRegion(),
       );
 
       var info = await Converter.instance.startQuery(query);
@@ -170,7 +162,7 @@ class FastRoomController extends ValueNotifier<FastRoomValue> {
       );
       return await whiteRoom?.addApp(windowAppParams);
     } catch (e) {
-      print("insertDoc error $e");
+      debugPrint("insertDoc error $e");
       return null;
     }
   }
@@ -190,9 +182,13 @@ class FastRoomController extends ValueNotifier<FastRoomValue> {
     );
   }
 
-  void _onRoomError(String error) {}
+  void _onRoomError(String error) {
+    debugPrint("on room error $error");
+  }
 
-  void _onRoomDisconnected(String error) {}
+  void _onRoomDisconnected(String error) {
+    debugPrint("room disconnected $error");
+  }
 
   void _onCanRedoUpdated(int redoCount) {
     var redoUndoCount = value.redoUndoCount.copyWith(redoCount: redoCount);

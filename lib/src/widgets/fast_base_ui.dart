@@ -15,34 +15,30 @@ abstract class FastRoomControllerWidget extends StatefulWidget {
 
 abstract class FastRoomControllerState<T extends FastRoomControllerWidget>
     extends State<T> {
-  FastRoomControllerState() {
-    listener = () {
-      calculateState();
-      setState(() {});
-    };
-  }
-
-  late VoidCallback listener;
-
   @override
   void initState() {
     super.initState();
-    widget.controller.addListener(listener);
+    widget.controller.addListener(_handleChange);
   }
 
   @override
   void didUpdateWidget(T oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.controller != widget.controller) {
-      oldWidget.controller.removeListener(listener);
-      widget.controller.addListener(listener);
+    if (widget.controller != oldWidget.controller) {
+      oldWidget.controller.removeListener(_handleChange);
+      widget.controller.addListener(_handleChange);
     }
   }
 
   @override
   void deactivate() {
     super.deactivate();
-    widget.controller.removeListener(listener);
+    widget.controller.removeListener(_handleChange);
+  }
+
+  void _handleChange() {
+    calculateState();
+    setState(() {});
   }
 
   @protected

@@ -60,9 +60,7 @@ class FastRoomViewState extends State<FastRoomView> {
   @override
   Widget build(BuildContext context) {
     FastGap.initContext(context);
-    var themeData = widget.useDarkTheme
-        ? widget.darkTheme ?? FastThemeData.dark()
-        : widget.theme ?? FastThemeData.light();
+    var themeData = _obtainThemeData();
 
     var whiteOptions = widget.fastRoomOptions.whiteOptions.copyWith(
       backgroundColor: themeData.backgroundColor,
@@ -88,6 +86,12 @@ class FastRoomViewState extends State<FastRoomView> {
         ));
   }
 
+  FastThemeData _obtainThemeData() {
+    return widget.useDarkTheme
+        ? widget.darkTheme ?? FastThemeData.dark()
+        : widget.theme ?? FastThemeData.light();
+  }
+
   @override
   void didUpdateWidget(FastRoomView oldWidget) {
     super.didUpdateWidget(oldWidget);
@@ -96,9 +100,7 @@ class FastRoomViewState extends State<FastRoomView> {
 
   void _updateWhiteIfNeed(FastRoomView oldWidget) {
     if (oldWidget.useDarkTheme != widget.useDarkTheme) {
-      var themeData = widget.useDarkTheme
-          ? widget.darkTheme ?? FastThemeData.dark()
-          : widget.theme ?? FastThemeData.light();
+      var themeData = _obtainThemeData();
       controller.whiteSdk?.setBackgroundColor(themeData.backgroundColor);
     }
   }
