@@ -25,8 +25,16 @@ class FastRoomController extends ValueNotifier<FastRoomValue> {
     return _fastEventStreamController.stream.whereType<OverlayChangedEvent>();
   }
 
+  Stream<FastErrorEvent> onError() {
+    return _fastEventStreamController.stream.whereType<FastErrorEvent>();
+  }
+
   void changeOverlay(int key) {
     _fastEventStreamController.add(OverlayChangedEvent(key));
+  }
+
+  void notifyFastError(WhiteException exception) {
+    _fastEventStreamController.add(FastErrorEvent(exception));
   }
 
   void cleanScene() {
@@ -110,18 +118,26 @@ class FastRoomController extends ValueNotifier<FastRoomValue> {
   }
 
   Future<void> joinRoom() async {
-    whiteRoom = await whiteSdk?.joinRoom(
-      options: fastRoomOptions.roomOptions,
-      onRoomPhaseChanged: _onRoomPhaseChanged,
-      onRoomStateChanged: _onRoomStateChanged,
-      onCanRedoStepsUpdate: _onCanRedoUpdated,
-      onCanUndoStepsUpdate: _onCanUndoUpdated,
-      onRoomDisconnected: _onRoomDisconnected,
-      onRoomError: _onRoomError,
-    );
-    value = value.copyWith(isReady: true, roomState: whiteRoom?.state);
-    if (fastRoomOptions.roomOptions.isWritable) {
-      whiteRoom?.disableSerialization(false);
+    try {
+      whiteRoom = await whiteSdk?.joinRoom(
+        options: fastRoomOptions.roomOptions,
+        onRoomPhaseChanged: _onRoomPhaseChanged,
+        onRoomStateChanged: _onRoomStateChanged,
+        onCanRedoStepsUpdate: _onCanRedoUpdated,
+        onCanUndoStepsUpdate: _onCanUndoUpdated,
+        onRoomDisconnected: _onRoomDisconnected,
+        onRoomKicked: _onRoomKicked,
+        onRoomError: _onRoomError,
+      );
+      value = value.copyWith(isReady: true, roomState: whiteRoom?.state);
+      if (fastRoomOptions.roomOptions.isWritable) {
+        whiteRoom?.disableSerialization(false);
+      }
+    } on WhiteException catch (e) {
+      debugPrint("joinRoom error ${e.message}");
+      notifyFastError(e);
+    } catch (e) {
+      debugPrint("joinRoom error $e");
     }
   }
 
@@ -180,6 +196,10 @@ class FastRoomController extends ValueNotifier<FastRoomValue> {
       roomPhase: phase,
       redoUndoCount: redoUndoCount,
     );
+  }
+
+  void _onRoomKicked(String reason) {
+    debugPrint("room kicked $reason");
   }
 
   void _onRoomError(String error) {

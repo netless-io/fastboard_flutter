@@ -1,3 +1,5 @@
+import 'package:fastboard_flutter/fastboard_flutter.dart';
+
 class FastRoomEvent<T extends Object> {
   final T value;
 
@@ -10,4 +12,8 @@ class OverlayChangedEvent extends FastRoomEvent<int> {
   static const int subAppliances = 1;
 
   OverlayChangedEvent(int value) : super(value);
+}
+
+class FastErrorEvent extends FastRoomEvent<WhiteException> {
+  FastErrorEvent(WhiteException exception) : super(exception);
 }
