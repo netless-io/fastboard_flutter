@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:i18n_extension/i18n_widget.dart';
 import 'package:whiteboard_sdk_flutter/whiteboard_sdk_flutter.dart';
 
 import 'controller.dart';
@@ -22,6 +23,7 @@ class FastRoomView extends StatefulWidget {
     this.theme,
     this.darkTheme,
     this.useDarkTheme = false,
+    this.locate,
     this.onFastRoomCreated,
     this.builder = defaultControllerBuilder,
   }) : super(key: key);
@@ -31,6 +33,12 @@ class FastRoomView extends StatefulWidget {
 
   /// dark theme data
   final FastThemeData? darkTheme;
+
+  /// The locale to use for the fastboard, defaults to system locale
+  /// supported :
+  ///   Locale("en")
+  ///   Locale("zh", "CN")
+  final Locale? locate;
 
   final bool useDarkTheme;
 
@@ -66,24 +74,27 @@ class FastRoomViewState extends State<FastRoomView> {
       backgroundColor: themeData.backgroundColor,
     );
 
-    return ConstrainedBox(
-        constraints: const BoxConstraints.expand(),
-        child: Stack(
-          children: [
-            WhiteboardView(
-              options: whiteOptions,
-              onSdkCreated: (sdk) async {
-                await controller.onSdkCreated(sdk);
-                widget.onFastRoomCreated?.call(controller);
-              },
-            ),
-            FastTheme(
-                data: themeData,
-                child: Builder(builder: (context) {
-                  return widget.builder(context, controller);
-                }))
-          ],
-        ));
+    return I18n(
+      child: ConstrainedBox(
+          constraints: const BoxConstraints.expand(),
+          child: Stack(
+            children: [
+              WhiteboardView(
+                options: whiteOptions,
+                onSdkCreated: (sdk) async {
+                  await controller.onSdkCreated(sdk);
+                  widget.onFastRoomCreated?.call(controller);
+                },
+              ),
+              FastTheme(
+                  data: themeData,
+                  child: Builder(builder: (context) {
+                    return widget.builder(context, controller);
+                  }))
+            ],
+          )),
+      initialLocale: widget.locate,
+    );
   }
 
   FastThemeData _obtainThemeData() {
