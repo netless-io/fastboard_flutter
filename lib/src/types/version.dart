@@ -1,1 +1,1 @@
-const String flutterFastboardVersion = "0.0.2";
+const String flutterFastboardVersion = "0.0.3";

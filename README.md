@@ -9,7 +9,7 @@ whiteboard applications.
 
 ```yaml
 dependencies:
-    fastboard_flutter: ^0.0.2
+    fastboard_flutter: ^0.0.3
 ```
 
 ## Usage

@@ -11,7 +11,7 @@ import 'widgets/widgets.dart';
 typedef FastRoomCreatedCallback = void Function(FastRoomController controller);
 
 /// 用于用户自定义控制组件
-typedef ControllerWidgetBuilder = Widget Function(
+typedef RoomControllerWidgetBuilder = Widget Function(
   BuildContext context,
   FastRoomController controller,
 );
@@ -48,7 +48,7 @@ class FastRoomView extends StatefulWidget {
   /// 加入成功回调
   final FastRoomCreatedCallback? onFastRoomCreated;
 
-  final ControllerWidgetBuilder builder;
+  final RoomControllerWidgetBuilder builder;
 
   @override
   State<StatefulWidget> createState() {
