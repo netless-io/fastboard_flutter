@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:fastboard_flutter/fastboard_flutter.dart';
 
 class FastRoomEvent<T extends Object> {
@@ -16,4 +18,8 @@ class OverlayChangedEvent extends FastRoomEvent<int> {
 
 class FastErrorEvent extends FastRoomEvent<WhiteException> {
   FastErrorEvent(WhiteException exception) : super(exception);
+}
+
+class SizeChangedEvent extends FastRoomEvent<Size> {
+  SizeChangedEvent(Size size) : super(size);
 }

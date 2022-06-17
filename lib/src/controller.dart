@@ -1,7 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:stream_transform/stream_transform.dart';
 import 'package:whiteboard_sdk_flutter/whiteboard_sdk_flutter.dart';
 
@@ -10,23 +9,42 @@ import 'utils/converter.dart';
 
 class FastRoomController extends ValueNotifier<FastRoomValue> {
   FastRoomController(this.fastRoomOptions)
-      : super(FastRoomValue.uninitialized(fastRoomOptions.writable));
+      : super(FastRoomValue.uninitialized(fastRoomOptions.writable)) {
+    containerSizeRatio = fastRoomOptions.containerSizeRatio;
+  }
 
   WhiteSdk? whiteSdk;
   WhiteRoom? whiteRoom;
   FastRoomOptions fastRoomOptions;
+  double? containerSizeRatio;
 
   num zoomScaleDefault = 1;
+  Size? roomLayoutSize;
+
+  double? get ratioWhenNull {
+    if (roomLayoutSize == null) {
+      return null;
+    }
+    return roomLayoutSize!.height / roomLayoutSize!.width;
+  }
 
   final StreamController<FastRoomEvent> _fastEventStreamController =
       StreamController<FastRoomEvent>.broadcast();
 
+  /// The fast room overlay has changed.
+  /// overlay is room extension operation view.
   Stream<OverlayChangedEvent> onOverlayChanged() {
     return _fastEventStreamController.stream.whereType<OverlayChangedEvent>();
   }
 
+  /// The fast room cause a error.
   Stream<FastErrorEvent> onError() {
     return _fastEventStreamController.stream.whereType<FastErrorEvent>();
+  }
+
+  /// The fast room view size has changed.
+  Stream<SizeChangedEvent> onSizeChanged() {
+    return _fastEventStreamController.stream.whereType<SizeChangedEvent>();
   }
 
   void changeOverlay(int key) {
@@ -35,6 +53,10 @@ class FastRoomController extends ValueNotifier<FastRoomValue> {
 
   void notifyFastError(WhiteException exception) {
     _fastEventStreamController.add(FastErrorEvent(exception));
+  }
+
+  void notifySizeChanged(Size size) {
+    _fastEventStreamController.add(SizeChangedEvent(size));
   }
 
   void cleanScene() {
@@ -112,7 +134,7 @@ class FastRoomController extends ValueNotifier<FastRoomValue> {
     ));
   }
 
-  Future<void> onSdkCreated(WhiteSdk whiteSdk) async {
+  Future<void> joinRoomWithSdk(WhiteSdk whiteSdk) async {
     this.whiteSdk = whiteSdk;
     await joinRoom();
   }
@@ -120,7 +142,7 @@ class FastRoomController extends ValueNotifier<FastRoomValue> {
   Future<void> joinRoom() async {
     try {
       whiteRoom = await whiteSdk?.joinRoom(
-        options: fastRoomOptions.roomOptions,
+        options: fastRoomOptions.genRoomOptions(ratioWhenNull: ratioWhenNull),
         onRoomPhaseChanged: _onRoomPhaseChanged,
         onRoomStateChanged: _onRoomStateChanged,
         onCanRedoStepsUpdate: _onCanRedoUpdated,
@@ -130,7 +152,7 @@ class FastRoomController extends ValueNotifier<FastRoomValue> {
         onRoomError: _onRoomError,
       );
       value = value.copyWith(isReady: true, roomState: whiteRoom?.state);
-      if (fastRoomOptions.roomOptions.isWritable) {
+      if (fastRoomOptions.writable) {
         whiteRoom?.disableSerialization(false);
       }
     } on WhiteException catch (e) {
@@ -142,7 +164,7 @@ class FastRoomController extends ValueNotifier<FastRoomValue> {
   }
 
   Future<void> reconnect() async {
-    value = FastRoomValue.uninitialized(fastRoomOptions.roomOptions.isWritable);
+    value = FastRoomValue.uninitialized(fastRoomOptions.writable);
     if (whiteRoom != null) {
       await whiteRoom?.disconnect();
     }
@@ -218,6 +240,19 @@ class FastRoomController extends ValueNotifier<FastRoomValue> {
   void _onCanUndoUpdated(int undoCount) {
     var redoUndoCount = value.redoUndoCount.copyWith(undoCount: undoCount);
     value = value.copyWith(redoUndoCount: redoUndoCount);
+  }
+
+  void setContainerSizeRatio(double ratio) {
+    containerSizeRatio = ratio;
+    whiteRoom?.setContainerSizeRatio(ratio);
+  }
+
+  void updateRoomLayoutSize(Size size) {
+    roomLayoutSize = size;
+    if (containerSizeRatio == null) {
+      whiteRoom?.setContainerSizeRatio(size.height / size.width);
+    }
+    notifySizeChanged(size);
   }
 
   @override

@@ -40,7 +40,8 @@ class FastUiSettings {
     ToolboxItem(appliances: [FastAppliance.clicker]),
     ToolboxItem(appliances: [FastAppliance.selector]),
     ToolboxItem(appliances: [FastAppliance.pencil]),
-    ToolboxItem(appliances: [FastAppliance.text]),
+    // not support text
+    // ToolboxItem(appliances: [FastAppliance.text]),
     ToolboxItem(appliances: [FastAppliance.eraser]),
     ToolboxItem(appliances: [
       FastAppliance.rectangle,

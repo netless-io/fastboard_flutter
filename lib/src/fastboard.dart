@@ -1,3 +1,4 @@
+import 'package:fastboard_flutter/src/widgets/flutter_after_layout.dart';
 import 'package:flutter/widgets.dart';
 import 'package:i18n_extension/i18n_widget.dart';
 import 'package:whiteboard_sdk_flutter/whiteboard_sdk_flutter.dart';
@@ -40,12 +41,13 @@ class FastRoomView extends StatefulWidget {
   ///   Locale("zh", "CN")
   final Locale? locate;
 
+  /// dark mode config, true for darkTheme, false for lightTheme
   final bool useDarkTheme;
 
-  /// 房间配置信息
+  /// fast room config info
   final FastRoomOptions fastRoomOptions;
 
-  /// 加入成功回调
+  /// room created callback
   final FastRoomCreatedCallback? onFastRoomCreated;
 
   final RoomControllerWidgetBuilder builder;
@@ -69,29 +71,33 @@ class FastRoomViewState extends State<FastRoomView> {
   Widget build(BuildContext context) {
     FastGap.initContext(context);
     var themeData = _obtainThemeData();
-
-    var whiteOptions = widget.fastRoomOptions.whiteOptions.copyWith(
+    var whiteOptions = widget.fastRoomOptions.genWhiteOptions(
       backgroundColor: themeData.backgroundColor,
     );
-
     return I18n(
       child: ConstrainedBox(
           constraints: const BoxConstraints.expand(),
-          child: Stack(
-            children: [
-              WhiteboardView(
-                options: whiteOptions,
-                onSdkCreated: (sdk) async {
-                  await controller.onSdkCreated(sdk);
-                  widget.onFastRoomCreated?.call(controller);
-                },
-              ),
-              FastTheme(
-                  data: themeData,
-                  child: Builder(builder: (context) {
-                    return widget.builder(context, controller);
-                  }))
-            ],
+          child: AfterLayout(
+            callback: (renderAfterLayout) {
+              debugPrint("room view changed: ${renderAfterLayout.size}");
+              controller.updateRoomLayoutSize(renderAfterLayout.size);
+            },
+            child: Stack(
+              children: [
+                WhiteboardView(
+                  options: whiteOptions,
+                  onSdkCreated: (sdk) async {
+                    await controller.joinRoomWithSdk(sdk);
+                    widget.onFastRoomCreated?.call(controller);
+                  },
+                ),
+                FastTheme(
+                    data: themeData,
+                    child: Builder(builder: (context) {
+                      return widget.builder(context, controller);
+                    }))
+              ],
+            ),
           )),
       initialLocale: widget.locate,
     );

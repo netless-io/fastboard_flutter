@@ -50,6 +50,7 @@ class QuickStartBodyState extends State<QuickStartBody> {
           uid: UNIQUE_CLIENT_ID,
           writable: true,
           fastRegion: FastRegion.cn_hz,
+          containerSizeRatio: null,
         ),
         useDarkTheme: false,
         onFastRoomCreated: onFastRoomCreated,

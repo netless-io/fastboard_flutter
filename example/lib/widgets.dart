@@ -122,7 +122,7 @@ class CloudTestWidgetState extends State<CloudTestWidget> {
     return map[item.type] ?? TestData.iconPdf;
   }
 
-  onItemClick(CloudFile item) {
+  void onItemClick(CloudFile item) {
     switch (item.type) {
       case "png":
       case "jpg":

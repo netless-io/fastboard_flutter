@@ -42,19 +42,21 @@ class CustomLayoutBodyState extends State<CustomLayoutBody> {
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
-      FastRoomView(
-        fastRoomOptions: FastRoomOptions(
-          appId: APP_ID,
-          uuid: ROOM_UUID,
-          token: ROOM_TOKEN,
-          uid: UNIQUE_CLIENT_ID,
-          writable: true,
-          fastRegion: FastRegion.cn_hz,
-        ),
-        useDarkTheme: false,
-        onFastRoomCreated: onFastRoomCreated,
-        builder: customBuilder,
-      ),
+      LayoutBuilder(builder: (context, constraints) {
+        return FastRoomView(
+          fastRoomOptions: FastRoomOptions(
+              appId: APP_ID,
+              uuid: ROOM_UUID,
+              token: ROOM_TOKEN,
+              uid: UNIQUE_CLIENT_ID,
+              writable: true,
+              fastRegion: FastRegion.cn_hz,
+              containerSizeRatio: constraints.maxHeight / constraints.maxWidth),
+          useDarkTheme: false,
+          onFastRoomCreated: onFastRoomCreated,
+          builder: customBuilder,
+        );
+      }),
       FutureBuilder<FastRoomController>(
           future: controllerCompleter.future,
           builder: (context, snapshot) {
