@@ -1,5 +1,9 @@
 # ChangeLog
 
+## 0.1.0
+
+* Add `FastRoomOptions.containerSizeRatio`, `FastRoomOptions.collectorStyles` to config windows
+
 ## 0.0.3
 
 * Add `FastRoomController.insertImage`, `FastRoomController.insertVideo`
