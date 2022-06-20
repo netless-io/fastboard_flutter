@@ -8,6 +8,8 @@
 * package: dart export show 和 hide
 * example: flutter 全屏显示
 * lib:
+* State: 存在属性 `widget`, `context`. Todo refactor.
+*
 
 # 项目任务项
 

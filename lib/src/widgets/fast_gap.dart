@@ -5,7 +5,7 @@ class FastGap {
   static late double _height;
   static late bool large;
 
-  static void initContext(BuildContext context) {
+  static void init(BuildContext context) {
     _width = MediaQuery.of(context).size.width;
     _height = MediaQuery.of(context).size.height;
     large = _width > 500 && _height > 500;

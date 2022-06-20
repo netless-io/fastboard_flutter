@@ -1,13 +1,10 @@
 <svg id="vector" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
     <path d="M 10.667 8 L 21.333 8 C 22.04 8 22.719 8.281 23.219 8.781 C 23.719 9.281 24 9.96 24 10.667 L 24 21.333 C 24 22.04 23.719 22.719 23.219 23.219 C 22.719 23.719 22.04 24 21.333 24 L 10.667 24 C 9.96 24 9.281 23.719 8.781 23.219 C 8.281 22.719 8 22.04 8 21.333 L 8 10.667 C 8 9.96 8.281 9.281 8.781 8.781 C 9.281 8.281 9.96 8 10.667 8 Z"
-            fill="#ffffff"
-            fill-rule="evenodd" id="path" stroke="#00a0ff" stroke-linecap="round"
+            fill="#ffffff" fill-rule="evenodd" id="path" stroke="#00a0ff" stroke-linecap="round"
             stroke-linejoin="round" stroke-width="1.2" />
     <path d="M 13 21.333 C 13 19.861 14.194 18.667 15.667 18.667 L 17.667 18.667 L 17.667 18.667 C 17.667 17.194 18.861 16 20.333 16 L 21.667 16 L 21.667 16"
-            fill="#ffffff"
-            fill-rule="evenodd" id="path_1" stroke="#00a0ff" stroke-linecap="round"
+            fill="#ffffff" fill-rule="evenodd" id="path_1" stroke="#00a0ff" stroke-linecap="round"
             stroke-linejoin="round" stroke-width="1.2" />
     <path d="M 12 12 M 11 12 C 11 11.735 11.105 11.48 11.293 11.293 C 11.48 11.105 11.735 11 12 11 C 12.265 11 12.52 11.105 12.707 11.293 C 12.895 11.48 13 11.735 13 12 C 13 12.265 12.895 12.52 12.707 12.707 C 12.52 12.895 12.265 13 12 13 C 11.735 13 11.48 12.895 11.293 12.707 C 11.105 12.52 11 12.265 11 12"
-            fill="#00a0ff"
-            fill-rule="evenodd" id="path_2" stroke-width="1" />
+            fill="#00a0ff" fill-rule="evenodd" id="path_2" stroke-width="1" />
 </svg>

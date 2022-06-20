@@ -68,7 +68,8 @@ class FastToolBoxExpandState
         Positioned(
           child: AfterLayout(
             callback: (renderAfterLayout) {
-              debugPrint("AfterLayout rect ${renderAfterLayout.size}");
+              debugPrint(
+                  "[Fastboard] toolbox changed: ${renderAfterLayout.size}");
               _renderAfterLayout = renderAfterLayout;
             },
             child: FastContainer(
@@ -125,9 +126,7 @@ class FastToolBoxExpandState
     return FastContainer(
       child: SizedBox(
         width: FastGap.subToolboxWidth,
-        child: Column(
-          children: children,
-        ),
+        child: Column(children: children),
       ),
     );
   }
@@ -206,8 +205,7 @@ class FastToolBoxExpandState
     );
   }
 
-  Widget buildSubToolAppliance(dynamic appliances) {
-    appliances = appliances as List<FastAppliance>;
+  Widget buildSubToolAppliance(List<FastAppliance> appliances) {
     return Container(
       child: GridView.builder(
         shrinkWrap: true,

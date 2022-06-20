@@ -102,12 +102,12 @@ class FastRoomController extends ValueNotifier<FastRoomValue> {
   }
 
   Future<bool> setWritable(bool writable) async {
-    var result = await whiteRoom?.setWritable(writable);
-    if (result ?? false) {
+    var result = await whiteRoom?.setWritable(writable) ?? false;
+    value = value.copyWith(writable: result);
+    if (result) {
       whiteRoom?.disableSerialization(false);
     }
-    value = value.copyWith(writable: result);
-    return result ?? false;
+    return result;
   }
 
   void undo() {
@@ -205,6 +205,19 @@ class FastRoomController extends ValueNotifier<FastRoomValue> {
     }
   }
 
+  void setContainerSizeRatio(double ratio) {
+    containerSizeRatio = ratio;
+    whiteRoom?.setContainerSizeRatio(ratio);
+  }
+
+  void updateRoomLayoutSize(Size size) {
+    roomLayoutSize = size;
+    if (containerSizeRatio == null) {
+      whiteRoom?.setContainerSizeRatio(size.height / size.width);
+    }
+    notifySizeChanged(size);
+  }
+
   void _onRoomStateChanged(RoomState newState) {
     value = value.copyWith(roomState: newState);
   }
@@ -240,19 +253,6 @@ class FastRoomController extends ValueNotifier<FastRoomValue> {
   void _onCanUndoUpdated(int undoCount) {
     var redoUndoCount = value.redoUndoCount.copyWith(undoCount: undoCount);
     value = value.copyWith(redoUndoCount: redoUndoCount);
-  }
-
-  void setContainerSizeRatio(double ratio) {
-    containerSizeRatio = ratio;
-    whiteRoom?.setContainerSizeRatio(ratio);
-  }
-
-  void updateRoomLayoutSize(Size size) {
-    roomLayoutSize = size;
-    if (containerSizeRatio == null) {
-      whiteRoom?.setContainerSizeRatio(size.height / size.width);
-    }
-    notifySizeChanged(size);
   }
 
   @override

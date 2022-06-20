@@ -69,7 +69,7 @@ class FastRoomViewState extends State<FastRoomView> {
 
   @override
   Widget build(BuildContext context) {
-    FastGap.initContext(context);
+    FastGap.init(context);
     var themeData = _obtainThemeData();
     var whiteOptions = widget.fastRoomOptions.genWhiteOptions(
       backgroundColor: themeData.backgroundColor,

@@ -1,12 +1,8 @@
 <svg id="vector" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
     <path d="M 16 16 M 6.667 16 C 6.66 14.025 7.281 12.099 8.439 10.499 C 9.596 8.899 11.233 7.707 13.11 7.096 C 14.988 6.484 17.012 6.484 18.89 7.096 C 20.768 7.707 22.404 8.899 23.561 10.499 C 24.719 12.099 25.34 14.025 25.333 16 C 25.34 17.975 24.719 19.901 23.561 21.501 C 22.404 23.101 20.768 24.293 18.89 24.904 C 17.012 25.516 14.988 25.516 13.11 24.904 C 11.233 24.293 9.596 23.101 8.439 21.501 C 7.281 19.901 6.66 17.975 6.667 16"
-            fill-rule="evenodd"
-            fill="#ffffff"
-            id="path" stroke="#56c794" stroke-linecap="round" stroke-linejoin="round"
-            stroke-width="1.2" />
+            fill="#ffffff" fill-rule="evenodd" id="path" stroke="#56c794" stroke-linecap="round"
+            stroke-linejoin="round" stroke-width="1.2" />
     <path d="M 14.676 12.606 L 19.381 15.428 C 19.696 15.618 19.799 16.027 19.609 16.343 C 19.553 16.437 19.474 16.515 19.381 16.572 L 14.676 19.394 C 14.361 19.584 13.951 19.481 13.762 19.166 C 13.7 19.062 13.667 18.943 13.667 18.823 L 13.667 13.178 C 13.667 12.809 13.965 12.511 14.333 12.511 C 14.454 12.511 14.573 12.544 14.676 12.606 Z"
-            fill-rule="evenodd"
-            fill="#ffffff"
-            id="path_1" stroke="#56c794" stroke-linecap="round" stroke-linejoin="round"
-            stroke-width="1.2" />
+            fill="#ffffff" fill-rule="evenodd" id="path_1" stroke="#56c794" stroke-linecap="round"
+            stroke-linejoin="round" stroke-width="1.2" />
 </svg>

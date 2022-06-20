@@ -1,8 +1,6 @@
 <svg id="vector" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-    <path d="M 6 12 L 18 12" fill-rule="evenodd" id="path" stroke="#7a7b7c" stroke-linecap="round"
-            fill="#ffffff"
-            stroke-linejoin="round" stroke-width="1" />
-    <path d="M 12 6 L 12 18" fill-rule="evenodd" id="path_1" stroke="#7a7b7c" stroke-linecap="round"
-            fill="#ffffff"
-            stroke-linejoin="round" stroke-width="1" />
+    <path d="M 6 12 L 18 12" fill="#ffffff" fill-rule="evenodd" id="path" stroke="#7a7b7c"
+            stroke-linecap="round" stroke-linejoin="round" stroke-width="1" />
+    <path d="M 12 6 L 12 18" fill="#ffffff" fill-rule="evenodd" id="path_1" stroke="#7a7b7c"
+            stroke-linecap="round" stroke-linejoin="round" stroke-width="1" />
 </svg>

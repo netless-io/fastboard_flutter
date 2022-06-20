@@ -54,7 +54,7 @@ class FastAppliance {
     FastAppliance.balloon: true,
     FastAppliance.clear: false,
   };
-  
+
   bool get hasProperties {
     return kHasProperties[this] ?? false;
   }

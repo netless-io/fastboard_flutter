@@ -12,7 +12,7 @@ class InsertDocParams {
   final String taskUUID;
 
   final String taskToken;
-  
+
   final String title;
 
   final bool dynamic;
