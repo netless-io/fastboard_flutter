@@ -8,15 +8,16 @@ import 'types/types.dart';
 import 'widgets/default_builder.dart';
 import 'widgets/widgets.dart';
 
-/// 回调房间控制
+/// callback on join room success.
 typedef FastRoomCreatedCallback = void Function(FastRoomController controller);
 
-/// 用于用户自定义控制组件
+/// builder to customize controller widgets
 typedef RoomControllerWidgetBuilder = Widget Function(
   BuildContext context,
   FastRoomController controller,
 );
 
+///
 class FastRoomView extends StatefulWidget {
   const FastRoomView({
     Key? key,
@@ -50,6 +51,7 @@ class FastRoomView extends StatefulWidget {
   /// room created callback
   final FastRoomCreatedCallback? onFastRoomCreated;
 
+  /// custom widgets see [defaultControllerBuilder]
   final RoomControllerWidgetBuilder builder;
 
   @override
@@ -74,6 +76,7 @@ class FastRoomViewState extends State<FastRoomView> {
     var whiteOptions = widget.fastRoomOptions.genWhiteOptions(
       backgroundColor: themeData.backgroundColor,
     );
+    controller.updateThemeData(widget.useDarkTheme, themeData);
     return I18n(
       child: ConstrainedBox(
           constraints: const BoxConstraints.expand(),
@@ -117,8 +120,7 @@ class FastRoomViewState extends State<FastRoomView> {
 
   void _updateWhiteIfNeed(FastRoomView oldWidget) {
     if (oldWidget.useDarkTheme != widget.useDarkTheme) {
-      var themeData = _obtainThemeData();
-      controller.whiteSdk?.setBackgroundColor(themeData.backgroundColor);
+      controller.updateThemeData(widget.useDarkTheme, _obtainThemeData());
     }
   }
 

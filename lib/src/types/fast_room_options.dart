@@ -49,6 +49,7 @@ extension FastRoomOptionsExtension on FastRoomOptions {
 
   RoomOptions genRoomOptions({
     double? ratioWhenNull,
+    WindowPrefersColorScheme? prefersColorScheme,
   }) {
     return RoomOptions(
       uuid: uuid,
@@ -59,6 +60,7 @@ extension FastRoomOptionsExtension on FastRoomOptions {
       disableNewPencil: false,
       windowParams: WindowParams(
         containerSizeRatio: containerSizeRatio ?? ratioWhenNull ?? 9 / 16,
+        prefersColorScheme: prefersColorScheme,
         chessboard: false,
         collectorStyles: collectorStyles ??
             {

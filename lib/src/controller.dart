@@ -20,6 +20,7 @@ class FastRoomController extends ValueNotifier<FastRoomValue> {
 
   num zoomScaleDefault = 1;
   Size? roomLayoutSize;
+  bool? useDarkTheme;
 
   double? get ratioWhenNull {
     if (roomLayoutSize == null) {
@@ -142,7 +143,11 @@ class FastRoomController extends ValueNotifier<FastRoomValue> {
   Future<void> joinRoom() async {
     try {
       whiteRoom = await whiteSdk?.joinRoom(
-        options: fastRoomOptions.genRoomOptions(ratioWhenNull: ratioWhenNull),
+        options: fastRoomOptions.genRoomOptions(
+            ratioWhenNull: ratioWhenNull,
+            prefersColorScheme: useDarkTheme ?? false
+                ? WindowPrefersColorScheme.dark
+                : WindowPrefersColorScheme.light),
         onRoomPhaseChanged: _onRoomPhaseChanged,
         onRoomStateChanged: _onRoomStateChanged,
         onCanRedoStepsUpdate: _onCanRedoUpdated,
@@ -216,6 +221,14 @@ class FastRoomController extends ValueNotifier<FastRoomValue> {
       whiteRoom?.setContainerSizeRatio(size.height / size.width);
     }
     notifySizeChanged(size);
+  }
+
+  void updateThemeData(bool useDarkTheme, FastThemeData themeData) {
+    this.useDarkTheme = useDarkTheme;
+    whiteSdk?.setBackgroundColor(themeData.backgroundColor);
+    whiteRoom?.setPrefersColorScheme(useDarkTheme
+        ? WindowPrefersColorScheme.dark
+        : WindowPrefersColorScheme.light);
   }
 
   void _onRoomStateChanged(RoomState newState) {
