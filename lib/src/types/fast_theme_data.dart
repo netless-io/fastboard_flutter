@@ -2,12 +2,25 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class FastThemeData {
+  /// main color, used by loadings, seekbars. mostly it's configured by app main color
   final Color mainColor;
+
+  /// for whiteboard background, loading view background
   final Color backgroundColor;
+
+  /// reserved
   final Color selectedBackgroundColor;
+
+  /// border color
   final Color borderColor;
+
+  /// icons color
   final Color iconColor;
+
+  /// text color
   final Color textColorOnBackground;
+
+  /// divider color
   final Color dividerColor;
 
   FastThemeData({
@@ -19,6 +32,28 @@ class FastThemeData {
     this.textColorOnBackground = const Color(0xFFF9F9F9),
     this.dividerColor = const Color(0xFFDBE1EA),
   });
+
+  FastThemeData copyWith({
+    Color? mainColor,
+    Color? backgroundColor,
+    Color? selectedBackgroundColor,
+    Color? borderColor,
+    Color? iconColor,
+    Color? textColorOnBackground,
+    Color? dividerColor,
+  }) {
+    return FastThemeData(
+      mainColor: mainColor ?? this.mainColor,
+      backgroundColor: backgroundColor ?? this.backgroundColor,
+      selectedBackgroundColor:
+          selectedBackgroundColor ?? this.selectedBackgroundColor,
+      borderColor: borderColor ?? this.borderColor,
+      iconColor: iconColor ?? this.iconColor,
+      textColorOnBackground:
+          textColorOnBackground ?? this.textColorOnBackground,
+      dividerColor: dividerColor ?? this.dividerColor,
+    );
+  }
 
   FastThemeData.dark()
       : this(
