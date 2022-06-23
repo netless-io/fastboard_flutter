@@ -9,12 +9,16 @@ class FastAppliance {
 
   /// Clicker, which can be used for clicking and selecting content on an HTML5 file.
   static const FastAppliance clicker = FastAppliance(ApplianceName.clicker);
+
   /// Selector
   static const FastAppliance selector = FastAppliance(ApplianceName.selector);
+
   /// Pencil
   static const FastAppliance pencil = FastAppliance(ApplianceName.pencil);
+
   /// Rectangle
   static const FastAppliance rectangle = FastAppliance(ApplianceName.rectangle);
+
   /// Ellipse
   static const FastAppliance ellipse = FastAppliance(ApplianceName.ellipse);
 
@@ -22,8 +26,10 @@ class FastAppliance {
 
   /// Eraser
   static const FastAppliance eraser = FastAppliance(ApplianceName.eraser);
+
   /// Arrow
   static const FastAppliance arrow = FastAppliance(ApplianceName.arrow);
+
   /// Straight line.
   static const FastAppliance straight = FastAppliance(ApplianceName.straight);
 
@@ -32,16 +38,19 @@ class FastAppliance {
     ApplianceName.shape,
     shapeType: ShapeType.pentagram,
   );
+
   /// Rhombus
   static const FastAppliance rhombus = FastAppliance(
     ApplianceName.shape,
     shapeType: ShapeType.rhombus,
   );
+
   /// Triangle
   static const FastAppliance triangle = FastAppliance(
     ApplianceName.shape,
     shapeType: ShapeType.triangle,
   );
+
   /// Speech balloon.
   static const FastAppliance balloon = FastAppliance(
     ApplianceName.shape,
