@@ -24,13 +24,14 @@ dependencies:
 
 ## Usage
 
-see
-example [quick_start](example/lib/quick_start.dart) [custom_layout](example/lib/custom_layout.dart)
+clone this repository and run `example`. main samples locate
+at [quick_start](example/lib/quick_start.dart) [custom_layout](example/lib/custom_layout.dart)
 
 ### FastRoomView
 
-See the `example` directory for a minimal example of how to use FastRoomView, embed `FastRoomView`
-to your app.
+See the [example](example) directory for a minimal example of how to use FastRoomView.
+
+embed `FastRoomView` to your app.
 
 ```dart
 @override
@@ -96,8 +97,9 @@ Widget build(BuildContext context) {
 
 ### RoomControllerWidgetBuilder
 
-hide/show built-in widgets, or customize widget use `FastRoomView.builder`
-see [example](example/lib/custom_layout.dart)
+Hide and show built-in widgets, or customize widget use `FastRoomView.builder`.
+
+see [custom_layout](example/lib/custom_layout.dart) for more info.
 
 ```dart
 @override
@@ -134,7 +136,7 @@ Widget customBuilder(BuildContext context, FastRoomController controller) {
 
 ### ToolBox Items
 
-you can configure ToolBox appliances by `FastUiSettings.toolboxItems`
+You can configure ToolBox appliances by `FastUiSettings.toolboxItems`.
 
 ```dart
 void main() {
