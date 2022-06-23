@@ -1,5 +1,11 @@
 # ChangeLog
 
+## 0.1.1
+
+* Fix iOS h5 video play.
+* Fix window-manager to support `FastRoomView.useDarkTheme`.
+* Add `FastThemeData.copyWith`.
+
 ## 0.1.0
 
 * Add `FastRoomOptions.containerSizeRatio`, `FastRoomOptions.collectorStyles` to config windows

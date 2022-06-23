@@ -19,7 +19,7 @@ In your flutter project add the dependency:
 
 ```yaml
 dependencies:
-    fastboard_flutter: ^0.1.0
+    fastboard_flutter: ^0.1.1
 ```
 
 ## Usage
