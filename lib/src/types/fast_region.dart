@@ -3,29 +3,24 @@
 import 'package:fastboard_flutter/fastboard_flutter.dart';
 
 enum FastRegion {
-  /// `cn_hz`：中国杭州。
-  /// <p>
-  /// 该数据中心为其他数据中心服务区未覆盖的地区提供服务。
+  /// Hangzhou, China
+  /// which provides services to areas not covered by other data centers.
   cn_hz,
 
-  /// `us_sv`：美国硅谷。
-  /// <p>
-  /// 该数据中心为北美洲、南美洲地区提供服务。
+  /// Silicon Valley, United States
+  /// which provides services to North America and South America.
   us_sv,
 
-  /// `sg`：新加坡。
-  /// <p>
-  /// 该数据中心为新加坡、东亚、东南亚地区提供服务。
+  /// Singapore
+  /// which provides services to Singapore, East Asia, and Southeast Asia.
   sg,
 
-  /// `in_mum`：印度孟买。
-  /// <p>
-  /// 该数据中心为印度地区提供服务。
+  /// Mumbai, India
+  /// which provides services to India.
   in_mum,
 
-  /// `gb_lon`：英国伦敦。
-  /// <p>
-  /// 该数据中心为欧洲地区提供服务。
+  /// London, United Kingdom
+  /// which provides services to Europe.
   gb_lon,
 }
 

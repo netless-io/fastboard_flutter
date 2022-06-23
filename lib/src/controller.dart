@@ -4,17 +4,26 @@ import 'package:flutter/widgets.dart';
 import 'package:stream_transform/stream_transform.dart';
 import 'package:whiteboard_sdk_flutter/whiteboard_sdk_flutter.dart';
 
+import 'fastboard.dart';
 import 'types/types.dart';
 import 'utils/converter.dart';
 
+/// Control a [FastRoomView].
+///
+/// A [FastRoomController] instance can be obtained by setting the [FastRoomView.onFastRoomCreated]
+/// callback for a [FastRoomView] widget.
 class FastRoomController extends ValueNotifier<FastRoomValue> {
   FastRoomController(this.fastRoomOptions)
       : super(FastRoomValue.uninitialized(fastRoomOptions.writable)) {
     containerSizeRatio = fastRoomOptions.containerSizeRatio;
   }
 
+  /// whiteboard_flutter [WhiteSdk] instance, export for specific usage
   WhiteSdk? whiteSdk;
+
+  /// whiteboard_flutter [WhiteRoom] instance, export for specific usage
   WhiteRoom? whiteRoom;
+
   FastRoomOptions fastRoomOptions;
   double? containerSizeRatio;
 
@@ -60,22 +69,33 @@ class FastRoomController extends ValueNotifier<FastRoomValue> {
     _fastEventStreamController.add(SizeChangedEvent(size));
   }
 
+  /// clean current scene. bath paint element (line, text, etc.) and image
   void cleanScene() {
     whiteRoom?.cleanScene(false);
   }
 
+  /// add a page current scene dir.
   void addPage() {
     whiteRoom?.addPage();
   }
 
+  /// change to preview page.
   void prevPage() {
     whiteRoom?.prevPage();
   }
 
+  /// change to next page;
   void nextPage() {
     whiteRoom?.nextPage();
   }
 
+  /// remove all pages.
+  void removePages() {
+    whiteRoom?.removeScenes('/');
+  }
+
+  /// sets the whiteboard tool currently in use. all tools see [FastAppliance].
+  /// when [fastAppliance] is [FastAppliance.clear], clean scene paint element.
   void setAppliance(FastAppliance fastAppliance) {
     if (fastAppliance == FastAppliance.clear) {
       cleanScene();
@@ -87,11 +107,13 @@ class FastRoomController extends ValueNotifier<FastRoomValue> {
     whiteRoom?.setMemberState(state);
   }
 
+  /// sets element paint stroke width to [strokeWidth].
   void setStrokeWidth(num strokeWidth) {
     var state = MemberState()..strokeWidth = strokeWidth;
     whiteRoom?.setMemberState(state);
   }
 
+  /// sets element paint stroke color to [color].
   void setStrokeColor(Color color) {
     var state = MemberState()
       ..strokeColor = [
@@ -102,6 +124,9 @@ class FastRoomController extends ValueNotifier<FastRoomValue> {
     whiteRoom?.setMemberState(state);
   }
 
+  /// sets whether the user is in interactive mode in the room.
+  /// true: interactive mode, that is, with read and write permissions.
+  /// false: subscription mode, that is, with read-only permission.
   Future<bool> setWritable(bool writable) async {
     var result = await whiteRoom?.setWritable(writable) ?? false;
     value = value.copyWith(writable: result);
@@ -111,16 +136,14 @@ class FastRoomController extends ValueNotifier<FastRoomValue> {
     return result;
   }
 
+  /// undoes an undone action.
   void undo() {
     whiteRoom?.undo();
   }
 
+  /// redoes an undone action.
   void redo() {
     whiteRoom?.redo();
-  }
-
-  void removePages() {
-    whiteRoom?.removeScenes('/');
   }
 
   void zoomTo(num zoomScale) {
@@ -140,6 +163,7 @@ class FastRoomController extends ValueNotifier<FastRoomValue> {
     await joinRoom();
   }
 
+  /// joins the whiteboard room.
   Future<void> joinRoom() async {
     try {
       whiteRoom = await whiteSdk?.joinRoom(
@@ -176,16 +200,22 @@ class FastRoomController extends ValueNotifier<FastRoomValue> {
     return joinRoom();
   }
 
+  /// insert a [url] image with whiteboard size ([width], [height])
+  /// at whiteboard center point (0, 0)
   void insertImage(String url, num width, num height) {
     var info = ImageInformation(width: width, height: height);
     whiteRoom?.insertImageByUrl(info, url);
   }
 
+  /// insert a video or audio with [url] into sub_window.
+  /// window app display [title].
   Future<String?> insertVideo(String url, String title) async {
     var windowAppParams = WindowAppParams.mediaPlayerApp(url, title);
     return await whiteRoom?.addApp(windowAppParams);
   }
 
+  /// insert a doc([InsertDocParams]) into sub_window.
+  /// window app display [InsertDocParams.title].
   Future<String?> insertDoc(InsertDocParams params) async {
     if (whiteRoom == null) return null;
     try {

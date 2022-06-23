@@ -8,7 +8,8 @@ import 'types/types.dart';
 import 'widgets/default_builder.dart';
 import 'widgets/widgets.dart';
 
-/// callback on join room success.
+/// Optional callback invoked when a fast room created. [controller] is
+/// the [FastRoomController] for the created fast room view.
 typedef FastRoomCreatedCallback = void Function(FastRoomController controller);
 
 /// builder to customize controller widgets
@@ -17,8 +18,11 @@ typedef RoomControllerWidgetBuilder = Widget Function(
   FastRoomController controller,
 );
 
-///
+/// fast room view widget showing whiteboard
 class FastRoomView extends StatefulWidget {
+  /// Creates a new room view.
+  /// The room view can be controlled using a `FastRoomController` that is passed to the
+  /// `onFastRoomCreated` callback once the room is created.
   const FastRoomView({
     Key? key,
     required this.fastRoomOptions,
