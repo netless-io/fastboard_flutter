@@ -7,6 +7,7 @@ Agora Fastboard SDK is the latest generation of the whiteboard SDK launched by A
 developers quickly build whiteboard applications. It simplifies the APIs of the Whiteboard SDK and
 adds UI implementations. These improvements enable you to join a room with just a few lines of code
 and instantly experience real-time interactive collaboration using a variety of rich editing tools.
+
 It is pinned on the following features
 
 * Low-cost
@@ -24,8 +25,8 @@ dependencies:
 
 ## Usage
 
-clone this repository and run `example`. main samples locate
-at [quick_start](example/lib/quick_start.dart) [custom_layout](example/lib/custom_layout.dart)
+clone this repository and run example. main samples locate
+at [quick_start](example/lib/quick_start.dart) and [custom_layout](example/lib/custom_layout.dart)
 
 ### FastRoomView
 
@@ -36,62 +37,60 @@ embed `FastRoomView` to your app.
 ```dart
 @override
 Widget build(BuildContext context) {
-  return Stack(children: [
-    FastRoomView(fastRoomOptions: FastRoomOptions(
+  return FastRoomView(
+    fastRoomOptions: FastRoomOptions(
       appId: APP_ID,
       uuid: ROOM_UUID,
       token: ROOM_TOKEN,
       uid: UNIQUE_CLIENT_ID,
       writable: true,
       fastRegion: FastRegion.cn_hz,
-    )),
-    useDarkTheme = true,
-  ]);
+    ),
+  );
 }
-
 ```
 
 ### DarkMode
 
 Fastboard has a built-in set of dark mode configuration, you can switch between dark mode and light
-mode by configuring useDarkTheme.
+mode by configuring `FastRoomView.useDarkTheme`.
 
 ```dart
 @override
 Widget build(BuildContext context) {
-  return Stack(children: [
-    FastRoomView(fastRoomOptions: FastRoomOptions(
+  return FastRoomView(
+    fastRoomOptions: FastRoomOptions(
       appId: APP_ID,
       uuid: ROOM_UUID,
       token: ROOM_TOKEN,
       uid: UNIQUE_CLIENT_ID,
       writable: true,
       fastRegion: FastRegion.cn_hz,
-    )),
+    ),
     useDarkTheme = true,
-  ]);
+  );
 }
 ```
 
 Also you can config `FastRoomView.theme`, `FastRoomView.darkTheme` to change colors of built-in
-Widgets. see [FastThemeData](lib/src/types/fast_theme_data.dart)
+Widgets.
 
 ```dart
 @override
 Widget build(BuildContext context) {
-  return Stack(children: [
-    FastRoomView(fastRoomOptions: FastRoomOptions(
+  return FastRoomView(
+    fastRoomOptions: FastRoomOptions(
       appId: APP_ID,
       uuid: ROOM_UUID,
       token: ROOM_TOKEN,
       uid: UNIQUE_CLIENT_ID,
       writable: true,
       fastRegion: FastRegion.cn_hz,
-    )),
+    ),
     theme: FastThemeData.light().copyWith(mainColor: Color(0xFF00BCD4)),
     darkTheme: FastThemeData.dark().copyWith(mainColor: Color(0xFF0097A7)),
     useDarkTheme = true,
-  ]);
+  );
 }
 ```
 
@@ -104,17 +103,17 @@ see [custom_layout](example/lib/custom_layout.dart) for more info.
 ```dart
 @override
 Widget build(BuildContext context) {
-  return Stack(children: [
-    FastRoomView(fastRoomOptions: FastRoomOptions(
+  return FastRoomView(
+    fastRoomOptions: FastRoomOptions(
       appId: APP_ID,
       uuid: ROOM_UUID,
       token: ROOM_TOKEN,
       uid: UNIQUE_CLIENT_ID,
       writable: true,
       fastRegion: FastRegion.cn_hz,
-    )),
+    ),
     builder: customBuilder,
-  ]);
+  );
 }
 
 Widget customBuilder(BuildContext context, FastRoomController controller) {
