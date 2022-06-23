@@ -10,7 +10,7 @@ environment:
 dependencies:
     flutter:
         sdk: flutter
-    whiteboard_sdk_flutter: ^0.5.2
+    whiteboard_sdk_flutter: ^0.5.3
     # whiteboard_sdk_flutter:
     #     path: ../whiteboard_flutter
     flutter_svg: ^1.0.3

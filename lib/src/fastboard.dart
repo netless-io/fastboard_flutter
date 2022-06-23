@@ -93,6 +93,7 @@ class FastRoomViewState extends State<FastRoomView> {
                     await controller.joinRoomWithSdk(sdk);
                     widget.onFastRoomCreated?.call(controller);
                   },
+                  useBasicWebView: true,
                 ),
                 FastTheme(
                     data: themeData,
