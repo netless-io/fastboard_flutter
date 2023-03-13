@@ -14,6 +14,13 @@ It is pinned on the following features
 * Scenario-based
 * Configurable
 
+## Prerequisites
+
+* A valid [Agora account](https://docs.agora.io/en/interactive-whiteboard/reference/manage-agora-account?platform=android#sign-up-and-log-in)
+* An Agora project with the Interactive Whiteboard enabled. Get the app identifier and SDK token
+  from the Agora Console.
+  See [Enable and configure Interactive Whiteboard](https://docs.agora.io/en/interactive-whiteboard/develop/enable-whiteboard?platform=android)
+
 ## Getting started
 
 In your flutter project add the dependency:
