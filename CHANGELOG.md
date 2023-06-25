@@ -1,5 +1,9 @@
 # ChangeLog
 
+## 0.1.2
+
+* Fix iOS WebView runJavascriptReturningResult return null.
+
 ## 0.1.1
 
 * Fix iOS h5 video play.
