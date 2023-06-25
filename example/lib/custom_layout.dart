@@ -4,6 +4,7 @@ import 'package:fastboard_flutter/fastboard_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'constants.dart';
 import 'page.dart';
 import 'widgets.dart';
 
@@ -31,12 +32,6 @@ class CustomLayoutBody extends StatefulWidget {
 
 class CustomLayoutBodyState extends State<CustomLayoutBody> {
   Completer<FastRoomController> controllerCompleter = Completer();
-
-  static const String APP_ID = '283/VGiScM9Wiw2HJg';
-  static const String ROOM_UUID = "9e441760c09711ec9b6bd3c11300c55c";
-  static const String ROOM_TOKEN =
-      "WHITEcGFydG5lcl9pZD15TFExM0tTeUx5VzBTR3NkJnNpZz1jNmU1ZDg0YmExYmU4YTY5MGViMDhkM2YyZGM1MzI2ZWE0M2YxNmYwOmFrPXlMUTEzS1N5THlXMFNHc2QmY3JlYXRlX3RpbWU9MTY1MDQ1MTc5NzIyNSZleHBpcmVfdGltZT0xNjgxOTg3Nzk3MjI1Jm5vbmNlPTE2NTA0NTE3OTcyMjUwMCZyb2xlPXJvb20mcm9vbUlkPTllNDQxNzYwYzA5NzExZWM5YjZiZDNjMTEzMDBjNTVjJnRlYW1JZD05SUQyMFBRaUVldTNPNy1mQmNBek9n";
-  static const String UNIQUE_CLIENT_ID = "123456";
 
   // This widgets is the root of your application.
   @override
