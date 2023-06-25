@@ -4,13 +4,13 @@ version: 0.1.1
 homepage: https://github.com/netless-io/fastboard_flutter
 
 environment:
-    sdk: ">=2.12.0 <3.0.0"
+    sdk: ">=2.12.0 <4.0.0"
     flutter: ">=1.22.2"
 
 dependencies:
     flutter:
         sdk: flutter
-    whiteboard_sdk_flutter: ^0.5.3
+    whiteboard_sdk_flutter: ^0.5.4
     # whiteboard_sdk_flutter:
     #     path: ../whiteboard_flutter
     flutter_svg: ^1.0.3
